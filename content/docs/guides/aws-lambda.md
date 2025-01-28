@@ -134,9 +134,9 @@ Create the Lambda function using the [Serverless Framework](https://www.serverle
 
     ```json
     {
-     "dependencies": {
-       "pg": "^8.8.0"
-     }
+      "dependencies": {
+        "pg": "^8.13.1"
+      }
     }
     ```
 
@@ -144,24 +144,44 @@ Create the Lambda function using the [Serverless Framework](https://www.serverle
 
     ```js
     'use strict';
-
     const { Client } = require('pg');
+
     let client;
 
     module.exports.getAllUsers = async () => {
-     if (!client) {
-       client = new Client(process.env.DATABASE_URL);
-       await client.connect();
-     }
+        if (!client) {
+            console.log('Initializing new database client');
+            client = new Client({ connectionString: process.env.DATABASE_URL });
+            try {
+                await client.connect();
+            } catch (error) {
+                console.error('Error connecting to the database:', error);
+                return {
+                    statusCode: 500,
+                    body: JSON.stringify({
+                        error: 'Failed to connect to the database',
+                    }),
+                };
+            }
+        }
 
-     const { rows } = await client.query('SELECT * from users');
-
-     return {
-       statusCode: 200,
-       body: JSON.stringify({
-         data: rows,
-       }),
-     };
+        try {
+            const { rows } = await client.query('SELECT * FROM users');
+            return {
+                statusCode: 200,
+                body: JSON.stringify({
+                    data: rows,
+                }),
+            };
+        } catch (error) {
+            console.error('Error executing query:', error);
+            return {
+                statusCode: 500,
+                body: JSON.stringify({
+                    error: 'Failed to fetch users',
+                }),
+            };
+        }
     };
     ```
 
