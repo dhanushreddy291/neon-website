@@ -2,6 +2,7 @@
 title: Automate branching with CircleCI
 subtitle: Learn how to use the Neon CircleCI Orb to provision ephemeral Postgres branches for every CI pipeline run
 enableTableOfContents: true
+tag: community
 updatedOn: '2026-02-15T00:00:00.000Z'
 ---
 
