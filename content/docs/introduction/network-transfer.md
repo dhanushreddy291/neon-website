@@ -7,7 +7,7 @@ summary: >-
   Neon, including the egress optimizer agent skill, public and private transfer
   types, common causes of high usage, Console and API monitoring, and strategies
   to reduce transfer.
-updatedOn: '2026-03-09T20:42:56.530Z'
+updatedOn: '2026-03-16T10:19:48.546Z'
 ---
 
 Network transfer is one of the usage metrics that affects your Neon bill. This guide explains what network transfer is, what causes it to increase, how to monitor it, and how to reduce it. For broader cost guidance, see [Cost optimization](/docs/introduction/cost-optimization). For plan allowances and pricing, see [Plans](/docs/introduction/plans).
