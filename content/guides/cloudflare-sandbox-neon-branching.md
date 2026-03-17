@@ -417,7 +417,7 @@ Building your own AI agent runner pairs ephemeral compute with ephemeral data, s
 - **Infinite parallelization:** Spin up multiple sandboxes and branches instantly to run concurrent agent tasks without state collisions.
 - **Zero risk:** A destructive agent action only affects its disposable branch, keeping staging and production databases entirely safe.
 - **Programmatic environment control:** Inject runtime configuration (like a dynamic `DATABASE_URL`) directly into each sandbox.
-- **No vendor lock-in:** Swap out Claude Code for any other CLI-based agent (e.g., GitHub Copilot CLI, Codex, OpenCode) while retaining the same execution architecture.
+- **No vendor lock-in:** Swap out Claude Code for any other CLI-based agent (e.g., Codex, OpenCode, GitHub Copilot CLI) while retaining the same execution architecture.
 
 ## Extending this workflow
 
