@@ -7,7 +7,23 @@ summary: >-
   and advanced text search capabilities.
 enableTableOfContents: true
 updatedOn: '2026-02-15T20:51:54.089Z'
+redirectFrom:
+  - /guides/pg-search
+  - /guides/pg-search/
 ---
+
+<Admonition type="warning" title="pg_search is deprecated">
+
+`pg_search` is no longer available for new Neon projects. Existing users must migrate before **June 1, 2026**, after which the extension will be fully removed.
+
+Depending on your use case, consider these alternatives:
+
+- **Full-text search**: PostgreSQL's built-in [`tsvector`/`tsquery`](https://www.postgresql.org/docs/current/textsearch.html)
+- **Fuzzy search**: [`pg_trgm`](https://www.postgresql.org/docs/current/pgtrgm.html) for similarity and pattern matching
+- **Semantic/vector search**: [`pgvector`](/docs/extensions/pgvector) for embedding-based search
+- **BM25 search**: [ParadeDB](https://www.paradedb.com/) for continued `pg_search` functionality
+
+</Admonition>
 
 The `pg_search` extension by [ParadeDB](https://www.paradedb.com/) adds functions and operators to Postgres that use [BM25 (Best Matching 25)](https://en.wikipedia.org/wiki/Okapi_BM25) indexes for efficient, high-relevance text searches. It supports standard SQL syntax and JSON query objects, offering features similar to those in Elasticsearch.
 
