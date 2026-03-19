@@ -14,16 +14,16 @@ redirectFrom:
   - /guides/pg-search-vs-tsvector/
 ---
 
-<Admonition type="warning" title="pg_search is deprecated">
+<Admonition type="warning" title="Neon's support for pg_search has been deprecated.">
 
-`pg_search` is no longer available for new Neon projects. Existing users must migrate before **June 1, 2026**, after which the extension will be fully removed.
+As of March 19, 2026, `pg_search` was no longer available for new Neon projects. Existing installations were required to migrate before **June 1, 2026**.
 
 Depending on your use case, consider these alternatives:
 
 - **Full-text search**: PostgreSQL's built-in [`tsvector`/`tsquery`](https://www.postgresql.org/docs/current/textsearch.html)
 - **Fuzzy search**: [`pg_trgm`](https://www.postgresql.org/docs/current/pgtrgm.html) for similarity and pattern matching
 - **Semantic/vector search**: [`pgvector`](/docs/extensions/pgvector) for embedding-based search
-- **BM25 search**: [ParadeDB](https://www.paradedb.com/) for continued `pg_search` functionality
+- **BM25 search**: [ParadeDB](https://www.paradedb.com/) for BM25-style search comparable to `pg_search`
 
 </Admonition>
 
