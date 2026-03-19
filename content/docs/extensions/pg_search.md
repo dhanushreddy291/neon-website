@@ -31,8 +31,6 @@ The `pg_search` extension by [ParadeDB](https://www.paradedb.com/) adds function
 
 `pg_search` eliminates the need to integrate external search engines, simplifying your architecture and providing real-time search functionality that's tightly coupled with your transactional data.
 
-<CTA />
-
 In this guide, you'll learn how to enable `pg_search` on Neon, understand the fundamentals of BM25 scoring and inverted indexes, and explore hands-on examples to create indexes and perform full-text searches on your Postgres database.
 
 <Admonition type="note" title="pg_search on Neon">
