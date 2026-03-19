@@ -224,7 +224,7 @@ The Lakeflow PostgreSQL connector uses two pipelines:
 7. **Database setup (Neon replication config)**: For each source Neon database, set:
    - **Replication slot name**: `databricks_slot`
    - **Publication name**: `databricks_publication`
-   These must match the slot and publication you created in Neon.
+     These must match the slot and publication you created in Neon.
 8. **Schedules and notifications** (optional): Set how often the ingestion pipeline runs (e.g. every 5 or 15 minutes) and add email notifications for failures or successful runs.
 9. Click **Save and run pipeline** to start the first full snapshot and CDC extraction.
 
