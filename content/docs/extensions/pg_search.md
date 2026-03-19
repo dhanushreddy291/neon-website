@@ -10,6 +10,8 @@ updatedOn: '2026-02-15T20:51:54.089Z'
 redirectFrom:
   - /guides/pg-search
   - /guides/pg-search/
+  - /guides/pg-search-vs-tsvector
+  - /guides/pg-search-vs-tsvector/
 ---
 
 <Admonition type="warning" title="pg_search is deprecated">
