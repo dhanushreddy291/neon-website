@@ -6,7 +6,7 @@ summary: >-
   providers, and controlling API access to customize its behavior and security
   settings.
 enableTableOfContents: true
-updatedOn: '2026-02-27T20:43:26.152Z'
+updatedOn: '2026-03-20T21:22:58.810Z'
 ---
 
 <FeatureBetaProps feature_name="Neon Data API" />

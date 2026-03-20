@@ -6,7 +6,7 @@ summary: >-
   Auth, detailing the SDK integration, session creation, and database
   interactions.
 enableTableOfContents: true
-updatedOn: '2026-02-15T20:51:54.036Z'
+updatedOn: '2026-03-20T21:22:58.805Z'
 ---
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />

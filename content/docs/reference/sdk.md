@@ -5,7 +5,7 @@ summary: >-
   developers to implement user authentication and database queries, as well as
   manage platform resources programmatically.
 enableTableOfContents: true
-updatedOn: '2026-02-15T20:51:54.265Z'
+updatedOn: '2026-03-20T21:22:58.813Z'
 ---
 
 Neon provides two categories of SDKs to support different use cases:

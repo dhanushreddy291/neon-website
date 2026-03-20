@@ -8,7 +8,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/neon-auth/api
   - /docs/guides/neon-auth-api
-updatedOn: '2026-03-05T14:07:19.743Z'
+updatedOn: '2026-03-20T21:22:58.806Z'
 ---
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />

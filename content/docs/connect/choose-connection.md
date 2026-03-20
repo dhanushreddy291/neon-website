@@ -5,7 +5,7 @@ summary: >-
   Guides you to the right Postgres driver, connection type, and pooling strategy
   based on your language, deployment platform, and runtime environment.
 enableTableOfContents: true
-updatedOn: '2026-03-06T22:53:13.489Z'
+updatedOn: '2026-03-20T21:22:58.809Z'
 ---
 
 Your connection method depends on where your code runs. Use the table below for a quick lookup, or read the scenario sections for detailed guidance.

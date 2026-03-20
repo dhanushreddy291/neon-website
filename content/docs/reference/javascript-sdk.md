@@ -7,7 +7,7 @@ summary: >-
   adapter options for different frameworks.
 enableTableOfContents: true
 layout: wide
-updatedOn: '2026-02-15T20:51:54.261Z'
+updatedOn: '2026-03-20T21:22:58.813Z'
 ---
 
 This page documents `@neondatabase/neon-js`, which combines Neon Auth and the Data API in a single client. Neon also publishes standalone packages:

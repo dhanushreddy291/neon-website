@@ -6,7 +6,7 @@ summary: >-
   using Neon, demonstrating how to secure user data by enforcing access control
   at the database level with JWT authentication.
 enableTableOfContents: true
-updatedOn: '2026-03-05T04:12:51.012Z'
+updatedOn: '2026-03-20T21:22:58.812Z'
 redirectFrom:
   - /docs/guides/neon-rls-authorize-tutorial
   - /docs/guides/neon-authorize-tutorial

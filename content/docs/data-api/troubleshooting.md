@@ -6,7 +6,7 @@ summary: >-
   including permission errors and JWT validation failures, along with steps to
   resolve them.
 enableTableOfContents: true
-updatedOn: '2026-02-15T20:51:54.073Z'
+updatedOn: '2026-03-20T21:22:58.811Z'
 ---
 
 <InfoBlock>
