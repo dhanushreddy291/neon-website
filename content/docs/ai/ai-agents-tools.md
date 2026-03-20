@@ -19,7 +19,7 @@ The fastest way to get started with Neon and AI:
 npx neonctl@latest init
 ```
 
-This authenticates via OAuth, creates an API key, configures your editor or CLI (Cursor, VS Code, Claude Code, and other assistants from the **init** wizard), and installs [agent skills](https://github.com/neondatabase/agent-skills). Then restart and ask your AI assistant **"Get started with Neon"**.
+This authenticates via OAuth, creates an API key, configures your editor or CLI, and installs [agent skills](https://github.com/neondatabase/agent-skills). Then restart and ask your AI assistant **"Get started with Neon"**.
 
 ## MCP integration
 
