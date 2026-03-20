@@ -60,7 +60,7 @@ See [Claude Code plugin for Neon](/docs/ai/ai-claude-code-plugin) for details.
 
 ### neonctl init
 
-The `neonctl init` command sets up your project to use Neon with your AI coding assistant. It authenticates via OAuth, creates an API key, configures the MCP server (Cursor, VS Code, Claude Code, and many other tools in the wizard), installs the Neon extension for Cursor and VS Code where applicable, and installs agent skills at the project level:
+The `neonctl init` command sets up your project to use Neon with your AI coding assistant. It authenticates via OAuth, creates an API key, configures the MCP server, installs the Neon extension for Cursor and VS Code where applicable, and installs agent skills at the project level:
 
 ```bash
 npx neonctl@latest init
