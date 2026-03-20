@@ -134,6 +134,8 @@ updatedOn: '2026-02-06T22:07:32.986Z'
 
 <a href="/docs/guides/logical-replication-kafka-confluent" title="Confluent (Kafka)" description="Replicate data from Neon with Confluent (Kafka)" icon="confluent"></a>
 
+<a href="/docs/guides/logical-replication-databricks" title="Databricks" description="Replicate data from Neon to Databricks with Lakeflow Connect" icon="databricks"></a>
+
 <a href="/docs/guides/logical-replication-decodable" title="Decodable" description="Replicate data from Neon with Decodable" icon="decodable"></a>
 
 <a href="/docs/guides/logical-replication-estuary-flow" title="Estuary Flow" description="Replicate data from Neon with Estuary Flow" icon="estuary"></a>
