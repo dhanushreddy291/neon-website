@@ -89,8 +89,13 @@ neon roles create --name databricks_replication
 
 <TabItem>
 
+Set `PROJECT_ID` and `BRANCH_ID` from your Neon project (for example from the project URL in the Console or via the Neon API).
+
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/roles' \
+export PROJECT_ID="your_project_id"
+export BRANCH_ID="your_branch_id"
+
+curl "https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/roles" \
   -H 'Accept: application/json' \
   -H "Authorization: Bearer $NEON_API_KEY" \
   -H 'Content-Type: application/json' \
@@ -177,7 +182,7 @@ Lakeflow Connect uses Unity Catalog connections to store JDBC connection details
    - **Database**: your Neon database name
    - **User**: `databricks_replication` (or the replication role you created).
    - **Password**: the password for that role. You can obtain the password from the **Connect** modal on the Neon project dashboard.
-6. Create he connection.
+6. Create the connection.
 7. On the **Catalog basics** page, test your connection. You will need to provide the name of your PostgreSQL database.
 8. Click next to grant catalog access. Specify the users, groups, and service principals that have privileges on this catalog. Additionally, set up workspace-catalog bindings to isolate user data access.
 
