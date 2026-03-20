@@ -94,7 +94,7 @@ In this `employee` table, the `manager_id` column references the `employee_id` c
 
 The `manager_id` column indicates the direct relationship, showing the manager to whom the employee reports.
 
-If the `manager_id` column contains NULL, which signifies that the respective employee does not report to anyone, essentially holding the top managerial position.
+If the `manager_id` column contains NULL, it signifies that the respective employee does not report to anyone, essentially holding the top managerial position.
 
 The following query uses the self\-join to find who reports to whom:
 

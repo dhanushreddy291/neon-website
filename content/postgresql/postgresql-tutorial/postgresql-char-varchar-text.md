@@ -50,7 +50,7 @@ Unlike `VARCHAR`, The `CHARACTER` or `CHAR` without the length, specifier (`n`) 
 
 Different from other database systems, in PostgreSQL, there is no performance difference among the three character types.
 
-In most cases, you should use `TEXT`or `VARCHAR` and use the `VARCHAR(n)` only when you want PostgreSQL to check the length.
+In most cases, you should use `TEXT` or `VARCHAR` and use the `VARCHAR(n)` only when you want PostgreSQL to check the length.
 
 ## PostgreSQL character type examples
 

@@ -14,7 +14,7 @@ nextLink:
   slug: 'postgresql-tutorial/postgresql-add-column'
 ---
 
-**Summary**: in this tutorial, you will show how to rename a table using the PostgreSQL `ALTER TABLE RENAME TO` statement.
+**Summary**: in this tutorial, you will learn how to rename a table using the PostgreSQL `ALTER TABLE RENAME TO` statement.
 
 ## Introduction to PostgreSQL RENAME TABLE statement
 

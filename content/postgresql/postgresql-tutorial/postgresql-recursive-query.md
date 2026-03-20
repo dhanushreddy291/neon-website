@@ -168,7 +168,7 @@ The recursive member returns the direct subordinate(s) of the employee id 2\. Th
            9 |          2 | Benjamin Glover
 ```
 
-PostgreSQL executes the recursive member repeatedly. The second iteration of the recursive member uses the result set above step as the input value, and returns this result set:
+PostgreSQL executes the recursive member repeatedly. The second iteration of the recursive member uses the result set from the above step as the input value, and returns this result set:
 
 ```text
  employee_id | manager_id |    full_name

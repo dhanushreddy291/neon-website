@@ -18,7 +18,7 @@ nextLink:
 
 In the previous tutorial, we showed you how to [import data from a CSV file into a table](import-csv-file-into-posgresql-table). We will use the same `persons` table for importing data from a CSV file.
 
-![posgresql export csv](/postgresqltutorial/posgresql-import-csv.jpg)
+![postgresql export csv](/postgresqltutorial/posgresql-import-csv.jpg)
 The following statement retrieves the data from the `persons` table.
 
 ```sql

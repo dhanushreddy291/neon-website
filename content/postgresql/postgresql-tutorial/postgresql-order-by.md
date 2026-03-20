@@ -142,7 +142,7 @@ In the database world, `NULL` is a marker that indicates the missing data or the
 When you sort rows that contain `NULL`, you can specify the order of `NULL` with other non\-null values by using the `NULLS FIRST` or `NULLS LAST` option of the `ORDER BY` clause:
 
 ```sql
-ORDER BY sort_expresssion [ASC | DESC] [NULLS FIRST | NULLS LAST]
+ORDER BY sort_expression [ASC | DESC] [NULLS FIRST | NULLS LAST]
 ```
 
 The `NULLS FIRST` option places `NULL` before other non\-null values and the `NULLS LAST` option places `NULL` after other non\-null values.

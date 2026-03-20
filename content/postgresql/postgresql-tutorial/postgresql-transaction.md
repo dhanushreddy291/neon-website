@@ -177,7 +177,7 @@ Or:
 ROLLBACK WORK;
 ```
 
-The `ROLLBACK` statement undos the changes that you made within the transaction.
+The `ROLLBACK` statement undoes the changes that you made within the transaction.
 
 For example, the following example uses the `ROLLBACK` statement to roll back the changes made to the account 1:
 

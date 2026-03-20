@@ -60,7 +60,7 @@ It’s important to note that PostgreSQL stores `timestamptz` values in the data
 
 Let’s take a look at an example of using the `timestamp` and `timestamptz`to have a better understanding of how PostgreSQL handles them.
 
-First, [create a table](postgresql-create-table) that consists of both `timestamp` the `timestamptz` columns.
+First, [create a table](postgresql-create-table) that consists of both `timestamp` and `timestamptz` columns.
 
 ```sql
 CREATE TABLE timestamp_demo (
@@ -88,7 +88,7 @@ SHOW TIMEZONE;
 (1 row)
 ```
 
-Then, [insert a new row](postgresql-insert) into the `timstamp_demo`table:
+Then, [insert a new row](postgresql-insert) into the `timestamp_demo` table:
 
 ```sql
 INSERT INTO timestamp_demo (ts, tstz)
