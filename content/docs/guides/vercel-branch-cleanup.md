@@ -1,12 +1,13 @@
 ---
 title: Managing Vercel preview branch cleanup
-subtitle: Understand cleanup timing and reduce branch accumulation for the Vercel-Managed integration
+subtitle: Understand cleanup timing and reduce branch accumulation for the
+  Vercel-Managed integration
 summary: >-
   Explains why Neon preview branches may not be deleted promptly when using the
-  Vercel-Managed integration, how to reduce Vercel's deployment retention policy,
-  and workarounds for immediate cleanup.
+  Vercel-Managed integration, how to reduce Vercel's deployment retention
+  policy, and workarounds for immediate cleanup.
 enableTableOfContents: true
-updatedOn: '2026-03-10T00:00:00.000Z'
+updatedOn: '2026-03-20T16:01:10.989Z'
 ---
 
 <InfoBlock>
