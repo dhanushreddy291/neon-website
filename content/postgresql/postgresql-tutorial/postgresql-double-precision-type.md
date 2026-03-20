@@ -28,7 +28,7 @@ Note that PostgreSQL double precision data type is an implementation of the [IEE
 
 The following shows how to define a column with the `DOUBLE PRECISION` type:
 
-```csssql
+```sql
 column_name double precision
 ```
 
@@ -89,7 +89,7 @@ Output:
 
 Third, calculate the average temperature of all locations:
 
-```
+```sql
 SELECT AVG(temperature)
 FROM temperatures;
 ```
@@ -106,7 +106,7 @@ Output:
 
 First, [create a table](postgresql-create-table) `t` with the column `c` of `DOUBLE PRECISION` type:
 
-```
+```sql
 CREATE TABLE t(c double precision);
 ```
 
@@ -156,7 +156,7 @@ VALUES (1E-400);
 
 It returns the following error:
 
-```sql
+```
 ERROR:  "0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001" is out of range for type double precision
 ```
 

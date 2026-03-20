@@ -24,7 +24,7 @@ The `RIGHT JOIN` can be useful when you want to find rows in the right table tha
 
 Here’s the basic syntax of the `RIGHT JOIN` clause:
 
-```sqlsql
+```sql
 SELECT
   select_list
 FROM
@@ -94,7 +94,7 @@ Output:
 ![PostgreSQL RIGHT JOIN example](/postgresqltutorial/PostgreSQL-RIGHT-JOIN-example.png)
 You can rewrite the above query using table aliases:
 
-```
+```sql
 SELECT
   f.film_id,
   f.title,

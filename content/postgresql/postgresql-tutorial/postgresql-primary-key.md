@@ -28,7 +28,7 @@ Technically, a primary key constraint is the combination of a [not\-null constra
 
 Typically, you define a primary key for a table when creating it:
 
-```phpsql
+```sql
 CREATE TABLE table_name (
   column_1 data_type PRIMARY KEY,
   column_2 data_type,
@@ -52,7 +52,7 @@ CREATE TABLE table_name (
 
 To add a primary key to an existing table, you use the `ALTER TABLE ... ADD PRIMARY KEY` statement:
 
-```
+```sql
 ALTER TABLE table_name
 ADD PRIMARY KEY (column_1, column_2, ...);
 ```
@@ -63,7 +63,7 @@ By default, PostgreSQL uses the format `table-name_pkey` as the default name fo
 
 To assign a name for the primary key, you can use the `CONSTRAINT` clause as follows:
 
-```
+```sql
 CONSTRAINT constraint_name
 PRIMARY KEY(column_1, column_2,...);
 ```
@@ -76,7 +76,7 @@ Let’s explore some examples of using the PostgreSQL primary key.
 
 The following statement creates a table with a primary key that consists of one column:
 
-```
+```sql
 CREATE TABLE orders(
   order_id SERIAL PRIMARY KEY,
   customer_id VARCHAR(255) NOT NULL,
@@ -194,7 +194,7 @@ Output:
 
 To remove a primary key from a table, you use the following `ALTER TABLE` statement:
 
-```
+```sql
 ALTER TABLE table_name
 DROP CONSTRAINT primary_key_constraint;
 ```
@@ -230,20 +230,20 @@ The output indicates that the primary key constraint is vendors_pkey.
 
 Second, drop the primary key from the `vendors` table using the `ALTER TABLE ... DROP CONSTRAINT` statement:
 
-```
+```sql
 ALTER TABLE vendors
 DROP CONSTRAINT vendors_pkey;
 ```
 
 Output:
 
-```
+```sql
 ALTER TABLE
 ```
 
 The statement removes only the primary key constraint but does not remove the vendor_id column:
 
-```
+```sql
 SELECT vendor_id, name
 FROM vendors;
 ```
