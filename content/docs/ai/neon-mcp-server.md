@@ -211,75 +211,9 @@ Use `cmd` or `wsl` if you encounter issues:
 
 </Tabs>
 
-## Scoping and access control (remote MCP)
+<MCPTools />
 
-Neon’s hosted MCP server at `https://mcp.neon.tech/mcp` exposes **only the tools your connection is allowed to use**. Tool lists are built from **OAuth consent** (what you approve in the browser) or from **HTTP headers** when you connect with an **API key**. That replaces an older pattern where every tool appeared in the catalog and calls could fail at runtime.
-
-<Admonition type="note" title="OAuth versus API key">
-**OAuth:** Scope categories, project scoping, and read-only defaults are captured when you create a session (consent + registration headers). If you change values in your MCP config file, **sign out and authorize again** so a new token is issued—otherwise the old grant may still apply. **API key:** `X-Neon-Scopes`, `X-Neon-Project-Id`, and read-only headers are read **on each request** along with `Authorization`.
-</Admonition>
-
-### Read-only mode
-
-**Read-only mode** removes write-oriented tools (for example creating projects or branches, provisioning Auth/Data API, or migration completion flows). Tools that remain include listing and describing resources, read-only-safe SQL helpers, documentation resources, and discovery tools where applicable.
-
-You can enable it in two ways:
-
-1. **OAuth (recommended):** In the authorization UI, leave **Full access** unchecked so the token is read-only.
-2. **HTTP header:** Set **`X-Neon-Read-Only: true`** on the MCP connection (preferred). The legacy header **`x-read-only: true`** is still accepted.
-
-```json
-{
-  "mcpServers": {
-    "neon": {
-      "type": "http",
-      "url": "https://mcp.neon.tech/mcp",
-      "headers": {
-        "X-Neon-Read-Only": "true"
-      }
-    }
-  }
-}
-```
-
-With an **API key**, `X-Neon-Read-Only` is how you enable read-only mode. With **OAuth**, the header influences default consent but you can still override access in the browser before approving.
-
-<Admonition type="important" title="Read-only tools versus SQL writes">
-Read-only mode filters **which MCP tools are registered**, not the SQL inside `run_sql`. If `run_sql` remains available, the database role you connect with still controls what SQL is allowed. For strict read-only SQL, use a [database role with limited privileges](/docs/manage/database-access#create-a-read-only-role).
-</Admonition>
-
-### Scope categories
-
-Use the **`X-Neon-Scopes`** header on the **remote** MCP connection: a **comma-separated** list of category names (lowercase, no spaces around commas). Each tool in [Supported actions (tools)](/docs/ai/neon-mcp-server#supported-actions-tools) is tagged with at most one category; the server keeps tools whose category appears in your list, plus tools **without** a category and the **`search`** / **`fetch`** discovery tools (except in [project-scoped mode](#project-scoped-mode), where those two are hidden).
-
-| Category    | Typical use                                                              |
-| :---------- | :----------------------------------------------------------------------- |
-| `projects`  | List, describe, create, or delete projects; list organizations           |
-| `branches`  | Branch lifecycle (create, delete, describe, reset, computes)             |
-| `schema`    | Schema comparison and migration-oriented flows                           |
-| `querying`  | Running and explaining SQL, slow-query and query-tuning helpers          |
-| `neon_auth` | Neon Auth provisioning and setup                                         |
-| `data_api`  | Neon Data API provisioning (separate from Auth)                          |
-| `docs`      | Neon documentation resources (`list_docs_resources`, `get_doc_resource`) |
-
-- **Omit** `X-Neon-Scopes` to allow **all** categories.
-- If the header is present but **no valid** category names parse, only the minimal discovery tool set remains (and **project-scoped** mode can narrow that further).
-
-Category scoping is independent of **read-only** mode: read-only still applies `readOnlySafe` filtering on top of scope.
-
-### Project-scoped mode
-
-Set **`X-Neon-Project-Id`** to a Neon **project ID** to lock the session to that project. The server **hides** project-wide tools such as **`list_projects`** and **`create_project`**, **hides** **`search`** and **`fetch`**, and **drops** `projectId` from tool schemas so the scoped ID is injected for you.
-
-Use this when an assistant should only ever act inside one project.
-
-### Preview available tools
-
-**`GET https://mcp.neon.tech/api/list-tools`** is a **stateless JSON** endpoint that returns tool names, descriptions, scope tags, and read-only flags **as they would appear** for the same `X-Neon-Scopes`, `X-Neon-Project-Id`, and `X-Neon-Read-Only` / `x-read-only` headers you pass. **No API key is required**; it returns metadata only (not execution access).
-
-Most people configure MCP in the editor and never call this URL. It is useful if you want to **verify** a header combination before sharing a config, or if you are building a **documentation or setup UI** (Neon uses it for the MCP configurator on this site). It is not part of the normal MCP protocol flow your assistant uses for `https://mcp.neon.tech/mcp`.
-
-### Troubleshooting
+## Troubleshooting
 
 If your client does not use JSON for configuration of MCP servers (such as older versions of Cursor), use this command when prompted:
 
@@ -290,12 +224,6 @@ npx -y @neondatabase/mcp-server-neon start <YOUR_NEON_API_KEY>
 <Admonition type="note">
 For clients that don't support Streamable HTTP, you can use the deprecated SSE endpoint: `https://mcp.neon.tech/sse`. SSE is not supported with API key authentication.
 </Admonition>
-
-<Admonition type="important" title="Security Considerations">
-The Neon MCP Server grants powerful database management capabilities through natural language requests. **Always review and authorize actions requested by the LLM before execution.** The Neon MCP Server is intended for local development and IDE integrations only. For more information, see [MCP security guidance](#mcp-security-guidance).
-</Admonition>
-
-<MCPTools />
 
 ## Usage examples
 
