@@ -7,7 +7,7 @@ summary: >-
   Server, enabling users to execute commands and make schema changes through
   natural language without coding.
 enableTableOfContents: true
-updatedOn: '2026-02-15T20:51:54.035Z'
+updatedOn: '2026-03-20T18:00:00.000Z'
 ---
 
 The **Neon MCP Server** is an open-source tool that lets you interact with your Neon Postgres databases in **natural language**:
@@ -24,7 +24,7 @@ The fastest way to set up Neon's MCP Server is with one command:
 npx neonctl@latest init
 ```
 
-This configures the Neon MCP Server for compatible MCP clients in your workspace (Cursor, VS Code, Claude Code, and others) using API key authentication. See the [neonctl init documentation](/docs/reference/cli-init).
+This configures the Neon MCP Server for compatible MCP clients in your workspace using API key authentication, including Cursor, VS Code, Claude Code, and other assistants [add-mcp can target](/docs/ai/connect-mcp-clients-to-neon#supported-agents-add-mcp). See the [neonctl init documentation](/docs/reference/cli-init).
 
 **If you only want the MCP server and nothing else**, use:
 
@@ -37,9 +37,11 @@ This command adds the required configuration to your editor's MCP config files; 
 **Other setup options:**
 
 - **API key authentication (remote agents):** For remote agents or when OAuth isn't available:
+
   ```bash
   npx add-mcp https://mcp.neon.tech/mcp --header "Authorization: Bearer $NEON_API_KEY"
   ```
+
 - **Manual configuration:** See [Connect MCP clients](/docs/ai/connect-mcp-clients-to-neon) for step-by-step instructions for any editor, including Windsurf, ChatGPT, Zed, and others.
 
 After setup, restart your editor and ask your AI assistant to **"Get started with Neon"** to launch the interactive onboarding guide.
@@ -97,7 +99,7 @@ Connect using API key authentication. Useful for remote agents where OAuth isn't
 npx add-mcp https://mcp.neon.tech/mcp --header "Authorization: Bearer <NEON_API_KEY>"
 ```
 
-#### MCP-only setup (OAuth):
+### MCP-only setup (OAuth)
 
 If you only want the MCP server and prefer OAuth, run:
 
@@ -130,10 +132,10 @@ Click the button below to install the Neon MCP server in Cursor. When prompted, 
 Use an organization API key to limit access to organization projects only.
 </Admonition>
 
-#### Manual setup:
+### Manual setup
 
-1.  Go to your MCP Client's settings where you configure MCP Servers (this varies by client)
-2.  Register a new MCP Server. When prompted for the configuration, name the server "Neon" and add the following configuration:
+1. Go to your MCP Client's settings where you configure MCP Servers (this varies by client)
+2. Register a new MCP Server. When prompted for the configuration, name the server "Neon" and add the following configuration:
 
     ```json
     {
@@ -209,9 +211,22 @@ Use `cmd` or `wsl` if you encounter issues:
 
 </Tabs>
 
+## Scoping and access control (remote MCP)
+
+Neon’s hosted MCP server at `https://mcp.neon.tech/mcp` exposes **only the tools your connection is allowed to use**. Tool lists are built from **OAuth consent** (what you approve in the browser) or from **HTTP headers** when you connect with an **API key**. That replaces an older pattern where every tool appeared in the catalog and calls could fail at runtime.
+
+<Admonition type="note" title="OAuth versus API key">
+**OAuth:** Scope categories, project scoping, and read-only defaults are captured when you create a session (consent + registration headers). If you change values in your MCP config file, **sign out and authorize again** so a new token is issued—otherwise the old grant may still apply. **API key:** `X-Neon-Scopes`, `X-Neon-Project-Id`, and read-only headers are read **on each request** along with `Authorization`.
+</Admonition>
+
 ### Read-only mode
 
-The Neon MCP Server supports read-only mode for safe operation. Enable it by adding the `x-read-only: true` header:
+**Read-only mode** removes write-oriented tools (for example creating projects or branches, provisioning Auth/Data API, or migration completion flows). Tools that remain include listing and describing resources, read-only-safe SQL helpers, documentation resources, and discovery tools where applicable.
+
+You can enable it in two ways:
+
+1. **OAuth (recommended):** In the authorization UI, leave **Full access** unchecked so the token is read-only.
+2. **HTTP header:** Set **`X-Neon-Read-Only: true`** on the MCP connection (preferred). The legacy header **`x-read-only: true`** is still accepted.
 
 ```json
 {
@@ -220,14 +235,49 @@ The Neon MCP Server supports read-only mode for safe operation. Enable it by add
       "type": "http",
       "url": "https://mcp.neon.tech/mcp",
       "headers": {
-        "x-read-only": "true"
+        "X-Neon-Read-Only": "true"
       }
     }
   }
 }
 ```
 
-When enabled, the server restricts all operations to read-only tools and SQL queries automatically run in read-only transactions. This provides a safe method for querying and analyzing databases without risk of accidental modifications.
+With an **API key**, `X-Neon-Read-Only` is how you enable read-only mode. With **OAuth**, the header influences default consent but you can still override access in the browser before approving.
+
+<Admonition type="important" title="Read-only tools versus SQL writes">
+Read-only mode filters **which MCP tools are registered**, not the SQL inside `run_sql`. If `run_sql` remains available, the database role you connect with still controls what SQL is allowed. For strict read-only SQL, use a [database role with limited privileges](/docs/manage/database-access#create-a-read-only-role).
+</Admonition>
+
+### Scope categories
+
+Use the **`X-Neon-Scopes`** header on the **remote** MCP connection: a **comma-separated** list of category names (lowercase, no spaces around commas). Each tool in [Supported actions (tools)](/docs/ai/neon-mcp-server#supported-actions-tools) is tagged with at most one category; the server keeps tools whose category appears in your list, plus tools **without** a category and the **`search`** / **`fetch`** discovery tools (except in [project-scoped mode](#project-scoped-mode), where those two are hidden).
+
+| Category | Typical use |
+| :-- | :-- |
+| `projects` | List, describe, create, or delete projects; list organizations |
+| `branches` | Branch lifecycle (create, delete, describe, reset, computes) |
+| `schema` | Schema comparison and migration-oriented flows |
+| `querying` | Running and explaining SQL, slow-query and query-tuning helpers |
+| `neon_auth` | Neon Auth provisioning and setup |
+| `data_api` | Neon Data API provisioning (separate from Auth) |
+| `docs` | Neon documentation resources (`list_docs_resources`, `get_doc_resource`) |
+
+- **Omit** `X-Neon-Scopes` to allow **all** categories.
+- If the header is present but **no valid** category names parse, only the minimal discovery tool set remains (and **project-scoped** mode can narrow that further).
+
+Category scoping is independent of **read-only** mode: read-only still applies `readOnlySafe` filtering on top of scope.
+
+### Project-scoped mode
+
+Set **`X-Neon-Project-Id`** to a Neon **project ID** to lock the session to that project. The server **hides** project-wide tools such as **`list_projects`** and **`create_project`**, **hides** **`search`** and **`fetch`**, and **drops** `projectId` from tool schemas so the scoped ID is injected for you.
+
+Use this when an assistant should only ever act inside one project.
+
+### Preview available tools
+
+**`GET https://mcp.neon.tech/api/list-tools`** is a **stateless JSON** endpoint that returns tool names, descriptions, scope tags, and read-only flags **as they would appear** for the same `X-Neon-Scopes`, `X-Neon-Project-Id`, and `X-Neon-Read-Only` / `x-read-only` headers you pass. **No API key is required**; it returns metadata only (not execution access).
+
+Most people configure MCP in the editor and never call this URL. It is useful if you want to **verify** a header combination before sharing a config, or if you are building a **documentation or setup UI** (Neon uses it for the MCP configurator on this site). It is not part of the normal MCP protocol flow your assistant uses for `https://mcp.neon.tech/mcp`.
 
 ### Troubleshooting
 

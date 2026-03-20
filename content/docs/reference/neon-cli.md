@@ -8,7 +8,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/reference/cli-create-app
-updatedOn: '2026-02-26T16:28:03.971Z'
+updatedOn: '2026-03-20T12:00:00.000Z'
 ---
 
 The Neon CLI is a command-line interface that lets you manage Neon directly from the terminal. This documentation references all commands and options available in the Neon CLI.
@@ -163,7 +163,7 @@ Commands:
   neon operations                  Manage operations               [aliases: operation]
   neon connection-string [branch]  Get connection string                  [aliases: cs]
   neon set-context                 Set the current context
-  neon init                        Initialize a project with Neon using your AI coding assistant
+  neon init                        Initialize Neon for AI assistants (MCP, skills, wizard)
   neon completion                  generate completion script
 
 Global options:
@@ -196,7 +196,7 @@ Options:
 | [operations](/docs/reference/cli-operations)               | `list`                                                                                                       | Manage operations                                             |
 | [connection-string](/docs/reference/cli-connection-string) |                                                                                                              | Get connection string                                         |
 | [set-context](/docs/reference/cli-set-context)             |                                                                                                              | Set context for session                                       |
-| [init](/docs/reference/cli-init)                           |                                                                                                              | Initialize a project with Neon using your AI coding assistant |
+| [init](/docs/reference/cli-init)                           |                                                                                                              | Init Neon for AI assistants (MCP, agent skills, wizard)       |
 | [completion](/docs/reference/cli-completion)               |                                                                                                              | Generate a completion script                                  |
 
 ## Global options

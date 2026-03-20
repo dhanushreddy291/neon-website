@@ -6,7 +6,7 @@ summary: >-
   including setup instructions, Model Context Protocol (MCP) usage, and plugins
   for Cursor, Claude Code, and GitHub Copilot.
 enableTableOfContents: true
-updatedOn: '2026-02-16T23:25:57.644Z'
+updatedOn: '2026-03-20T12:00:00.000Z'
 ---
 
 Neon provides several ways to integrate with AI tools and agents, from natural language database control to autonomous agent frameworks. Choose the tools that fit your workflow.
@@ -19,7 +19,7 @@ The fastest way to get started with Neon and AI:
 npx neonctl@latest init
 ```
 
-This authenticates via OAuth, creates an API key, configures your editor (Cursor, VS Code, or Claude Code), and installs [agent skills](https://github.com/neondatabase/agent-skills). Then restart and ask your AI assistant **"Get started with Neon"**.
+This authenticates via OAuth, creates an API key, configures your editor or CLI (Cursor, VS Code, Claude Code, and other assistants from the **init** wizard), and installs [agent skills](https://github.com/neondatabase/agent-skills). Then restart and ask your AI assistant **"Get started with Neon"**.
 
 ## MCP integration
 
