@@ -6,7 +6,7 @@ summary: >-
   and analytics in Postgres, utilizing BM25 indexing for high-relevance results
   and advanced text search capabilities.
 enableTableOfContents: true
-updatedOn: '2026-03-19T19:40:30.847Z'
+updatedOn: '2026-03-20T11:17:24.718Z'
 redirectFrom:
   - /guides/pg-search
   - /guides/pg-search/
