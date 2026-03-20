@@ -6,7 +6,7 @@ summary: >-
   including setup instructions, Model Context Protocol (MCP) usage, and plugins
   for Cursor, Claude Code, and GitHub Copilot.
 enableTableOfContents: true
-updatedOn: '2026-03-20T12:00:00.000Z'
+updatedOn: '2026-02-16T23:25:57.644Z'
 ---
 
 Neon provides several ways to integrate with AI tools and agents, from natural language database control to autonomous agent frameworks. Choose the tools that fit your workflow.
