@@ -24,7 +24,7 @@ First, [create a new table](postgresql-create-table) named `persons` with the fo
 - `dob` date of birth
 - `email`: the email address
 
-```shellsql
+```sql
 CREATE TABLE persons (
   id SERIAL,
   first_name VARCHAR(50),
@@ -62,7 +62,7 @@ COPY 2
 
 It means that two rows have been copied. Let’s check the `persons` table.
 
-```
+```sql
 SELECT * FROM persons;
 ```
 

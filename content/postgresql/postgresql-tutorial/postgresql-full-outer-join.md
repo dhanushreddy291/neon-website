@@ -24,7 +24,7 @@ In other words, the `FULL OUTER JOIN` combines the results of both the [left joi
 
 Here’s the basic syntax of `FULL OUTER JOIN` clause:
 
-```sqlsql
+```sql
 SELECT select_list
 FROM table1
 FULL OUTER JOIN table2
@@ -124,7 +124,7 @@ Output:
 (5 rows)
 ```
 
-```
+```sql
 SELECT * FROM employees;
 ```
 

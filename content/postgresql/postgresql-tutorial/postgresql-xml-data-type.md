@@ -230,7 +230,7 @@ ON person USING BTREE
 
 Second, create a function that inserts 1000 rows into the `person` table for testing purposes:
 
-```sql
+```plsql
 CREATE OR REPLACE FUNCTION generate_persons()
 RETURNS void AS
 $$

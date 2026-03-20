@@ -26,7 +26,7 @@ A recursive CTE is often referred to as a recursive query.
 
 Here’s the basic syntax of a recursive CTE:
 
-```phpsql
+```sql
 WITH RECURSIVE cte_name (column1, column2, ...)
 AS(
     -- anchor member
@@ -106,7 +106,7 @@ VALUES
 
 The following statement uses a recursive CTE to find all subordinates of the manager with the id 2\.
 
-```
+```sql
 WITH RECURSIVE subordinates AS (
   SELECT
     employee_id,

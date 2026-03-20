@@ -58,7 +58,7 @@ How it works.
 
 The outer query retrieves id, title, length, and rating from the `film` table that has the alias `f`:
 
-```
+```sql
 SELECT film_id, title, length, rating
 FROM film f
 WHERE length > (...)

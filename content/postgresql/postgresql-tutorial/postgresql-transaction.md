@@ -161,19 +161,19 @@ COMMIT;
 
 If you want to undo the changes to the database, you can use the ROLLBACK statement:
 
-```
+```sql
 ROLLBACK;
 ```
 
 Or more clear:
 
-```
+```sql
 ROLLBACK TRANSACTION;
 ```
 
 Or:
 
-```
+```sql
 ROLLBACK WORK;
 ```
 
@@ -181,7 +181,7 @@ The `ROLLBACK` statement undos the changes that you made within the transaction.
 
 For example, the following example uses the `ROLLBACK` statement to roll back the changes made to the account 1:
 
-```
+```sql
 -- start a transaction
 BEGIN;
 
@@ -195,7 +195,7 @@ ROLLBACK;
 
 If you retrieve data from the accounts table, you’ll won’t see the changes because it was rolled back.
 
-```
+```sql
 SELECT * FROM accounts;
 ```
 
