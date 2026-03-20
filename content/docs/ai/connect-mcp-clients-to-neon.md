@@ -42,22 +42,22 @@ This adds the MCP config to your editor's configuration files. Add `-g` for glob
 
 **add-mcp** is the CLI Neon uses to patch each tool’s MCP config. Use **`npx add-mcp list-agents`** for the live list from your installed version. As of the current [add-mcp](https://github.com/neondatabase/add-mcp) release, **`--agent`** values include:
 
-| Assistant | `--agent` |
-| :-- | :-- |
-| Antigravity | `antigravity` |
-| Cline (VS Code extension) | `cline` |
-| Cline CLI | `cline-cli` |
-| Claude Code | `claude-code` |
-| Claude Desktop | `claude-desktop` |
-| Codex | `codex` |
-| Cursor | `cursor` |
-| Gemini CLI | `gemini-cli` |
-| GitHub Copilot CLI | `github-copilot-cli` |
-| Goose | `goose` |
-| MCPorter | `mcporter` |
-| OpenCode | `opencode` |
-| VS Code | `vscode` |
-| Zed | `zed` |
+| Assistant                 | `--agent`            |
+| :------------------------ | :------------------- |
+| Antigravity               | `antigravity`        |
+| Cline (VS Code extension) | `cline`              |
+| Cline CLI                 | `cline-cli`          |
+| Claude Code               | `claude-code`        |
+| Claude Desktop            | `claude-desktop`     |
+| Codex                     | `codex`              |
+| Cursor                    | `cursor`             |
+| Gemini CLI                | `gemini-cli`         |
+| GitHub Copilot CLI        | `github-copilot-cli` |
+| Goose                     | `goose`              |
+| MCPorter                  | `mcporter`           |
+| OpenCode                  | `opencode`           |
+| VS Code                   | `vscode`             |
+| Zed                       | `zed`                |
 
 **Aliases:** `cline-vscode` → `cline`, `gemini` → `gemini-cli`, `github-copilot` → `vscode`. Config paths differ by agent and by project vs global (`-g`); see the [add-mcp README](https://github.com/neondatabase/add-mcp#supported-agents).
 

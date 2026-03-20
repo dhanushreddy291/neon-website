@@ -137,18 +137,18 @@ Use an organization API key to limit access to organization projects only.
 1. Go to your MCP Client's settings where you configure MCP Servers (this varies by client)
 2. Register a new MCP Server. When prompted for the configuration, name the server "Neon" and add the following configuration:
 
-    ```json
-    {
-      "mcpServers": {
-        "Neon": {
-          "type": "http",
-          "url": "https://mcp.neon.tech/mcp"
-        }
-      }
-    }
-    ```
+   ```json
+   {
+     "mcpServers": {
+       "Neon": {
+         "type": "http",
+         "url": "https://mcp.neon.tech/mcp"
+       }
+     }
+   }
+   ```
 
-    > MCP supports two remote server transports: the deprecated Server-Sent Events (SSE) and the newer, recommended Streamable HTTP. If your LLM client doesn't support Streamable HTTP yet, you can switch the endpoint from `https://mcp.neon.tech/mcp` to `https://mcp.neon.tech/sse` to use SSE instead.
+   > MCP supports two remote server transports: the deprecated Server-Sent Events (SSE) and the newer, recommended Streamable HTTP. If your LLM client doesn't support Streamable HTTP yet, you can switch the endpoint from `https://mcp.neon.tech/mcp` to `https://mcp.neon.tech/sse` to use SSE instead.
 
 </TabItem>
 
@@ -252,15 +252,15 @@ Read-only mode filters **which MCP tools are registered**, not the SQL inside `r
 
 Use the **`X-Neon-Scopes`** header on the **remote** MCP connection: a **comma-separated** list of category names (lowercase, no spaces around commas). Each tool in [Supported actions (tools)](/docs/ai/neon-mcp-server#supported-actions-tools) is tagged with at most one category; the server keeps tools whose category appears in your list, plus tools **without** a category and the **`search`** / **`fetch`** discovery tools (except in [project-scoped mode](#project-scoped-mode), where those two are hidden).
 
-| Category | Typical use |
-| :-- | :-- |
-| `projects` | List, describe, create, or delete projects; list organizations |
-| `branches` | Branch lifecycle (create, delete, describe, reset, computes) |
-| `schema` | Schema comparison and migration-oriented flows |
-| `querying` | Running and explaining SQL, slow-query and query-tuning helpers |
-| `neon_auth` | Neon Auth provisioning and setup |
-| `data_api` | Neon Data API provisioning (separate from Auth) |
-| `docs` | Neon documentation resources (`list_docs_resources`, `get_doc_resource`) |
+| Category    | Typical use                                                              |
+| :---------- | :----------------------------------------------------------------------- |
+| `projects`  | List, describe, create, or delete projects; list organizations           |
+| `branches`  | Branch lifecycle (create, delete, describe, reset, computes)             |
+| `schema`    | Schema comparison and migration-oriented flows                           |
+| `querying`  | Running and explaining SQL, slow-query and query-tuning helpers          |
+| `neon_auth` | Neon Auth provisioning and setup                                         |
+| `data_api`  | Neon Data API provisioning (separate from Auth)                          |
+| `docs`      | Neon documentation resources (`list_docs_resources`, `get_doc_resource`) |
 
 - **Omit** `X-Neon-Scopes` to allow **all** categories.
 - If the header is present but **no valid** category names parse, only the minimal discovery tool set remains (and **project-scoped** mode can narrow that further).
