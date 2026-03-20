@@ -6,7 +6,7 @@ summary: >-
   integrates with your Neon database, allowing for branch-aware authentication
   and seamless testing of authentication workflows in isolated environments.
 enableTableOfContents: true
-updatedOn: '2026-03-20T20:00:00.000Z'
+updatedOn: '2026-03-20T18:23:32.443Z'
 redirectFrom:
   - /docs/neon-auth/quick-start/nextjs
   - /docs/auth/migrate/from-stack-auth

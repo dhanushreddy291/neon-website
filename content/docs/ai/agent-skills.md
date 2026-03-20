@@ -2,7 +2,7 @@
 title: Agent Skills
 subtitle: Teach your AI coding assistant how to work with Neon
 enableTableOfContents: true
-updatedOn: '2026-03-04T00:00:00.000Z'
+updatedOn: '2026-03-20T18:23:32.432Z'
 redirectFrom:
   - /docs/ai/ai-rules
   - /docs/ai/ai-rules-neon-toolkit

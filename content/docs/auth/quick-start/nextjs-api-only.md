@@ -6,7 +6,7 @@ summary: >-
   enabling authentication, installing the Neon SDK, and setting up environment
   variables.
 enableTableOfContents: true
-updatedOn: '2026-03-20T20:00:00.000Z'
+updatedOn: '2026-03-20T18:23:32.444Z'
 layout: wide
 ---
 

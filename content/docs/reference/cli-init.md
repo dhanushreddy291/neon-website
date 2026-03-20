@@ -7,7 +7,7 @@ summary: >-
   including authentication, configuring the Neon MCP Server, and installing
   necessary extensions and agent skills for supported editors.
 enableTableOfContents: true
-updatedOn: '2026-03-20T21:00:00.000Z'
+updatedOn: '2026-03-20T18:23:32.457Z'
 ---
 
 ## The `init` command

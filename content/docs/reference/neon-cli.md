@@ -8,7 +8,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/reference/cli-create-app
-updatedOn: '2026-03-20T12:00:00.000Z'
+updatedOn: '2026-03-20T18:23:32.458Z'
 ---
 
 The Neon CLI is a command-line interface that lets you manage Neon directly from the terminal. This documentation references all commands and options available in the Neon CLI.

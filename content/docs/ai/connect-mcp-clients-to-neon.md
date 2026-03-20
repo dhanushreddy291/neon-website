@@ -7,7 +7,7 @@ summary: >-
   Code to the Neon Postgres database, including quick setup, OAuth
   authentication, and local server options.
 enableTableOfContents: true
-updatedOn: '2026-03-20T12:00:00.000Z'
+updatedOn: '2026-03-20T18:23:32.438Z'
 ---
 
 This guide covers connecting MCP clients to the Neon MCP Server for natural language interaction with your Neon Postgres databases.
