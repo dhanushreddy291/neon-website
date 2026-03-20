@@ -1,9 +1,10 @@
 ---
 title: Replicate data to Databricks with Lakeflow Connect
-subtitle: Learn how to replicate data from Neon to Databricks Lakehouse using the Lakeflow Connect PostgreSQL connector
+subtitle: Learn how to replicate data from Neon to Databricks Lakehouse using the
+  Lakeflow Connect PostgreSQL connector
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-03-19T00:00:00.000Z'
+updatedOn: '2026-03-20T18:41:23.218Z'
 ---
 
 Neon's logical replication feature lets you stream changes from your Neon Postgres database into external systems. This guide shows how to use Databricks Lakeflow Connect's PostgreSQL connector to replicate data from Neon Postgres into Databricks Lakehouse using PostgreSQL logical replication.
