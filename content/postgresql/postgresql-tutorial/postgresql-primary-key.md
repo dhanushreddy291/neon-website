@@ -1,7 +1,7 @@
 ---
 title: 'PostgreSQL Primary Key'
 page_title: 'PostgreSQL Primary Key'
-page_description: 'In this tutorial, we will show you what is the primary key is and how to manage PostgreSQL primary key constraints through SQL statements.'
+page_description: 'In this tutorial, we will show you what a primary key is and how to manage PostgreSQL primary key constraints through SQL statements.'
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-primary-key/'
 ogImage: ''
 updatedOn: '2024-01-25T07:25:38+00:00'
@@ -26,7 +26,7 @@ It is a good practice to add a primary key to every table. When you add a prima
 
 Technically, a primary key constraint is the combination of a [not\-null constraint](postgresql-not-null-constraint) and [a UNIQUE constraint](postgresql-unique-constraint).
 
-Typically, you define primary for a table when creating it:
+Typically, you define a primary key for a table when creating it:
 
 ```phpsql
 CREATE TABLE table_name (
@@ -50,7 +50,7 @@ CREATE TABLE table_name (
 );
 ```
 
-To add a primary key to an existing table, you the `ALTER TABLE ... ADD PRIMARY KEY` statement:
+To add a primary key to an existing table, you use the `ALTER TABLE ... ADD PRIMARY KEY` statement:
 
 ```
 ALTER TABLE table_name

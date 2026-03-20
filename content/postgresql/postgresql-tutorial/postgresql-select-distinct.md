@@ -177,7 +177,7 @@ In this example, the query uses the values from both `bcolor` and `fcolor` colum
 
 In practice, you often use the `SELECT DISTINCT` clause to analyze the uniqueness of values in a column.
 
-For example, you may want to know how many rental rates for films from the `film` table:
+For example, you may want to know the rental rates for films from the `film` table:
 
 ![PostgreSQL SELECT DISTINCT - sample table](/postgresqltutorial/film.png)To achieve this, you can specify the `rental_rate` column in the `SELECT DISTINCT` clause as follows:
 

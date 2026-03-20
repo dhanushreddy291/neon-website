@@ -14,7 +14,7 @@ nextLink:
   slug: 'postgresql-tutorial/postgresql-is-null'
 ---
 
-**Summary**: in this tutorial, you will learn how to use the PostgreSQL `LIKE` operators to query data based on patterns.
+**Summary**: in this tutorial, you will learn how to use the PostgreSQL `LIKE` operator to query data based on patterns.
 
 ## Introduction to PostgreSQL LIKE operator
 
@@ -149,7 +149,7 @@ first_name  |  last_name
 ...
 ```
 
-### 3\) Using the LIKE operator a pattern that contains both wildcards
+### 3\) Using the LIKE operator with a pattern that contains both wildcards
 
 The following example uses the `LIKE` operator with a pattern that contains both the percent (`%`) and underscore (`_`) wildcards:
 

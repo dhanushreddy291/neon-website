@@ -35,7 +35,7 @@ The `SELECT` statement has the following clauses:
 - Join with other tables using [joins](postgresql-joins) such as [`INNER JOIN`](postgresql-inner-join), [`LEFT JOIN`](postgresql-left-join), [`FULL OUTER JOIN`](postgresql-full-outer-join), [`CROSS JOIN`](postgresql-cross-join) clauses.
 - Perform set operations using [`UNION`](postgresql-union), [`INTERSECT`](postgresql-intersect), and [`EXCEPT`](/postgresql/postgresql-tutorial/postgresql-except/).
 
-In this tutorial, you are going to focus on the `SELECT`and `FROM` clauses.
+In this tutorial, you are going to focus on the `SELECT` and `FROM` clauses.
 
 ## PostgreSQL SELECT statement syntax
 

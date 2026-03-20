@@ -248,7 +248,7 @@ CREATE TABLE contacts(
 );
 ```
 
-The `phones` column has the JSONB data type. We’ll store both work phone and personal number numbers in a JSON array in the `phones` column.
+The `phones` column has the JSONB data type. We’ll store both work phone and personal phone numbers in a JSON array in the `phones` column.
 
 Second, insert new rows into the `contacts` table:
 

@@ -29,7 +29,7 @@ VALUES (value1, value2, …);
 
 In this syntax:
 
-- First, specify the name of the table (`table1`) that you want to insert data after the `INSERT INTO` keywords and a list of comma\-separated columns (`colum1, column2, ....`).
+- First, specify the name of the table (`table1`) that you want to insert data after the `INSERT INTO` keywords and a list of comma\-separated columns (`column1, column2, ....`).
 - Second, supply a list of comma\-separated values in parentheses `(value1, value2, ...)` after the `VALUES` keyword. The column and value lists must be in the same order.
 
 The `INSERT` statement returns a command tag with the following form:

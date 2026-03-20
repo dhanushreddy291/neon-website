@@ -80,7 +80,7 @@ CREATE TABLE courses(
 INSERT INTO courses( course_name, price, description, published_date)
 VALUES
 ('PostgreSQL for Developers', 299.99, 'A complete PostgreSQL for Developers', '2020-07-13'),
-('PostgreSQL Admininstration', 349.99, 'A PostgreSQL Guide for DBA', NULL),
+('PostgreSQL Administration', 349.99, 'A PostgreSQL Guide for DBA', NULL),
 ('PostgreSQL High Performance', 549.99, NULL, NULL),
 ('PostgreSQL Bootcamp', 777.99, 'Learn PostgreSQL via Bootcamp', '2013-07-11'),
 ('Mastering PostgreSQL', 999.98, 'Mastering PostgreSQL in 21 Days', '2012-06-30');
@@ -95,7 +95,7 @@ Output:
  course_id |         course_name         | price  |             description              | published_date
 -----------+-----------------------------+--------+--------------------------------------+----------------
          1 | PostgreSQL for Developers   | 299.99 | A complete PostgreSQL for Developers | 2020-07-13
-         2 | PostgreSQL Admininstration  | 349.99 | A PostgreSQL Guide for DBA           | null
+         2 | PostgreSQL Administration  | 349.99 | A PostgreSQL Guide for DBA           | null
          3 | PostgreSQL High Performance | 549.99 | null                                 | null
          4 | PostgreSQL Bootcamp         | 777.99 | Learn PostgreSQL via Bootcamp        | 2013-07-11
          5 | Mastering PostgreSQL        | 999.98 | Mastering PostgreSQL in 21 Days      | 2012-06-30

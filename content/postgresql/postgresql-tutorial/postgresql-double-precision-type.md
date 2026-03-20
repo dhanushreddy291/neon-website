@@ -35,7 +35,7 @@ column_name double precision
 Alternatively, you can use the `float8` or `float` data type which is the same as `DOUBLE PRECISION`:
 
 ```sql
-colum_name float
+column_name float
 ```
 
 A column of `DOUBLE PRECISION` type can store values that have a range around `1E-307` to `1E+308` with a precision of at least 15 digits.

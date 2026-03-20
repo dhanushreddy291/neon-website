@@ -27,7 +27,7 @@ To create a temporary table, you use the `CREATE TEMPORARY TABLE` statement:
 ```sqlsqlsql
 CREATE TEMPORARY TABLE table_name(
    column1 datatype(size) constraint,
-   column1 datatype(size) constraint,
+   column2 datatype(size) constraint,
    ...,
    table_constraints
 );

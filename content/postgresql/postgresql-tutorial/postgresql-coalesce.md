@@ -68,7 +68,7 @@ Because the first argument is NULL and the second argument is non\-null, the fun
 (1 row)
 ```
 
-In practice, you often use the `COLAESCE()` function to substitute a default value for null when querying data from nullable columns.
+In practice, you often use the `COALESCE()` function to substitute a default value for null when querying data from nullable columns.
 
 For example, if you want to display the excerpt from a blog post and the excerpt is not provided, you can use the first 150 characters of the content of the post.
 

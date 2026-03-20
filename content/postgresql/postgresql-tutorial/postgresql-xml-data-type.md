@@ -65,7 +65,7 @@ In this statement:
 
 - `DOCUMENT` indicates that the input string is a complete XML document starting with the XML declaration `<?xml version="1.0" encoding="UTF-8"?>` and having the root element `<person>`
 - `XMLPARSE` function converts the string into an XML document.
-- The `INSERT` statement inserts the new XML document into the info column of the `persons` table.
+- The `INSERT` statement inserts the new XML document into the info column of the `person` table.
 
 Third, [insert multiple rows](postgresql-insert-multiple-rows) into the `person` table:
 

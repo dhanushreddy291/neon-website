@@ -133,7 +133,7 @@ How it works.
 
 - First, sort films by film id in ascending order.
 - Second, skip the first three rows using the `OFFSET 3` clause.
-- Second, take the next four rows using the `LIMIT 4` clause.
+- Third, take the next four rows using the `LIMIT 4` clause.
 
 ### 3\) Using LIMIT to get top/bottom N rows
 
