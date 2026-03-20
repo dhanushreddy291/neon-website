@@ -52,7 +52,7 @@ To create a branch:
    - **Schema only**: Replicates only the database schema (tables, views, roles, etc.) from the parent branch, without copying any of the actual data. This is useful for testing migrations or building new test data without exposing sensitive real-world data. See [Schema-only branches](/docs/guides/branching-schema-only).
    - **Anonymized data**: Creates a branch with masked sensitive data. You can configure data anonymization rules to protect personally identifiable information while preserving realistic data sets for development. See [Data anonymization](/docs/workflows/data-anonymization).
 7. Configure auto-deletion: By default, **Automatically delete branch after** is checked with 1 day selected to help prevent unused branches from accumulating. You can choose 1 hour, 1 day, or 7 days, or uncheck to disable expiration entirely. This is useful for CI/CD pipelines and short-lived development environments. Note: This default only applies when creating branches through the Console; API and CLI branches have no expiration by default. Refer to our [Branch expiration guide](/docs/guides/branch-expiration) for details.
-8. Click **Create new branch**.
+8. Click **Create** to create your branch.
 
 You are presented with the connection details for your new branch and directed to the **Branch** overview page where you are shown the details for your new branch.
 
