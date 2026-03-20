@@ -69,21 +69,21 @@ SHOW wal_level;
 
 Databricks recommends a dedicated database user for ingestion. Create a role in Neon (roles created via the Neon Console, CLI, or API are granted the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege). You can name it `databricks_replication` or reuse an existing replication role.
 
-<Tabs labels={["CLI", "Console", "API"]}>
-
-<TabItem>
-
-```bash
-neon roles create --name databricks_replication
-```
-
-</TabItem>
+<Tabs labels={["Console", "CLI", "API"]}>
 
 <TabItem>
 
 1. In the [Neon Console](https://console.neon.tech), select your project and **Branches**.
 2. Select the branch, then the **Roles & Databases** tab.
 3. Click **Add Role**, enter the role name (e.g. `databricks_replication`), and click **Create**. Save the password.
+
+</TabItem>
+
+<TabItem>
+
+```bash
+neon roles create --name databricks_replication
+```
 
 </TabItem>
 
@@ -108,7 +108,7 @@ GRANT CONNECT ON DATABASE your_database TO databricks_replication;
 GRANT USAGE ON SCHEMA public TO databricks_replication;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO databricks_replication;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
-  GRANT SELECT ON TABLES TO databricks_replication;
+GRANT SELECT ON TABLES TO databricks_replication;
 ```
 
 Granting `SELECT ON ALL TABLES IN SCHEMA` and `ALTER DEFAULT PRIVILEGES` ensures future tables in the schema are included without re-granting.
@@ -167,15 +167,19 @@ Lakeflow Connect uses Unity Catalog connections to store JDBC connection details
 ### Using the Databricks UI (recommended)
 
 1. In your Databricks workspace, open **Catalog** (Catalog Explorer).
-2. Go to **Connections** and click **Create connection**.
-3. Choose **PostgreSQL** as the connection type.
-4. Enter your Neon connection details (from the **Connect** button on your Neon project dashboard):
+2. Click the plus icon (+) and select **Create a connection**.
+3. Enter a **Connection name**.
+   Choose **PostgreSQL** as the connection type.
+4. For Auth type, select `Username and password`.
+5. Enter your Neon connection details (from the **Connect** button on your Neon project dashboard):
    - **Host**: your Neon host (e.g. `ep-cool-darkness-123456.us-east-2.aws.neon.tech`)
    - **Port**: 5432
    - **Database**: your Neon database name
-   - **User**: `databricks_replication` (or the replication role you created)
-   - **Password**: the password for that role
-5. Save the connection with a descriptive name (e.g. `neon_postgresql_connection`).
+   - **User**: `databricks_replication` (or the replication role you created).
+   - **Password**: the password for that role. You can obtain the password from the **Connect** modal on the Neon project dashboard.
+6. Create he connection.
+7. On the **Catalog basics** page, test your connection. You will need to provide the name of your PostgreSQL database.
+8. Click next to grant catalog access. Specify the users, groups, and service principals that have privileges on this catalog. Additionally, set up workspace-catalog bindings to isolate user data access.
 
 ### Using the Databricks CLI (alternative)
 
@@ -209,22 +213,23 @@ The Lakeflow PostgreSQL connector uses two pipelines:
 
 ### Create the gateway and pipeline in the Databricks UI
 
-1. In the sidebar, click **Data ingestion**.
+1. In the Lakehouse sidebar, click **Data ingestion**.
 2. On **Add data**, under Databricks connectors, select **PostgreSQL**.
 3. **Connection**: Choose the PostgreSQL connection you created (e.g. `neon_postgresql_connection`), then click **Next**.
 4. **Ingestion setup**:
+   - Select **Change data capture**.
    - **Ingestion pipeline name**: e.g. `neon_to_lakehouse_ingestion`.
    - **Event log catalog and schema**: Choose where the pipeline event log will be stored.
    - (Optional) Turn **Auto full refresh for all tables** on if you want the pipeline to automatically fix certain schema or log issues via full refreshes.
    - **Gateway name**: e.g. `neon_postgresql_gateway`.
    - **Staging catalog and schema**: Choose where the staging volume for CDC data will live.
    - Click **Create pipeline and continue**.
-5. **Source (select tables)**: Databricks introspects Neon via the connection. Select the tables to replicate (e.g. `public.playing_with_neon`). Optionally set a custom **Destination name** per table or configure **History tracking** (SCD type 2). Click **Next**, then **Save and continue**.
-6. **Destination**: Choose the Unity Catalog catalog and schema that will hold the replicated Delta tables. Click **Save and continue**.
-7. **Database setup (Neon replication config)**: For each source Neon database, set:
+5. **Source (select tables)**: Databricks introspects Neon via the connection. Select the tables to replicate (e.g. `public.playing_with_neon`). Optionally set a custom **Destination name** per table or configure **History tracking** (SCD type 2). Click **Next**.
+6. **Destination**: Choose the Unity Catalog catalog and schema that will hold the replicated Delta tables. Click **Next**.
+7. **Database setup (Neon replication config)**: If requested, for each source Neon database, set:
    - **Replication slot name**: `databricks_slot`
    - **Publication name**: `databricks_publication`
-     These must match the slot and publication you created in Neon.
+     These must match the slot and publication you created in Neon. This step may not be necessary if you have only one replication slot. Optionally, click `Validate` to ensure your database setup is correct. This may take a few minutes. Issues are reported if encountered.
 8. **Schedules and notifications** (optional): Set how often the ingestion pipeline runs (e.g. every 5 or 15 minutes) and add email notifications for failures or successful runs.
 9. Click **Save and run pipeline** to start the first full snapshot and CDC extraction.
 
@@ -264,7 +269,7 @@ Replace `workspace` with your Unity Catalog name, `public` with the destination 
 - **Scale**: Keep each pipeline to about 250 tables or fewer for best performance; there is no hard row or column limit per table.
 - **Neon compatibility**: The connector supports PostgreSQL 13+ on various managed and self-hosted sources. Neon is a managed Postgres service that exposes a standard primary with logical replication; validate in a non-production environment and coordinate with Databricks Support for mission-critical use.
 
-For adding tables, monitoring lag, and cleaning up slots, see Databricks' "Maintain PostgreSQL ingestion pipelines" documentation and [Logical replication in Neon](/docs/guides/logical-replication-neon).
+For adding tables, monitoring lag, and cleaning up slots, see Databricks' [Maintain PostgreSQL ingestion pipelines](https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/postgresql-maintenance) documentation and [Logical replication in Neon](/docs/guides/logical-replication-neon).
 
 ## References
 
