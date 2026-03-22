@@ -6,7 +6,7 @@ summary: >-
   and analytics in Postgres, utilizing BM25 indexing for high-relevance results
   and advanced text search capabilities.
 enableTableOfContents: true
-updatedOn: '2026-03-19T19:40:30.847Z'
+updatedOn: '2026-03-20T11:17:24.718Z'
 redirectFrom:
   - /guides/pg-search
   - /guides/pg-search/
@@ -21,7 +21,7 @@ As of March 19, 2026, `pg_search` is longer available for new Neon projects. Dep
 - **Full-text search**: PostgreSQL's built-in [`tsvector`/`tsquery`](https://www.postgresql.org/docs/current/textsearch.html)
 - **Fuzzy search**: [`pg_trgm`](https://www.postgresql.org/docs/current/pgtrgm.html) for similarity and pattern matching
 - **Semantic/vector search**: [`pgvector`](/docs/extensions/pgvector) for embedding-based search
-- **BM25 search**: [ParadeDB](https://www.paradedb.com/) for BM25-style search comparable to `pg_search`
+- **BM25 search**: [ParadeDB](https://www.paradedb.com/) for continued `pg_search` functionality
 
 </Admonition>
 
