@@ -15,6 +15,8 @@ redirectFrom:
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
+<CopyPrompt src="https://raw.githubusercontent.com/neondatabase/neon-js/main/skills/neon-auth-react/SKILL.md" description="Copy an AI-ready skill to set up Neon Auth in React with Cursor, Windsurf, or any AI coding tool." buttonText="Copy skill" />
+
 <TwoColumnLayout>
 
 <TwoColumnLayout.Step title="Create a Neon project with Auth enabled">

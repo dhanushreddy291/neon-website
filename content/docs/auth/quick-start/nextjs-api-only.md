@@ -19,6 +19,8 @@ redirectFrom:
 Upgrading from Neon Auth SDK v0.1? See the [migration guide](/docs/auth/migrate/from-auth-v0.1) for step-by-step instructions.
 </Admonition>
 
+<CopyPrompt src="https://raw.githubusercontent.com/neondatabase/neon-js/main/skills/neon-auth-nextjs/SKILL.md" description="Copy an AI-ready skill to set up Neon Auth in Next.js with Cursor, Windsurf, or any AI coding tool." buttonText="Copy skill" />
+
 This guide shows you how to integrate Neon Auth into a [Next.js](https://nextjs.org) (App Router) project using SDK methods directly. For pre-built UI components, see the [UI components reference](/docs/auth/reference/ui-components) and the [neon-js examples](https://github.com/neondatabase/neon-js/tree/main/examples).
 
 <TwoColumnLayout>

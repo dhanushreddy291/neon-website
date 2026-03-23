@@ -26,10 +26,6 @@ redirectFrom:
 
 Neon Auth is a managed authentication service that stores users, sessions, and auth configuration directly in your Neon database. When you branch your database, your entire auth state branches with it. This lets you test real authentication workflows in preview environments.
 
-<Admonition type="note" title="Before you start">
-Neon Auth is in active development. Check the [roadmap](/docs/auth/roadmap) to see what's supported and what's coming next.
-</Admonition>
-
 ## Why Neon Auth?
 
 - **Identity lives in your database**  
@@ -143,6 +139,18 @@ Choose your framework to get started:
 <a href="/docs/auth/quick-start/tanstack-router" title="TanStack Router" description="With UI components" icon="tanstack"></a>
 
 </TechCards>
+
+### Set up with AI
+
+Copy an AI-ready skill for your framework and paste it into Cursor, Windsurf, or any AI coding tool to set up Neon Auth automatically.
+
+<PromptCards>
+
+<a title="Next.js" icon="next-js" promptSrc="https://raw.githubusercontent.com/neondatabase/neon-js/main/skills/neon-auth-nextjs/SKILL.md"></a>
+
+<a title="React" icon="react" promptSrc="https://raw.githubusercontent.com/neondatabase/neon-js/main/skills/neon-auth-react/SKILL.md"></a>
+
+</PromptCards>
 
 ## Example applications
 
