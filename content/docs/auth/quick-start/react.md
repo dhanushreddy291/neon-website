@@ -21,6 +21,7 @@ Run [`neonctl init`](/docs/reference/cli-init) to configure your editor with the
 ```bash
 npx neonctl@latest init
 ```
+
 </Admonition>
 
 <TwoColumnLayout>
