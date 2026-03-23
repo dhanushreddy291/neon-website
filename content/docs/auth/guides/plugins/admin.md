@@ -6,7 +6,7 @@ summary: >-
   through the Admin plugin APIs in Neon, enabling the creation and updating of
   user accounts and their authentication states.
 enableTableOfContents: true
-updatedOn: '2026-02-06T22:07:32.744Z'
+updatedOn: '2026-03-23T12:18:17.902Z'
 ---
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />

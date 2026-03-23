@@ -6,7 +6,7 @@ summary: >-
   sign in, reset passwords, and verify email addresses using one-time passwords
   sent via email, with automatic handling of OTP generation and delivery.
 enableTableOfContents: true
-updatedOn: '2026-02-06T22:07:32.745Z'
+updatedOn: '2026-03-23T12:18:17.904Z'
 ---
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />

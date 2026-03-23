@@ -5,7 +5,7 @@ summary: >-
   Covers the setup of the OpenAPI plugin for Neon Auth, providing an interactive
   API reference UI and a JSON Schema endpoint for generating type-safe clients.
 enableTableOfContents: true
-updatedOn: '2026-02-06T22:07:32.747Z'
+updatedOn: '2026-03-23T12:18:17.907Z'
 ---
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
