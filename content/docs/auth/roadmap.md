@@ -47,15 +47,15 @@ Neon Auth is built on [Better Auth](https://www.better-auth.com/). Not all Bette
 
 ### Supported
 
-| Plugin                                                                                                                                            | Status                                          |
-| ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [Email & password](https://www.better-auth.com/docs/authentication/email-password)                                                                | ✅ Supported                                    |
-| Social OAuth (Google, GitHub, Vercel)                                                                                                             | ✅ Supported                                    |
-| [Email OTP](/docs/auth/guides/plugins/email-otp)                                                                                                  | ✅ Supported                                    |
-| [Admin](/docs/auth/guides/plugins/admin)                                                                                                          | ✅ Supported                                    |
-| [Organization](/docs/auth/guides/plugins/organization)                                                                                            | ⚠️ Partial (JWT token claims under development) |
-| [JWT](/docs/auth/guides/plugins/jwt)                                                                                                              | ✅ Supported                                    |
-| [Open API](/docs/auth/guides/plugins/openapi)                                                                                                     | ✅ Supported                                    |
+| Plugin                                                                             | Status                                          |
+| ---------------------------------------------------------------------------------- | ----------------------------------------------- |
+| [Email & password](https://www.better-auth.com/docs/authentication/email-password) | ✅ Supported                                    |
+| Social OAuth (Google, GitHub, Vercel)                                              | ✅ Supported                                    |
+| [Email OTP](/docs/auth/guides/plugins/email-otp)                                   | ✅ Supported                                    |
+| [Admin](/docs/auth/guides/plugins/admin)                                           | ✅ Supported                                    |
+| [Organization](/docs/auth/guides/plugins/organization)                             | ⚠️ Partial (JWT token claims under development) |
+| [JWT](/docs/auth/guides/plugins/jwt)                                               | ✅ Supported                                    |
+| [Open API](/docs/auth/guides/plugins/openapi)                                      | ✅ Supported                                    |
 
 See [Set up OAuth](/docs/auth/guides/setup-oauth) for Neon-specific OAuth configuration (including Vercel). Email flows such as verification and password reset are covered in [Email verification](/docs/auth/guides/email-verification), [Password reset](/docs/auth/guides/password-reset), and [User management](/docs/auth/guides/user-management).
 
@@ -63,11 +63,11 @@ See [Set up OAuth](/docs/auth/guides/setup-oauth) for Neon-specific OAuth config
 
 These capabilities are documented in Neon Auth guides but are not Better Auth plugins you enable through the SDK.
 
-| Capability                             | Status       | Documentation                                                    |
-| -------------------------------------- | ------------ | ---------------------------------------------------------------- |
-| Trusted domains (redirect allowlist)   | Supported    | [Configure trusted domains](/docs/auth/guides/configure-domains) |
-| Webhooks (auth events)                 | Supported    | [Webhooks](/docs/auth/guides/webhooks)                           |
-| Manage Auth via Neon API               | Supported    | [Manage Auth in the Neon API](/docs/auth/guides/manage-auth-api) |
+| Capability                           | Status    | Documentation                                                    |
+| ------------------------------------ | --------- | ---------------------------------------------------------------- |
+| Trusted domains (redirect allowlist) | Supported | [Configure trusted domains](/docs/auth/guides/configure-domains) |
+| Webhooks (auth events)               | Supported | [Webhooks](/docs/auth/guides/webhooks)                           |
+| Manage Auth via Neon API             | Supported | [Manage Auth in the Neon API](/docs/auth/guides/manage-auth-api) |
 
 Branch-aware auth (separate auth state per Neon branch) is supported; see [Branching authentication](/docs/auth/branching-authentication) and [Authentication flow](/docs/auth/authentication-flow).
 
@@ -83,11 +83,11 @@ Branch-aware auth (separate auth state per Neon branch) is supported; see [Branc
 
 ## SDK and UI references
 
-| Surface                             | Documentation                                            |
-| ----------------------------------- | -------------------------------------------------------- |
-| TypeScript client SDK (`neon-js`)   | [Neon TypeScript SDK](/docs/reference/javascript-sdk)    |
-| Next.js server SDK                  | [Next.js Server SDK](/docs/auth/reference/nextjs-server) |
-| Pre-built UI components             | [UI components](/docs/auth/reference/ui-components)      |
+| Surface                           | Documentation                                            |
+| --------------------------------- | -------------------------------------------------------- |
+| TypeScript client SDK (`neon-js`) | [Neon TypeScript SDK](/docs/reference/javascript-sdk)    |
+| Next.js server SDK                | [Next.js Server SDK](/docs/auth/reference/nextjs-server) |
+| Pre-built UI components           | [UI components](/docs/auth/reference/ui-components)      |
 
 ## Migration guides
 
