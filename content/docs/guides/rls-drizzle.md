@@ -30,24 +30,15 @@ redirectFrom:
 </DocsList>
 </InfoBlock>
 
-Row-Level Security (RLS) is an important last line of defense for protecting your data at the database level. It ensures that users can only access the data they are permitted to see. However, implementing RLS requires writing and maintaining separate SQL policies for each CRUD operation (Create, Read, Update, Delete), which can be both tedious and error-prone.
+Row-Level Security (RLS) is an important last line of defense for protecting your data at the database level. It ensures that users can only access the data they are permitted to see. When exposing your database directly to clients (for example, through the [Data API](/docs/data-api/get-started)), RLS policies are highly recommended to keep your data secure.
 
-Drizzle ORM provides a declarative way to manage these policies directly within your database schema, making your security rules easier to write, review, and maintain.
+However, implementing RLS natively requires writing and maintaining separate SQL policies for each table, and often for each CRUD operation (Create, Read, Update, Delete). This can quickly become tedious and error-prone.
 
-## Understanding Neon's auth functions
+Drizzle ORM provides a declarative way to manage these policies directly within your TypeScript database schema, making them much easier to write, review, and maintain. Once you define policies in your Drizzle schema and run migrations, they are automatically created in your Postgres database and reliably enforced for all queries.
 
-The code samples on this page use the `auth.user_id()` function provided by the [Data API](/docs/data-api/get-started). This function automatically extracts user information from JWT claims and makes it available in your RLS policies:
+## The baseline: RLS in plain SQL
 
-```typescript
-// In your RLS policy
-using: sql`(select auth.user_id() = ${table.userId})`,
-```
-
-When exposing your database directly to clients (such as through the Data API), RLS policies are essential to keep your data secure. We recommend using Drizzle to **declare your RLS policies** because they're easier to maintain than raw SQL. Once you define policies in your Drizzle schema and run migrations, they're created in your Postgres database and enforced for all queries.
-
-## Example schema
-
-Below is a sample schema for a basic todo application. This example demonstrates how you would define the table structure and manually create Row-Level Security (RLS) policies for each CRUD operation using plain SQL.
+Before seeing how Drizzle simplifies things, it helps to understand the underlying SQL it replaces. Below is a sample schema for a basic todo application, where users should only be able to view and manage their own tasks:
 
 ```sql
 CREATE TABLE IF NOT EXISTS "todos" (
@@ -66,11 +57,13 @@ TO "authenticated"
 USING ((select auth.user_id()) = user_id);
 ```
 
-These SQL policies guarantee that authenticated users can only create, view, update, or delete todo items they own, that is when `auth.user_id()` matches the `user_id` column for a given row. This enforces strict, per-user access control at the database level.
+These SQL policies guarantee strict, per-user access control at the database level. The `USING` clause defines the condition under which a row is accessible (readable). Since `WITH CHECK` is omitted, Postgres automatically applies the `USING` condition to also restrict inserts and updates.
 
-In this RLS policy, the `USING` clause defines the condition under which a row is accessible (readable) by a user and, when `WITH CHECK` is not specified, also enforces the condition required for inserting or updating a row. Together, this provides precise, row-level access control to your data.
+### Understanding authentication context
 
-While this approach is secure and explicit, managing multiple policies across many tables can become repetitive. Drizzle's declarative `crudPolicy` and `pgPolicy` helpers eliminate this boilerplate, letting you define and manage your security logic directly in your Drizzle schema for better maintainability.
+Notice the `auth.user_id()` function in the SQL above. When you use Neon's [Data API](/docs/data-api/get-started) alongside your database, this function automatically extracts the user identifier from the active [JWT claims](/blog/wtf-are-jwts). This makes the authenticated user's identity securely available directly in your database policies without needing extra backend logic.
+
+While this plain SQL approach is secure and explicit, managing multiple policies across many tables can become repetitive. Drizzle's declarative `crudPolicy` and `pgPolicy` helpers eliminate this boilerplate, letting you define your security logic directly alongside your tables for better maintainability.
 
 ## Simplifying RLS with crudPolicy
 
@@ -103,7 +96,9 @@ export const todos = pgTable(
 ```
 
 <Admonition type="note">
-**About Drizzle's role:** Drizzle is used here to **declare your RLS policies** in TypeScript. When you run migrations, these policies are created in your Postgres database. After that, the policies are enforced regardless of how you query your data (via the Data API, the serverless driver, or any other connection method).
+**About Drizzle's role:** Drizzle is used to **declare and migrate RLS policies** in TypeScript. When migrations are run, these policies are created in your Postgres database and enforced automatically regardless of how queries are executed.
+
+You can run queries that respect these policies using either the [Data API client](/docs/data-api/get-started#connect-and-query) (frontend) or the [Neon serverless driver](#using-drizzle-with-the-serverless-driver) using the Drizzle query builder (backend).
 </Admonition>
 
 ### Configuration parameters
@@ -126,7 +121,7 @@ The `crudPolicy` helper generates an array of RLS policy definitions for all CRU
 
 > The `authUid(column)` helper generates the SQL condition `(select auth.user_id() = column)`, which is used to restrict access to rows owned by the current user for use in `read` and `modify` policies.
 
-### Advanced usage: Finer-grained control with `pgPolicy`
+## Fine-grained control with pgPolicy
 
 While `crudPolicy` is ideal for scenarios where a role has the same permissions for reading and modifying data, there are cases where you need more granular control. For these situations, you can use Drizzle's `pgPolicy` function, which provides the flexibility to define custom policies for each operation.
 
@@ -138,7 +133,7 @@ Using `pgPolicy` is ideal when you need to:
 
 For example, you might want to allow only users with an `admin` role to update or delete rows in a table, while regular users can insert new rows and view only their own data. This kind of scenario where different roles have different permissions for each operation is easy to express using `pgPolicy`, giving you fine-grained control over who can perform which actions on your data.
 
-#### Replicating `crudPolicy` with `pgPolicy`
+### Replicating `crudPolicy` with `pgPolicy`
 
 To understand how `pgPolicy` works, let's rewrite the `todos` example using it. The following `pgPolicy` definition is exactly what `crudPolicy` would generate from your simpler configuration.
 
@@ -174,7 +169,7 @@ This single `pgPolicy` definition with `for: 'all'` is exactly what `crudPolicy`
 
 You can apply this approach to additional tables and operations, allowing you to define increasingly sophisticated and tailored security policies as your application's requirements evolve.
 
-#### Example: Time limited updates
+### Example: Time limited updates
 
 Here is how you can implement a rule that `crudPolicy` can't handle alone: **A user can update their todo, but only within 24 hours of creating it.** They should still be able to view and delete it anytime.
 
@@ -238,7 +233,7 @@ export const todos = pgTable(
 
 This example demonstrates how `pgPolicy` gives you precise, command-level control over your security rules, making it easy to implement complex business logic directly in your database schema.
 
-### Securing database views with RLS
+## Securing database views with RLS
 
 Row-Level Security (RLS) can also be enabled on Postgres views, allowing you to control access to view data at the row level. For details on how to enable RLS on views and apply policies using Drizzle, refer to the [Drizzle documentation](https://orm.drizzle.team/docs/rls#rls-on-views). This approach makes it possible to expose curated or joined subsets of your data while ensuring users only see the rows they are authorized to access.
 
@@ -423,7 +418,7 @@ In this example:
 
 This pattern can be adapted for other relationship-based access controls, such as project teams, organization memberships, or shared resources.
 
-### Using Custom Roles with Drizzle RLS
+## Using Custom Roles with Drizzle RLS
 
 Custom roles are essential when your application requires more nuanced access control than what default roles (like `authenticated` or `anonymous`) provide. By defining custom roles, you can assign specific permissions to different user groups, such as moderators, editors, or admins, tailoring access to fit your business logic and security needs.
 
@@ -436,7 +431,7 @@ import { sql } from 'drizzle-orm';
 import { authenticatedRole, authUid, crudPolicy } from 'drizzle-orm/neon';
 import { bigint, boolean, pgRole, pgTable, text } from 'drizzle-orm/pg-core';
 
-export const editorRole = pgRole('editor');
+export const editorRole = pgRole('editor').existing();
 
 export const posts = pgTable(
   'posts',
@@ -466,32 +461,184 @@ export const posts = pgTable(
 ```
 
 <Admonition type="important">
-It's important to note that while Drizzle RLS policies define row-level access, you must also grant the necessary table privileges to the `editor` role directly in Postgres. Drizzle does not manage these privileges for you. Make sure to follow the instructions in [Granting Permissions to Postgres Roles](#granting-permissions-to-postgres-roles) to ensure the `editor` role has the required access.
+It's important to note that while Drizzle RLS policies define row-level access, you must also grant the necessary table privileges to the `editor` role directly in Postgres. Drizzle does not manage these privileges for you. Make sure to follow the instructions in [Granting permissions to Postgres roles](#granting-permissions-to-postgres-roles) to ensure the `editor` role has the required access.
 </Admonition>
 
 This approach lets you easily combine multiple roles with different permissions in your schema, keeping your access logic clear and maintainable.
 
-## Executing authenticated queries
+### Granting permissions to Postgres roles
 
-After defining RLS policies in your Drizzle schema and running migrations, you need to execute queries with proper authentication.
+Drizzle does not manage Postgres table privileges. When you create new roles (such as `editor` or a custom backend role), you must manually grant them permission to access your schema and tables. You can execute these commands in the [Neon SQL Editor](/docs/get-started/query-with-neon-sql-editor) or via a custom database migration:
 
-### Using the Data API
+```sql shouldWrap
+-- Create a role that can log in (for backend connections) or a NOLOGIN role
+CREATE ROLE editor WITH LOGIN PASSWORD 'your_secure_password';
 
-If you're building a frontend application, the [Data API](/docs/data-api/get-started) provides a REST API for querying your database. In this case, Drizzle is used only to **declare your RLS policies**; you won't use Drizzle's query builder for executing queries. Instead, you'll use a PostgREST-compatible client like `postgrest-js`.
+-- Grant schema access
+GRANT USAGE ON SCHEMA public TO editor;
 
-Your RLS policies (defined with Drizzle) automatically enforce security at the database level when queries come through the Data API.
+-- Grant access to specific tables
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE todos TO editor;
+
+-- Note: Repeat the GRANT statement for any other tables this role needs to access or use a wildcard to grant on all tables in the schema:
+-- GRANT SELECT, UPDATE, INSERT, DELETE ON ALL TABLES IN SCHEMA public TO editor;
+
+-- Set default privileges for future tables in the schema:
+-- ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, UPDATE, INSERT, DELETE ON TABLES TO editor;
+```
+
+## How to run authenticated queries
+
+After defining RLS policies, the next step is choosing how to run queries that respect these policies. Depending on your application architecture, you have two main options for running authenticated queries with RLS:
+
+- **Frontend**: use the [Data API](/docs/data-api/get-started)
+- **Backend**: use the Neon serverless driver with Drizzle
+
+### Frontend: Use the Data API
+
+For frontend applications, use the [Data API](/docs/data-api/get-started#connect-and-query), which provides a REST interface for your database. In this setup, Drizzle is used only to **declare and migrate RLS policies**; query execution is done with a PostgREST-compatible client such as `@neondatabase/neon-js`, `postgrest-js` etc.
+
+When requests go through the Data API, your database enforces RLS policies automatically based on the JWT claims included in the request. This means that as long as your frontend includes the appropriate authentication token, users will only be able to access the data they're authorized to see.
 
 For complete examples of using Drizzle RLS with the Data API, see:
 
-- [Data API tutorial](/docs/data-api/demo) - Full note-taking app example
+- [Data API tutorial](/docs/data-api/demo) - Full note-taking app example built with Neon Auth, Drizzle RLS, and the Data API
 - [Data API getting started](/docs/data-api/get-started) - Setup and basic queries
 
-### Using Drizzle with the serverless driver
+### Backend: Use Drizzle with the serverless driver
 
-For backend APIs where you want to use Drizzle's query builder with RLS, you can use the `drizzle-orm/neon-serverless` driver with JWT verification in transactions.
+When connecting a backend API directly to the database using the Neon serverless driver, you have two options for handling authorization. The approach you choose depends on the Postgres role you use to connect.
+
+By default, the `authenticated` role used for Data API is a `NOLOGIN` role. Consequently, if you connect using your default administrative role (like `neondb_owner`), that role has the `BYPASSRLS` attribute, meaning Row-Level Security policies are ignored. If you want to rely on your RLS policies at the database level, you must connect using a custom role that can log in and does not bypass RLS. Otherwise, you must enforce authorization directly in your queries.
+
+Install the necessary dependencies for either approach:
+
+```bash
+npm install drizzle-orm @neondatabase/serverless jose
+```
+
+<Tabs labels={["Using a custom role (Enforce RLS)", "Using a role with BYPASSRLS"]}>
+<TabItem>
+
+If you connect with a custom role that does **not** have the `BYPASSRLS` attribute, the database will enforce your RLS policies. To use this approach, you must create a custom role, grant it the necessary privileges, and define your RLS policies for it.
+
+#### 1. Create role and grant privileges
+
+Make sure you have created your custom backend role (e.g., `my_backend_role`) and granted it the necessary privileges to access your schema and tables. See [Using custom roles with Drizzle RLS](#using-custom-roles-with-drizzle-rls) and [Granting permissions to Postgres roles](#granting-permissions-to-postgres-roles) for details.
+
+#### 2. Define RLS Policies
+
+Next, define policies that allow your custom role to access the rows conditionally.
+
+<CodeTabs labels={["Drizzle", "SQL"]}>
+
+```typescript
+import { pgTable, text, bigint, boolean, pgRole } from 'drizzle-orm/pg-core';
+import { crudPolicy, authUid } from 'drizzle-orm/neon';
+import { sql } from 'drizzle-orm';
+
+// Define the custom role in Drizzle
+export const backendRole = pgRole('my_backend_role').existing();
+
+export const todos = pgTable('todos', {
+  id: bigint('id', { mode: 'number' }).primaryKey(),
+  userId: text('user_id').notNull().default(sql`(auth.user_id())`),
+  task: text('task').notNull(),
+  isComplete: boolean('is_complete').notNull().default(false),
+}, (table) => [
+  crudPolicy({
+    role: backendRole,
+    read: authUid(table.userId),
+    modify: authUid(table.userId),
+  }),
+]);
+```
+
+```sql
+-- Assuming `todos` table and RLS are already enabled
+CREATE POLICY "manage todos" ON "todos"
+FOR ALL
+TO my_backend_role
+USING ((select auth.user_id()) = user_id);
+```
+
+</CodeTabs>
+
+#### 3. Implement in your backend
+
+Once your role and policies are set up, you can securely connect using this custom role. You can set the JWT claims in the transaction context using `set_config`, allowing functions like `auth.user_id()` to evaluate the authenticated user context.
 
 <Admonition type="note">
 The RLS policies in this example use `auth.user_id()`, which requires the Data API to be enabled. This is a hybrid approach: frontend queries use the Data API while backend operations use the serverless driver, both enforcing the same RLS policies.
+</Admonition>
+
+<Admonition type="note">
+The `$withAuth` method in Drizzle is deprecated; instead, set JWT claims in the transaction context as shown in the example below.
+</Admonition>
+
+```typescript
+import { createRemoteJWKSet, jwtVerify, type JWTPayload } from 'jose';
+import { Pool } from '@neondatabase/serverless';
+import { sql } from 'drizzle-orm';
+import { drizzle } from 'drizzle-orm/neon-serverless';
+import { todos } from './schema'; // Your Drizzle schema with RLS policies
+
+const JWKS = createRemoteJWKSet(new URL(process.env.JWKS_URL!));
+
+async function verifyJWT(token: string): Promise<JWTPayload> {
+    const { payload } = await jwtVerify(token, JWKS, {
+        // Adjust issuer and audience checks based on your JWT provider's configuration.
+        // For Neon Auth, the issuer is new URL(jwksUrl).origin
+        issuer: new URL(process.env.JWKS_URL!).origin,
+    });
+
+    if (!payload.sub) {
+        throw new Error('JWT is missing required `sub` claim');
+    }
+
+    return payload;
+}
+
+export async function getTodosForUser(jwtToken: string) {
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
+    const db = drizzle(pool);
+
+    try {
+        const claims = await verifyJWT(jwtToken);
+
+        // Use Drizzle transaction to set auth and query
+        const result = await db.transaction(async (tx) => {
+            // Set JWT claims in the session
+            await tx.execute(sql`select set_config('request.jwt.claims', ${claims}, true)`);
+
+            // Now execute your Drizzle query - RLS policies will enforce access
+            return await tx.select().from(todos);
+        });
+
+        return result;
+    } finally {
+        await pool.end();
+    }
+}
+```
+
+> Your application should use the correct database connection string with the custom role (for example, `postgresql://my_backend_role:password@host:port/database`) to ensure that RLS policies are enforced for that role.
+
+**Pattern breakdown:**
+
+1. **Verify the JWT** using your provider's JWKS (signature, issuer, and audience checks).
+2. **Start a transaction** with Drizzle using the Neon serverless driver.
+3. **Set `request.jwt.claims` in the transaction context** to make the authenticated user's identity available to RLS policies.
+4. **Run Drizzle queries in the same transaction** and let database RLS policies enforce access.
+
+</TabItem>
+
+<TabItem>
+
+When connecting with a role like `neondb_owner` (which has `BYPASSRLS`), RLS policies are **not enforced**. In this case, you must verify the JWT in your backend and manually apply access control directly in your Drizzle queries.
+
+<Admonition type="important">
+If you choose this approach, RLS policies in your database will be ignored, so you must ensure that all queries correctly enforce access control based on the authenticated user's identity. This puts the responsibility for security on your backend code, so it's crucial to implement this logic carefully to avoid data leaks. For this reason, using a custom role without `BYPASSRLS` is generally recommended for better security guarantees.
 </Admonition>
 
 ```typescript
@@ -499,53 +646,45 @@ import { drizzle } from 'drizzle-orm/neon-serverless';
 import { Pool } from '@neondatabase/serverless';
 import { todos } from './schema'; // Your Drizzle schema
 import { sql } from 'drizzle-orm';
+import { jwtVerify, createRemoteJWKSet } from 'jose'
 
 // Example JWT verification (implement based on your auth provider)
 async function verifyJWT(token: string, jwksUrl: string) {
-  // Your verification logic here
-  // This should return the decoded payload
-  return { payload: { sub: 'user-id', email: 'user@example.com' } };
+    try {
+        const JWKS = createRemoteJWKSet(new URL(jwksUrl))
+        const { payload } = await jwtVerify(token, JWKS, {
+            // Adjust issuer and audience checks based on your JWT provider's configuration.
+            // For Neon Auth, the issuer is new URL(jwksUrl).origin
+            issuer: new URL(jwksUrl).origin
+        })
+        return { payload };
+    } catch (err) {
+        throw new Error(`JWT verification failed: ${(err as Error).message}`)
+    }
 }
 
 async function getTodosForUser(jwtToken: string) {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
-  const db = drizzle(pool);
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
+    const db = drizzle(pool);
 
-  try {
-    // Verify JWT
-    const { payload } = await verifyJWT(jwtToken, process.env.JWKS_URL!);
-    const claims = JSON.stringify(payload);
+    try {
+        // Verify JWT (Replace your actual JWKS URL and JWT token from your auth provider)
+        const { payload } = await verifyJWT(jwtToken, "https://your-jwks-url.json");
 
-    // Use Drizzle transaction to set auth and query
-    const result = await db.transaction(async (tx) => {
-      // Set JWT claims in the session
-      await tx.execute(sql`SELECT set_config('request.jwt.claims', ${claims}, true)`);
+        // When using a role with BYPASSRLS, RLS is not enforced.
+        // You MUST apply access control directly in your query.
+        const result = await db.transaction(async (tx) => {
+            return await tx.select().from(todos).where(sql`${todos.userId} = ${payload.sub}`);
+        });
 
-      // Now execute your Drizzle query - RLS policies will enforce access
-      return await tx.select().from(todos);
-    });
-
-    return result;
-  } finally {
-    await pool.end();
-  }
+        return result;
+    } finally {
+        await pool.end();
+    }
 }
 ```
 
-**Pattern breakdown:**
-
-1. **Verify the JWT** using your authentication provider's method
-2. **Set the claims** in the database session using `set_config()` within a transaction
-3. **Execute Drizzle queries** in the same transaction - RLS policies use `auth.user_id()` to enforce access
-
-<Admonition type="important">
-When using this pattern, ensure your database connection string uses a role that does **not** have the `BYPASSRLS` attribute. Avoid using the `neondb_owner` role, as it bypasses Row-Level Security policies.
-</Admonition>
-
-## Example applications
-
-To see these concepts in action, check out these sample applications:
-
-- **[Data API Demo](https://github.com/neondatabase-labs/neon-data-api-neon-auth)**: A note-taking app demonstrating `crudPolicy` with Neon's Data API.
+</TabItem>
+</Tabs>
 
 <NeedHelp/>
