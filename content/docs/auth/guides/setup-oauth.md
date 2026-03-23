@@ -111,7 +111,7 @@ await authClient.signIn.social({
 For production, configure your own OAuth app credentials. GitHub and Vercel OAuth require custom credentials, while Google OAuth works with shared credentials for development but should use custom credentials in production.
 
 1. Create OAuth apps with your providers:
-   - [Google OAuth setup](https://developers.google.com/identity/protocols/oauth2/web-server) — see [Google OAuth branding](#google-oauth-branding) below before going live
+   - [Google OAuth setup](https://developers.google.com/identity/protocols/oauth2/web-server) (see [Google OAuth branding](#google-oauth-branding) below before going live)
    - [GitHub OAuth setup](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)
    - [Vercel OAuth setup](https://vercel.com/docs/sign-in-with-vercel/manage-from-dashboard#create-an-app)
 2. In your project's **Settings** → **Auth** page, configure your Client ID and Client Secret for each provider
@@ -120,15 +120,15 @@ Your app will automatically use your configured credentials
 
 ## Google OAuth branding
 
-When using your own Google OAuth credentials, users will see a consent screen before signing in. Without branding configured, Google displays the `redirect_uri` domain — **"Continue to neon.tech"** — instead of your app's name. This happens even when your OAuth client ID and secret are correctly configured.
+When using your own Google OAuth credentials, users will see a consent screen before signing in. Without branding configured, Google displays the `redirect_uri` domain (**"Continue to neon.tech"**) instead of your app's name. This happens even when your OAuth client ID and secret are correctly configured.
 
 To show your app's name on the consent screen:
 
 1. Go to [Google Cloud Console → OAuth consent screen](https://console.cloud.google.com/auth/branding)
 2. Fill in the required app information:
-   - **App name** — the name users will see on the consent screen
-   - **User support email** — a contact email for users with auth questions
-   - **Developer contact information** — your email address (not shown to users)
+   - **App name**: the name users will see on the consent screen
+   - **User support email**: a contact email for users with auth questions
+   - **Developer contact information**: your email address (not shown to users)
 3. Under **Authorized domains**, add your app's domain (for example, `myapp.com`)
 4. Save your changes
 
