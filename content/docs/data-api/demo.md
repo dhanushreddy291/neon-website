@@ -137,7 +137,9 @@ export const notes = pgTable(
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
     shared: boolean('shared').default(false),
   }
-  // ... RLS policies defined here
+  (table) => [
+    // ... RLS policies defined here
+  ]
 ).enableRLS();
 
 export const paragraphs = pgTable(
@@ -148,7 +150,9 @@ export const paragraphs = pgTable(
     content: text('content').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   }
-  // ... RLS policies defined here
+  (table) => [
+    // ... RLS policies defined here
+  ]
 ).enableRLS();
 ```
 
