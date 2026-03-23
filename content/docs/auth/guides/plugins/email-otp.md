@@ -60,7 +60,7 @@ Users can now sign in with Email OTP by selecting the option on the sign-in scre
 
 ![Email OTP verification](/docs/auth/email-otp-verification.png)
 
-> If you haven't set up Neon Auth UI components yet, see our [Quick start guides](/docs/auth/overview#quick-start-guides).
+> If you haven't set up Neon Auth UI components yet, see the [UI components reference](/docs/auth/reference/ui-components) and the [Next.js](/docs/auth/quick-start/nextjs-api-only) or [React](/docs/auth/quick-start/react) quick start.
 
 ## Use Email OTP with SDK methods
 

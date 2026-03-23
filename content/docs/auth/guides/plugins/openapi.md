@@ -64,7 +64,7 @@ One of the most powerful use cases for the OpenAPI plugin is generating type-saf
 
 ### Using Scalar SDK generator
 
-If you're using Next.js, you can access the OpenAPI reference page at `/api/auth/reference` in your application, once Neon Auth is set up according to the [Next.js guide](/docs/auth/quick-start/nextjs). Unlike the default Neon Auth reference page, this version can be fully customized to match your application's theme. It also provides additional options, such as generating SDK clients in multiple languages using Scalar's [built‑in tools](https://guides.scalar.com/scalar/scalar-sdks/getting-started).
+If you're using Next.js, you can access the OpenAPI reference page at `/api/auth/reference` in your application, once Neon Auth is set up according to the [Next.js quick start](/docs/auth/quick-start/nextjs-api-only). Unlike the default Neon Auth reference page, this version can be fully customized to match your application's theme. It also provides additional options, such as generating SDK clients in multiple languages using Scalar's [built‑in tools](https://guides.scalar.com/scalar/scalar-sdks/getting-started).
 
 ## Limitations
 

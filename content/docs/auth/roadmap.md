@@ -22,8 +22,8 @@ Neon Auth is targeting general availability this quarter. We're actively working
 
 | Framework               | Status       | Quick start                                                   |
 | ----------------------- | ------------ | ------------------------------------------------------------- |
-| Next.js                 | ✅ Supported | [Get started](/docs/auth/quick-start/nextjs)                  |
-| React + React Router    | ✅ Supported | [Get started](/docs/auth/quick-start/react-router-components) |
+| Next.js                 | ✅ Supported | [Get started](/docs/auth/quick-start/nextjs-api-only)         |
+| React + React Router    | ✅ Supported | [Get started](/docs/auth/quick-start/react)                   |
 | React + TanStack Router | ✅ Supported | [Get started](/docs/auth/quick-start/tanstack-router)         |
 | Vite + React            | ✅ Supported | [Get started](/docs/auth/quick-start/react)                   |
 

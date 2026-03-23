@@ -906,7 +906,7 @@ If you're upgrading from Neon Auth SDK v0.1, see the [migration guide](/docs/aut
 
 - [Client SDK Reference](/docs/reference/javascript-sdk) - Client-side authentication
 - [UI Components Reference](/docs/auth/reference/ui-components) - Pre-built auth UI
-- [Next.js Quickstart](/docs/auth/quick-start/nextjs) - Getting started guide
+- [Next.js quick start](/docs/auth/quick-start/nextjs-api-only) - Getting started guide
 - [Migration Guide](/docs/auth/migrate/from-auth-v0.1) - Upgrading from v0.1
 
 <NeedHelp/>
