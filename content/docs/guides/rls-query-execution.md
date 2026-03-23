@@ -1,8 +1,13 @@
 ---
 title: Run RLS queries with Drizzle ORM
-subtitle: Learn how to execute RLS queries securely with Drizzle ORM, including best practices for Postgres roles, connection management, and dynamic client setup.
-summary: Covers how to execute RLS queries using Drizzle ORM securely, with details on Postgres custom roles, advanced connection string configurations, and dynamic client setup with auth callbacks.
+subtitle: Learn how to execute RLS queries securely with Drizzle ORM, including best
+  practices for Postgres roles, connection management, and dynamic client setup.
+summary: >-
+  Covers how to execute RLS queries using Drizzle ORM securely, with details on
+  Postgres custom roles, advanced connection string configurations, and dynamic
+  client setup with auth callbacks.
 enableTableOfContents: true
+updatedOn: '2026-03-23T18:27:00.724Z'
 ---
 
 <InfoBlock>
