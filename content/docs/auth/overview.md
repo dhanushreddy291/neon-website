@@ -41,7 +41,11 @@ Choose your framework to get started:
 </TechCards>
 
 <Admonition type="tip" title="Using an AI coding tool?">
-Add a Neon Auth skill to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools: [Next.js skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-nextjs/SKILL.md) or [React skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-react/SKILL.md).
+Install the [Neon agent skills](https://github.com/neondatabase/agent-skills) to help with Neon Auth setup in Cursor, Windsurf, Claude Code, and similar tools:
+
+```bash
+npx skills add neondatabase/agent-skills
+```
 </Admonition>
 
 ## Why Neon Auth?

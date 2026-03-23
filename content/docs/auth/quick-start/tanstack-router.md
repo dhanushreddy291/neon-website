@@ -13,7 +13,11 @@ layout: wide
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
 <Admonition type="tip" title="Using an AI coding tool?">
-Add the [Neon Auth React skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-react/SKILL.md) to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools.
+Install the [Neon agent skills](https://github.com/neondatabase/agent-skills) to help with Neon Auth setup in Cursor, Windsurf, Claude Code, and similar tools:
+
+```bash
+npx skills add neondatabase/agent-skills
+```
 </Admonition>
 
 <TwoColumnLayout>
