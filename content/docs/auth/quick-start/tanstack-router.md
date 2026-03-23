@@ -12,6 +12,10 @@ layout: wide
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
+<Admonition type="tip" title="Using an AI coding tool?">
+Add the [Neon Auth React skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-react/SKILL.md) to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools.
+</Admonition>
+
 <TwoColumnLayout>
 
 <TwoColumnLayout.Step title="Create a Neon project with Auth enabled">
@@ -343,7 +347,3 @@ SELECT * FROM neon_auth.user;
 - [Add email verification](/docs/auth/guides/email-verification)
 - [Learn how to branch your auth](/docs/auth/branching-authentication)
 - [More example apps](/docs/auth/overview#example-applications) in the **neon-js** `examples/` directory
-
-<Admonition type="tip" title="Using an AI coding tool?">
-Add the [Neon Auth React skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-react/SKILL.md) to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools.
-</Admonition>

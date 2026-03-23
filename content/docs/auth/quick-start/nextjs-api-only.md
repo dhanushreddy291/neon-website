@@ -15,6 +15,10 @@ redirectFrom:
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
+<Admonition type="tip" title="Using an AI coding tool?">
+Add the [Neon Auth Next.js skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-nextjs/SKILL.md) to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools.
+</Admonition>
+
 This guide shows you how to integrate Neon Auth into a [Next.js](https://nextjs.org) (App Router) project using SDK methods directly. For pre-built UI components, see the [UI components reference](/docs/auth/reference/ui-components) and the [neon-js examples](https://github.com/neondatabase/neon-js/tree/main/examples). Upgrading from v0.1? See the [migration guide](/docs/auth/migrate/from-auth-v0.1).
 
 <TwoColumnLayout>
@@ -472,9 +476,5 @@ The `auth` instance also includes `.handler()` for API routes and `.middleware()
 - [Add email verification](/docs/auth/guides/email-verification)
 - [Branching authentication](/docs/auth/branching-authentication)
 - [More example apps](/docs/auth/overview#example-applications) in the **neon-js** `examples/` directory
-
-<Admonition type="tip" title="Using an AI coding tool?">
-Add the [Neon Auth Next.js skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-nextjs/SKILL.md) to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools.
-</Admonition>
 
 <NeedHelp/>
