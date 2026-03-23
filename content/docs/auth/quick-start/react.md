@@ -15,6 +15,15 @@ redirectFrom:
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
+<Admonition type="tip" title="Using an AI coding tool?">
+Run [`neonctl init`](/docs/reference/cli-init) to configure your editor with the Neon MCP server and agent skills, including Neon Auth setup guidance:
+
+```bash
+npx neonctl@latest init
+```
+
+</Admonition>
+
 <TwoColumnLayout>
 
 <TwoColumnLayout.Step title="Create a Neon project with Auth enabled">
