@@ -6,7 +6,7 @@ summary: >-
   in your application using Neon Auth, including development and production
   configurations.
 enableTableOfContents: true
-updatedOn: '2026-02-06T22:07:32.749Z'
+updatedOn: '2026-03-23T15:16:28.128Z'
 ---
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
