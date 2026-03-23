@@ -26,6 +26,24 @@ redirectFrom:
 
 Neon Auth is a managed authentication service that stores users, sessions, and auth configuration directly in your Neon database. When you branch your database, your entire auth state branches with it. This lets you test real authentication workflows in preview environments.
 
+## Quick start guides
+
+Choose your framework to get started:
+
+<TechCards>
+
+<a href="/docs/auth/quick-start/nextjs-api-only" title="Next.js" description="Quick start with API methods" icon="next-js"></a>
+
+<a href="/docs/auth/quick-start/react" title="React" description="Quick start with API methods" icon="react"></a>
+
+<a href="/docs/auth/quick-start/tanstack-router" title="TanStack Router" description="With UI components" icon="tanstack"></a>
+
+</TechCards>
+
+<Admonition type="tip" title="Using an AI coding tool?">
+Add a Neon Auth skill to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools: [Next.js skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-nextjs/SKILL.md) or [React skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-react/SKILL.md).
+</Admonition>
+
 ## Why Neon Auth?
 
 - **Identity lives in your database**  
@@ -125,24 +143,6 @@ export default function App() {
   Spin up complete environments instantly with database and auth together
 
 See [Branching authentication](/docs/auth/branching-authentication) for details on how auth branches with your database.
-
-## Quick start guides
-
-Choose your framework to get started:
-
-<TechCards>
-
-<a href="/docs/auth/quick-start/nextjs-api-only" title="Next.js" description="Quick start with API methods" icon="next-js"></a>
-
-<a href="/docs/auth/quick-start/react" title="React" description="Quick start with API methods" icon="react"></a>
-
-<a href="/docs/auth/quick-start/tanstack-router" title="TanStack Router" description="With UI components" icon="tanstack"></a>
-
-</TechCards>
-
-<Admonition type="tip" title="Using an AI coding tool?">
-Add a Neon Auth skill to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools: [Next.js skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-nextjs/SKILL.md) or [React skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-react/SKILL.md).
-</Admonition>
 
 ## Example applications
 
