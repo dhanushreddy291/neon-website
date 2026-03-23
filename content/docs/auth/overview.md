@@ -136,11 +136,9 @@ Choose your framework to get started:
 
 <TechCards>
 
-<a href="/docs/auth/quick-start/nextjs" title="Next.js" description="With UI components" icon="next-js"></a>
+<a href="/docs/auth/quick-start/nextjs-api-only" title="Next.js" description="Quick start with API methods" icon="next-js"></a>
 
-<a href="/docs/auth/quick-start/react" title="React (API methods)" description="Build your own auth UI" icon="react"></a>
-
-<a href="/docs/auth/quick-start/react-router-components" title="React" description="With UI components" icon="react"></a>
+<a href="/docs/auth/quick-start/react" title="React" description="Quick start with API methods" icon="react"></a>
 
 <a href="/docs/auth/quick-start/tanstack-router" title="TanStack Router" description="With UI components" icon="tanstack"></a>
 

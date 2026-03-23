@@ -8,6 +8,9 @@ summary: >-
 enableTableOfContents: true
 updatedOn: '2026-03-20T18:23:32.447Z'
 layout: wide
+redirectFrom:
+  - /docs/auth/quick-start/react-router-components
+  - /docs/auth/quick-start/react-router-components/
 ---
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />

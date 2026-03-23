@@ -12,6 +12,10 @@ layout: wide
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
+<Admonition type="note" title="Archived copy">
+This quick start is kept in the repo for reference but is not published on [neon.com/docs](https://neon.com/docs). Use the [React quick start (API methods)](/docs/auth/quick-start/react), the [UI components reference](/docs/auth/reference/ui-components), and the [neon-js examples](https://github.com/neondatabase/neon-js/tree/main/examples) instead.
+</Admonition>
+
 <TwoColumnLayout>
 
 <TwoColumnLayout.Step title="Enable Auth in your Neon project">

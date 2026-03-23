@@ -34,7 +34,7 @@ The Admin plugin provides APIs to manage your users and their authentication sta
 
 You can call Admin plugin methods using the Neon SDK auth client.
 
-> If you haven’t set up Neon Auth yet, follow our [Quick start guides](/docs/auth/overview#quick-start-guides) to get started and create an `authClient`.
+> If you haven’t set up Neon Auth yet, follow the [Next.js](/docs/auth/quick-start/nextjs-api-only) or [React](/docs/auth/quick-start/react) quick start to create an `authClient`.
 
 ### Create a user
 

@@ -12,6 +12,10 @@ layout: wide
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
+<Admonition type="note" title="Archived copy">
+This quick start is kept in the repo for reference but is not published on [neon.com/docs](https://neon.com/docs). Use the [Next.js quick start (API methods)](/docs/auth/quick-start/nextjs-api-only) and the [UI components reference](/docs/auth/reference/ui-components) instead.
+</Admonition>
+
 <Admonition type="note">
 Upgrading from Neon Auth SDK v0.1? See the [migration guide](/docs/auth/migrate/from-auth-v0.1) for step-by-step instructions.
 </Admonition>
