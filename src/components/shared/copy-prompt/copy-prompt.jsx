@@ -21,13 +21,6 @@ const CopyPrompt = (props) => {
   useEffect(() => {
     fetch(src)
       .then((res) => res.text())
-      .then((text) => {
-        if (text.startsWith('---')) {
-          const end = text.indexOf('\n---', 3);
-          return end !== -1 ? text.slice(end + 4).trimStart() : text;
-        }
-        return text;
-      })
       .then(setMarkdown);
   }, [src]);
 

@@ -12,7 +12,9 @@ layout: wide
 
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
-<CopyPrompt src="https://raw.githubusercontent.com/neondatabase/neon-js/main/skills/neon-js-react/SKILL.md" description="Copy an AI-ready skill to set up Neon Auth in TanStack Router with Cursor, Windsurf, or any AI coding tool." buttonText="Copy skill" />
+<Admonition type="tip" title="Using an AI coding tool?">
+Add the [Neon Auth React skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-react/SKILL.md) to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools.
+</Admonition>
 
 <TwoColumnLayout>
 

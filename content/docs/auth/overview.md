@@ -140,17 +140,9 @@ Choose your framework to get started:
 
 </TechCards>
 
-### Set up with AI
-
-Copy an AI-ready skill for your framework and paste it into Cursor, Windsurf, or any AI coding tool to set up Neon Auth automatically.
-
-<PromptCards>
-
-<a title="Next.js" icon="next-js" promptSrc="https://raw.githubusercontent.com/neondatabase/neon-js/main/skills/neon-auth-nextjs/SKILL.md"></a>
-
-<a title="React" icon="react" promptSrc="https://raw.githubusercontent.com/neondatabase/neon-js/main/skills/neon-auth-react/SKILL.md"></a>
-
-</PromptCards>
+<Admonition type="tip" title="Using an AI coding tool?">
+Add a Neon Auth skill to your project for automatic setup context in Cursor, Windsurf, Claude Code, and similar tools: [Next.js skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-nextjs/SKILL.md) or [React skill](https://github.com/neondatabase/neon-js/blob/main/skills/neon-auth-react/SKILL.md).
+</Admonition>
 
 ## Example applications
 
