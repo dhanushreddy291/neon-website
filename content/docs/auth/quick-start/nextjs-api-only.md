@@ -16,10 +16,10 @@ redirectFrom:
 <FeatureBetaProps feature_name="Neon Auth with Better Auth" />
 
 <Admonition type="tip" title="Using an AI coding tool?">
-Install the [Neon agent skills](https://github.com/neondatabase/agent-skills) to help with Neon Auth setup in Cursor, Windsurf, Claude Code, and similar tools:
+Run [`neonctl init`](/docs/reference/cli-init) to configure your editor with the Neon MCP server and agent skills, including Neon Auth setup guidance:
 
 ```bash
-npx skills add neondatabase/agent-skills
+npx neonctl@latest init
 ```
 </Admonition>
 
