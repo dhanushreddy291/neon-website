@@ -21,8 +21,6 @@ To support these advanced use cases, Neon Auth provides [**Webhooks**](/docs/aut
 
 This guide walks you through building a custom webhook handler in a Next.js application. You’ll learn how to send OTPs via email using Resend, implement a blocking handler to prevent sign-ups from disposable email providers, and optionally modify the handler to send SMS or WhatsApp messages using Twilio.
 
-When you subscribe to `send.magic_link`, Neon Auth also skips its default magic link email delivery. Your webhook endpoint becomes responsible for delivering the link.
-
 ## Prerequisites
 
 Before you begin, ensure you have the following:
@@ -31,6 +29,8 @@ Before you begin, ensure you have the following:
 - **Neon account:** A free Neon project. If you don't have one, sign up at [Neon](https://console.neon.tech/signup).
 - **Resend account:** To send custom emails. You'll need an [API key](https://resend.com/docs/dashboard/api-keys/introduction). You can use the default `resend.dev` testing domain, or [verify a custom domain](https://resend.com/docs/dashboard/domains/introduction).
 - **ngrok** (or a similar tunneling tool): To test webhooks locally, you will need `ngrok` installed and configured on your machine. See the [ngrok Quickstart](https://ngrok.com/docs/getting-started/) to sign up, install the CLI, and authenticate with your auth token.
+
+Review the [Neon Auth Webhooks Reference](/docs/auth/guides/webhooks) for complete event payload fields, required response formats, retry behavior, and signature verification details.
 
 <Steps>
 
@@ -270,6 +270,7 @@ Create `app/api/webhooks/neon/route.ts`:
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyNeonWebhook } from '@/lib/neon-webhook';
 import { Resend } from 'resend';
+import { User } from '@neondatabase/auth/types';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -285,9 +286,9 @@ export async function POST(request: NextRequest) {
                 await handleSendOtp(event_data, user);
                 return NextResponse.json({ success: true });
 
-          case 'send.magic_link':
-            await handleSendMagicLink(event_data, user);
-            return NextResponse.json({ success: true });
+            case 'send.magic_link':
+                await handleSendMagicLink(event_data, user);
+                return NextResponse.json({ success: true });
 
             case 'user.before_create':
                 const validationResult = await handleUserBeforeCreate(user);
@@ -311,7 +312,7 @@ export async function POST(request: NextRequest) {
     }
 }
 
-async function handleSendOtp(eventData: any, user: any) {
+async function handleSendOtp(eventData: any, user: User) {
     const { otp_code } = eventData;
 
     console.log(`Sending custom Resend OTP to ${user.email}`);
@@ -332,7 +333,7 @@ async function handleSendOtp(eventData: any, user: any) {
     });
 }
 
-async function handleSendMagicLink(eventData: any, user: any) {
+async function handleSendMagicLink(eventData: any, user: User) {
     const { link_url, link_type } = eventData;
 
     console.log(`Sending custom ${link_type} magic link to ${user.email}`);
@@ -354,7 +355,7 @@ async function handleSendMagicLink(eventData: any, user: any) {
 }
 
 // Example: Block signups from disposable domains
-async function handleUserBeforeCreate(user: any) {
+async function handleUserBeforeCreate(user: User) {
     const blockedDomains = ['spam.com', 'tempmail.org'];
     const userDomain = user.email.split('@')[1];
 
@@ -374,12 +375,10 @@ async function handleUserBeforeCreate(user: any) {
 The above code does the following:
 
 - Verifies the webhook signature and parses the payload.
-- For `send.otp` events, it sends a custom OTP email using Resend (or SMS if you later add Twilio logic).
+- For `send.otp` events, it sends a custom OTP email using Resend.
 - For `send.magic_link` events, it sends a custom sign-in or password reset link email using Resend.
 - For `user.before_create` events, it checks if the email domain is in a blocked list and returns a response to allow or deny the signup accordingly.
 - Logs when a user is fully created (which can be useful for analytics or triggering other side effects).
-
-`send.magic_link` payloads include `link_url`, `link_type`, and token metadata. Unlike `send.otp`, they do not include `delivery_preference`, so your handler decides the delivery channel.
 
 ## Expose and register the webhook
 
@@ -446,7 +445,7 @@ First, install the Twilio SDK in your project:
 npm install twilio
 ```
 
-Then, you can adjust your `handleSendOtp` function. By checking if the user object possesses a `phone_number` and modifying the delivery method, you can seamlessly integrate alternative channels like normal SMS using Twilio:
+Then, you can adjust your `handleSendOtp` function to send an SMS instead of an email. Here's an example of how to do this with Twilio:
 
 ```typescript shouldWrap
 import twilio from 'twilio';
@@ -458,7 +457,7 @@ async function handleSendOtp(eventData: any, user: any) {
     await twilioClient.messages.create({
         body: `Your App verification code is: ${otp_code}. Do not share this with anyone.`,
         from: process.env.TWILIO_PHONE_NUMBER,
-        to: user.phone_number,
+        to: USER_PHONE_NUMBER
     });
 }
 ```
@@ -467,7 +466,7 @@ In a similar way, you could integrate WhatsApp messaging or other channels suppo
 
 ## Deploying to production
 
-When you are ready to take your Next.js application live:
+When you are ready to take your application live:
 
 1. Deploy your app to a hosting platform like Vercel, Netlify, or AWS.
 2. Ensure you configure your environment variables (`RESEND_API_KEY`, `NEON_AUTH_COOKIE_SECRET`, etc.) in your hosting provider's dashboard.
@@ -490,4 +489,3 @@ The complete source code for a Next.js application implementing these webhooks i
 - [Neon Auth Webhooks Reference](/docs/auth/guides/webhooks)
 - [Neon Auth UI components](/docs/auth/reference/ui-components)
 - [Resend Documentation](https://resend.com/docs)
-- [Twilio SMS Documentation](https://www.twilio.com/docs/sms)
