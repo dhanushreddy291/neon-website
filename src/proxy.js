@@ -63,7 +63,7 @@ function trackLLMPageview(req, { is404 = false } = {}) {
   }).catch(() => {});
 }
 
-export async function middleware(req) {
+export async function proxy(req) {
   try {
     const { pathname } = req.nextUrl;
 
