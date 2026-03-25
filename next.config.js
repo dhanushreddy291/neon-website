@@ -574,6 +574,78 @@ const defaultConfig = {
         destination: 'https://get.neon.com/student-25',
         permanent: false,
       },
+      // Deprecated Neon Azure Native ISV docs (EOL); redirect to docs home
+      {
+        source: '/docs/manage/azure',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/import/migrate-from-azure-native',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/azure/azure-deploy',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/azure/azure-manage',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/azure/azure-develop',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/introduction/billing-azure-marketplace',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/get-started/azure-get-started',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      // Same deprecated Azure Native ISV slugs as raw `.md` URLs (rewrites otherwise miss file)
+      {
+        source: '/docs/manage/azure.md',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/import/migrate-from-azure-native.md',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/azure/azure-deploy.md',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/azure/azure-manage.md',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/azure/azure-develop.md',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/introduction/billing-azure-marketplace.md',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
+      {
+        source: '/docs/get-started/azure-get-started.md',
+        destination: '/docs/introduction',
+        permanent: true,
+      },
       ...docsRedirects,
       ...changelogRedirects,
     ];
