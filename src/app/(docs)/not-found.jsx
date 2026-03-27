@@ -3,7 +3,7 @@ import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
 
 const DocsNotFoundPage = () => (
-  <div className="fixed inset-0 z-50 bg-white">
+  <div className="fixed inset-0 z-50 overflow-auto bg-white">
     <meta httpEquiv="x-ua-compatible" content="ie=edge" />
     <meta
       name="viewport"
