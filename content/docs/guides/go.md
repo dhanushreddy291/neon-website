@@ -21,7 +21,11 @@ You'll learn how to connect to your Neon database from a Go application, and per
 ## Prerequisites
 
 - A Neon account. If you do not have one, see [Sign up](https://console.neon.tech/signup).
-- Go 1.18 or later. If you do not have Go installed, see the [official installation guide](https://go.dev/doc/install).
+- Go 1.21 or later. If you do not have Go installed, see the [official installation guide](https://go.dev/doc/install).
+
+<Admonition type="note">
+The latest version of `pgx/v5` (v5.9.1+) requires Go 1.25. If you are using an older Go version, pin to a compatible release: `go get github.com/jackc/pgx/v5@v5.7.4`.
+</Admonition>
 
 <Steps>
 
