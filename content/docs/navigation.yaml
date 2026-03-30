@@ -30,6 +30,17 @@
         - title: Overview
           slug: import/migrate-intro
 
+        - title: Region migration
+          items:
+            - title: Overview
+              slug: guides/region-migration
+            - title: Neon to another region
+              slug: guides/migrate-neon-to-another-region
+            - title: Neon to Lakebase
+              slug: guides/migrate-neon-to-lakebase
+            - title: Postgres-compatible export
+              slug: guides/export-neon-postgres-compatible
+
         - title: Utilities
           items:
             - title: Import Data Assistant

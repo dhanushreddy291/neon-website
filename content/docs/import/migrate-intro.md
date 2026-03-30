@@ -9,10 +9,26 @@ summary: >-
 redirectFrom:
   - /docs/import/import-intro
 enableTableOfContents: true
-updatedOn: '2026-02-15T20:51:54.208Z'
+updatedOn: '2026-03-30T12:00:00.000Z'
 ---
 
 This guide helps you choose the best migration method based on your database size, downtime tolerance, source database type, and technical requirements.
+
+## Move to another region or export from Neon
+
+If you need to move a **Neon** database to another **region**, or **export** it from Neon in Postgres-compatible form, start with the **[Region migration](/docs/guides/region-migration)** hub. It links to step-by-step guides for **another Neon region**, **Lakebase**, and **Postgres-compatible export**.
+
+<DetailIconCards>
+
+<a href="/docs/guides/region-migration" description="Choose another Neon region, Lakebase, or export" icon="import">Region migration overview</a>
+
+<a href="/docs/guides/migrate-neon-to-another-region" description="Import Data Assistant, pg_dump, or logical replication" icon="neon">Neon to another region</a>
+
+<a href="/docs/guides/migrate-neon-to-lakebase" description="Export from Neon and restore into Databricks Lakebase" icon="screen">Neon to Lakebase</a>
+
+<a href="/docs/guides/export-neon-postgres-compatible" description="Standard pg_dump archive for use outside Neon" icon="cli">Postgres-compatible export</a>
+
+</DetailIconCards>
 
 <Admonition type="tip" title="Quick guidance">
 If you can't afford downtime, use [Logical Replication](/docs/guides/logical-replication-guide). For Postgres databases under 10GB with some downtime flexibility, [Import Data Assistant](/docs/import/import-data-assistant) is the easiest option. For larger Postgres databases where downtime is acceptable, choose between [pg_dump/restore](/docs/import/migrate-from-postgres) (simplest) or [pgcopydb](/docs/import/pgcopydb) (fastest).

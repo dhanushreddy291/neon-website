@@ -7,7 +7,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/conceptual-guides/regions
-updatedOn: '2026-03-11T12:52:46.889Z'
+updatedOn: '2026-03-30T12:00:00.000Z'
 ---
 
 Neon offers project deployment in multiple AWS and Azure regions. To minimize latency between your Neon database and application, we recommend choosing the region closest to your application server.
@@ -28,6 +28,12 @@ Neon offers project deployment in multiple AWS and Azure regions. To minimize la
 - 🇺🇸 Azure East US 2 region (Virginia) &mdash; `azure-eastus2`
 - 🇺🇸 Azure West US 3 region (Arizona) &mdash; `azure-westus3`
 - 🇩🇪 Azure Germany West Central region (Frankfurt) &mdash; `azure-gwc`
+
+<Admonition type="warning" title="Azure regions on Neon">
+Neon is deprecating **Azure** regions for Neon projects (`azure-eastus2`, `azure-westus3`, `azure-gwc`). If your database runs there, plan a migration. **Suggested paths:** (1) **another Neon project** on **AWS** when you can use AWS (see [Region migration](/docs/guides/region-migration)), (2) **Databricks Lakebase** when you need Postgres to stay in **Azure**, (3) **Postgres-compatible export** when neither option works.
+
+**April 2, 2026:** You can no longer **create new projects** in Neon **Azure** regions. **Migration deadlines** for existing projects are communicated by **email from Neon** and in the **[Neon changelog](/docs/changelog)**. For help planning, contact [Support](/docs/introduction/support).
+</Admonition>
 
 ## Request a region
 
@@ -74,7 +80,7 @@ If you are unsure of your project's region, you can find this information in the
 
 ## Move project data to a new region
 
-Moving a project to a different region requires moving your data using one of the following options:
+Start with **[Region migration](/docs/guides/region-migration)** for path selection (another Neon region, Lakebase, or export). Then use one of the following options.
 
 ### Option 1: Dump and restore
 
