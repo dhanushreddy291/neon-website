@@ -12,8 +12,6 @@ updatedOn: '2026-03-30T12:00:00.000Z'
 
 This topic describes how to export your **Neon** database to a **Postgres-compatible** archive using the Postgres **`pg_dump`** utility. You get a normal custom-format dump (for example `-Fc`) that any Postgres toolchain can consume.
 
-If you can stay on Neon or move to **Lakebase**, **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)** and **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)** are usually simpler paths. Use this guide when your **destination** is something else and you need a portable dump file.
-
 Once you have the archive, importing it is standard Postgres tooling. The **[Restore on your destination](#restore-on-your-destination-with-pg-restore)** section below shows a **`pg_restore`** command that pairs with the **`-Fc`** export. **You must still check your destination Postgres platform or provider**—their docs are authoritative for SSL, networking, extensions, roles, empty-database requirements, and any managed import UI they offer.
 
 ## Export steps on Neon

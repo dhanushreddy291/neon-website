@@ -58,11 +58,7 @@ The [Import Data Assistant](/docs/import/import-data-assistant) works well for s
 **Logical replication** is supported only when both the source and the target are **Neon** projects ([Neon to Neon](/docs/guides/logical-replication-neon-to-neon)). It is **not** supported for **Neon to Lakebase** migrations yet. For Lakebase, use **`pg_dump`** and **`pg_restore`** ([Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)).
 </Admonition>
 
-<Admonition type="warning" title="Azure regions on Neon">
-Neon is deprecating **Azure** regions for Neon projects (`azure-eastus2`, `azure-westus3`, `azure-gwc`). If your database runs there, plan a **data migration**. **Suggested paths:** (1) **another Neon project** on **AWS** when you can use AWS ([Azure to AWS region pairings](/docs/guides/migrate-neon-to-another-region#choosing-a-destination-aws-region-from-neon-on-azure)), (2) **Databricks Lakebase** when you need Postgres to stay in **Azure**, (3) **Postgres-compatible export** when neither option works.
-
-**Starting April 2, 2026:** You can no longer **create new Neon projects** in **Azure** regions. **Migration deadlines** for existing projects are communicated by **email from Neon** and in the **[Neon changelog](/docs/changelog)**.
-</Admonition>
+<AzureRegionsDeprecation/>
 
 <a id="azure-neon-regions-to-suggested-neon-aws-regions" aria-hidden="true"></a>
 
