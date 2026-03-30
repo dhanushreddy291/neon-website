@@ -13,6 +13,10 @@ This guide covers the **Neon** side (export) and points you to **Databricks** do
 
 Start with the [Region migration](/docs/guides/region-migration) overview if you have not picked a path yet.
 
+<Admonition type="note" title="Logical replication">
+**Logical replication** is only supported for **Neon-to-Neon** migrations. Neon-to-Lakebase moves rely on **`pg_dump`** and **`pg_restore`** as in this guide. Logical replication to Lakebase is **not** supported yet.
+</Admonition>
+
 ## Prerequisites
 
 - A Neon project with the database you want to migrate to Lakebase (export from Neon, restore on Lakebase). See [Region migration](/docs/guides/region-migration) for how this fits with other paths.
@@ -78,6 +82,6 @@ When Lakebase is live and you no longer need the old database, delete the Neon p
 
 - [Region migration](/docs/guides/region-migration)
 - [Migrate data from Postgres](/docs/import/migrate-from-postgres)
-- [Logical replication guide](/docs/guides/logical-replication-guide) (not Lakebase‑specific, for context only)
+- [Get started with logical replication](/docs/guides/logical-replication-guide) (Neon-to-Neon only; not used for Lakebase yet)
 
 <NeedHelp/>

@@ -10,9 +10,19 @@ isDraft: false
 updatedOn: '2026-03-30T12:00:00.000Z'
 ---
 
-Use this guide when you want to migrate your **database** to a **different region** on Neon. A project's region is fixed. You need to **create a new Neon project** in the target region and **migrate your database** into it.
+Use this guide when you want to migrate your **database** to a **different region** on Neon. A project's region is fixed. To move your data to a new region, you need to **create a new Neon project** in the target region and **migrate your database** into it.
 
-If you are migrating from a Neon project in an **Azure** region, see the mapping table in [Region migration](/docs/guides/region-migration#azure-neon-regions-to-suggested-neon-aws-regions) to choose a **destination** AWS region on Neon.
+## Choosing a destination AWS region (from Neon on Azure)
+
+Use the table below to choose an AWS region for your new Neon project that's closest to your project's Azure region.
+
+| Neon Azure region                                   | Suggested Neon AWS region      |
+| --------------------------------------------------- | ------------------------------ |
+| `azure-eastus2` (Azure East US 2, Virginia)         | `aws-us-east-1` (N. Virginia)  |
+| `azure-westus3` (Azure West US 3, Arizona)          | `aws-us-west-2` (Oregon)       |
+| `azure-gwc` (Azure Germany West Central, Frankfurt) | `aws-eu-central-1` (Frankfurt) |
+
+For moves that do not start from these Azure regions (for example AWS to AWS), choose any [supported Neon region](/docs/introduction/regions). We recommend choosing a region closest to your application.
 
 ## Prerequisites
 
