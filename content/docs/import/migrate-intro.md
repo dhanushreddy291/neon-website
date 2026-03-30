@@ -31,7 +31,7 @@ If you can't afford downtime, use [Logical Replication](/docs/guides/logical-rep
 
 ## Region migration
 
-If you need your Neon **database** in a different **region**, or a **Postgres-compatible export** from Neon, see **[Region migration](/docs/guides/region-migration)**. A project stays in one region; you create a **new** Neon project in the target region and migrate your **data**, or export. That topic covers paths, tradeoffs, and links to the detailed guides.
+If you need your Neon **database** in a different **region**, or a **Postgres-compatible export** from Neon, start with **[Region migration](/docs/guides/region-migration)** for paths and tradeoffs. For **Neon-to-Neon** moves (including **Azure to AWS** region pairings), use **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)**. A project stays in one region; you create a **new** Neon project in the target region and migrate your **data**, or export.
 
 ## Provider-specific guides
 

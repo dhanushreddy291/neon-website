@@ -66,7 +66,7 @@ Neon is deprecating **Azure** regions for Neon projects (`azure-eastus2`, `azure
 
 <a id="azure-neon-regions-to-suggested-neon-aws-regions" aria-hidden="true"></a>
 
-The **Neon on Azure** to **Neon on AWS** region pairings table lives in [Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region#choosing-a-destination-aws-region-from-neon-on-azure). Use that page when you choose a destination AWS region for your new Neon project.
+The Neon on Azure to Neon on AWS pairing table is in **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region#choosing-a-destination-aws-region-from-neon-on-azure)** ([legacy anchor](/docs/guides/migrate-neon-to-another-region#azure-neon-regions-to-suggested-neon-aws-regions)).
 
 ## Where to go next
 

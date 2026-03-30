@@ -12,6 +12,8 @@ updatedOn: '2026-03-30T12:00:00.000Z'
 
 Use this guide when you want to migrate your **database** to a **different region** on Neon. A project's region is fixed. To move your data to a new region, you need to **create a new Neon project** in the target region and **migrate your database** into it.
 
+<a id="azure-neon-regions-to-suggested-neon-aws-regions" aria-hidden="true"></a>
+
 ## Choosing a destination AWS region (from Neon on Azure)
 
 Use the table below to choose an AWS region for your new Neon project that's closest to your project's Azure region.
@@ -32,7 +34,7 @@ For moves that do not start from these Azure regions (for example AWS to AWS), c
 
 ## Migration methods
 
-The subsections below are **different ways** to complete the same job. They are **not** a sequence. Pick **one** method based on database size, whether you want to use the Console, and your downtime tolerance.
+The subsections below are **different ways** to complete the same job. Pick **one** method based on database size, whether you want to use the Console, and your downtime tolerance.
 
 ### Import Data Assistant (smaller databases)
 
@@ -63,6 +65,8 @@ Enable **logical replication** on the source project only when you accept the **
 ## Related docs
 
 - [Region migration](/docs/guides/region-migration)
+- [Neon data migration guides](/docs/import/migrate-intro)
+- [Migrate data from another Neon project](/docs/import/migrate-from-neon)
 - [Get started with logical replication](/docs/guides/logical-replication-guide)
 - [Migrate data from Postgres](/docs/import/migrate-from-postgres)
 
