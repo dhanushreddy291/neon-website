@@ -34,7 +34,7 @@ Each Neon **project** exists in exactly one region. Your database runs in that r
 <Admonition type="warning" title="Azure regions on Neon">
 Neon is deprecating **Azure** regions for Neon projects (`azure-eastus2`, `azure-westus3`, `azure-gwc`). If your database runs there, plan a **data migration** into a new project or destination. **Suggested paths:** (1) **another Neon project** on **AWS** when you can use AWS (see [Region migration](/docs/guides/region-migration) and [Azure to AWS region pairings](/docs/guides/migrate-neon-to-another-region#choosing-a-destination-aws-region-from-neon-on-azure)), (2) **Databricks Lakebase** when you need Postgres to stay in **Azure**, (3) **Postgres-compatible export** when neither option works.
 
-**April 2, 2026:** You can no longer **create new projects** in Neon **Azure** regions. **Migration deadlines** for existing projects are communicated by **email from Neon** and in the **[Neon changelog](/docs/changelog)**. For help planning, contact [Support](/docs/introduction/support).
+**April 2, 2026:** You can no longer **create new projects** in Neon **Azure** regions. **Migration deadlines** for existing projects are communicated by **email from Neon** and in the **[Neon changelog](/docs/changelog)**.
 </Admonition>
 
 ## Request a region

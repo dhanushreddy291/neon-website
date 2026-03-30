@@ -71,7 +71,7 @@ The Neon on Azure to Neon on AWS pairing table is in **[Migrate to another Neon 
 ## Where to go next
 
 1. **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)**. New Neon project in the target region, then Import Data Assistant, dump and restore, or logical replication to move your database.
-2. **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**. Stay in Azure with Databricks Lakebase Postgres. You dump from Neon and restore into Lakebase.
+2. **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**. End-to-end guide: Lakebase setup, **`pg_dump`** from Neon, **`pg_restore`** on Lakebase, verify, and cut over.
 3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. When another Neon region and Lakebase do not fit. Standard `pg_dump` output.
 
 ## Cutover for live databases

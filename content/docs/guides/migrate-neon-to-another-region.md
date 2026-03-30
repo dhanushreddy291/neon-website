@@ -14,18 +14,6 @@ Use this guide when you want to migrate your **database** to a **different regio
 
 <a id="azure-neon-regions-to-suggested-neon-aws-regions" aria-hidden="true"></a>
 
-## Choosing a destination AWS region (from Neon on Azure)
-
-Use the table below to choose an AWS region for your new Neon project that's closest to your project's Azure region.
-
-| Neon Azure region                                   | Suggested Neon AWS region      |
-| --------------------------------------------------- | ------------------------------ |
-| `azure-eastus2` (Azure East US 2, Virginia)         | `aws-us-east-1` (N. Virginia)  |
-| `azure-westus3` (Azure West US 3, Arizona)          | `aws-us-west-2` (Oregon)       |
-| `azure-gwc` (Azure Germany West Central, Frankfurt) | `aws-eu-central-1` (Frankfurt) |
-
-For moves that do not start from these Azure regions (for example AWS to AWS), choose any [supported Neon region](/docs/introduction/regions). We recommend choosing a region closest to your application.
-
 ## Prerequisites
 
 - A Neon **source** project (your database today) in your current region.
@@ -38,7 +26,7 @@ The subsections below are **different ways** to complete the same job. Pick **on
 
 ### Import Data Assistant (smaller databases)
 
-Best when your database is **under roughly 10 GB** and you can use the Neon Console migration flow.
+Best when your database is **under roughly 10 GB** and you prefer a Neon Console migration workflow.
 
 1. Create a **new Neon project** in the **target region**. See [Create a project](/docs/manage/projects#create-a-project).
 2. Open the target project in the Neon Console and use the **Import Data Assistant** from the **Import** or onboarding flow. See [Import Data Assistant](/docs/import/import-data-assistant).
@@ -52,15 +40,14 @@ Best when your database is **under roughly 10 GB** and you can use the Neon Cons
 Best for larger databases or when you want full control of dump files.
 
 1. Create a **target** Neon project and database in the new region. Match database names if that simplifies your restore.
-2. Export from the **source** with **`pg_dump`** using an **unpooled** connection string. See [Backups with pg_dump](/docs/manage/backup-pg-dump).
-3. Import to the **target** with **`pg_restore`**. See [Migrate data from Postgres](/docs/import/migrate-from-postgres).
-4. **Verify**, **cut over**, then **retire** the source project when ready. See [Cutover for live databases](/docs/guides/region-migration#cutover-for-live-databases) for detailed cutover steps.
+2. Export from the **source** with **`pg_dump`** and import to the **target** with **`pg_restore`**, using **unpooled** connection strings on both sides. The full procedure (commands, flags, ownership) is [Migrate data from Postgres](/docs/import/migrate-from-postgres). For Neon connection strings and installing `pg_dump` / `pg_restore` clients, see [Backups with pg_dump](/docs/manage/backup-pg-dump).
+3. **Verify**, **cut over**, then **retire** the source project when ready. See [Cutover for live databases](/docs/guides/region-migration#cutover-for-live-databases) for detailed cutover steps.
 
 ### Logical replication (near-zero downtime)
 
-Use when you need **ongoing replication** before switchover. Follow [Replicate data from one Neon project to another](/docs/guides/logical-replication-neon-to-neon) end to end. That guide includes **publication**, **subscription**, and **monitoring** steps.
+Use this when **minimal downtime** matters more than a simple migration. It suits **busy** databases where a long dump/restore window is hard to accept, at the cost of **more setup** (replication, lag, cutover) than the other methods.
 
-Enable **logical replication** on the source project only when you accept the **wal_level** change described in that guide. After replication catches up, use [Cutover for live databases](/docs/guides/region-migration#cutover-for-live-databases) when you switch traffic.
+Follow [Replicate data from one Neon project to another](/docs/guides/logical-replication-neon-to-neon). Enable logical replication on the source only if you accept the **wal_level** change described there, then [cut over](/docs/guides/region-migration#cutover-for-live-databases) when replication has caught up.
 
 ## Related docs
 
