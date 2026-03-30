@@ -14,9 +14,9 @@ updatedOn: '2026-03-30T12:00:00.000Z'
 
 This guide helps you choose the best migration method based on your database size, downtime tolerance, source database type, and technical requirements.
 
-## Move to another region or export from Neon
+## Move your database to another region or export from Neon
 
-If you need to move a **Neon** database to another **region**, or **export** it from Neon in Postgres-compatible form, start with the **[Region migration](/docs/guides/region-migration)** hub. It links to step-by-step guides for **another Neon region**, **Lakebase**, and **Postgres-compatible export**.
+A Neon **project** lives in one **region**; you cannot move that project to a new region. To run your **data** elsewhere, you **create a new Neon project** in the target region and **migrate your database** into it, or **export** from Neon in Postgres-compatible form. Start with the **[Region migration](/docs/guides/region-migration)** hub. It links to step-by-step guides for **another Neon region**, **Lakebase**, and **Postgres-compatible export**.
 
 <DetailIconCards>
 

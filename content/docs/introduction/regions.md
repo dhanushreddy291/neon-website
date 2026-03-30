@@ -12,6 +12,8 @@ updatedOn: '2026-03-30T12:00:00.000Z'
 
 Neon offers project deployment in multiple AWS and Azure regions. To minimize latency between your Neon database and application, we recommend choosing the region closest to your application server.
 
+Each Neon **project** exists in exactly one region. Your database runs in that region. **You cannot change the region** for an existing project. If you need your **data** in a different region, you **create a new Neon project** in that region and **migrate your database** there. You are not moving the project; region is fixed when the project is created.
+
 ## AWS regions
 
 - 🇺🇸 AWS US East (N. Virginia) &mdash; `aws-us-east-1`
@@ -30,7 +32,7 @@ Neon offers project deployment in multiple AWS and Azure regions. To minimize la
 - 🇩🇪 Azure Germany West Central region (Frankfurt) &mdash; `azure-gwc`
 
 <Admonition type="warning" title="Azure regions on Neon">
-Neon is deprecating **Azure** regions for Neon projects (`azure-eastus2`, `azure-westus3`, `azure-gwc`). If your database runs there, plan a migration. **Suggested paths:** (1) **another Neon project** on **AWS** when you can use AWS (see [Region migration](/docs/guides/region-migration)), (2) **Databricks Lakebase** when you need Postgres to stay in **Azure**, (3) **Postgres-compatible export** when neither option works.
+Neon is deprecating **Azure** regions for Neon projects (`azure-eastus2`, `azure-westus3`, `azure-gwc`). If your database runs there, plan a **data migration** into a new project or destination. **Suggested paths:** (1) **another Neon project** on **AWS** when you can use AWS (see [Region migration](/docs/guides/region-migration)), (2) **Databricks Lakebase** when you need Postgres to stay in **Azure**, (3) **Postgres-compatible export** when neither option works.
 
 **April 2, 2026:** You can no longer **create new projects** in Neon **Azure** regions. **Migration deadlines** for existing projects are communicated by **email from Neon** and in the **[Neon changelog](/docs/changelog)**. For help planning, contact [Support](/docs/introduction/support).
 </Admonition>
@@ -48,7 +50,7 @@ All branches and databases created in a Neon project are created in the region s
 ![Select region image](/docs/introduction/project_creation_regions.png)
 
 <Admonition type="note">
-After you select a region for a Neon project, it cannot be changed for that project. To use a different region, create a new project in your desired region and [move your data to the new project](/docs/introduction/regions#move-project-data-to-a-new-region).
+After you select a region for a Neon project, it cannot be changed for that project. To run your database in a different region, create a **new** project there and [migrate your database and data](/docs/introduction/regions#move-your-database-to-another-region) into it.
 </Admonition>
 
 ## NAT Gateway IP addresses
@@ -78,7 +80,11 @@ If you are unsure of your project's region, you can find this information in the
 | `azure-gwc`     | 20.52.100.129, 20.52.100.208, 20.52.187.150    |
 | `azure-westus3` | 20.38.38.171, 20.168.0.32, 20.168.0.77         |
 
-## Move project data to a new region
+<a id="move-project-data-to-a-new-region" aria-hidden="true"></a>
+
+## Move your database to another region
+
+A Neon project's region does not change after creation. To use another region, you create a **new** Neon project there and migrate your **database and data** into it.
 
 Start with **[Region migration](/docs/guides/region-migration)** for path selection (another Neon region, Lakebase, or export). Then use one of the following options.
 
@@ -86,10 +92,10 @@ Start with **[Region migration](/docs/guides/region-migration)** for path select
 
 Using the dump and restore method involves the following steps:
 
-1. Creating a new project in the desired region. For project creation instructions, see [Create a project](/docs/manage/projects#create-a-project).
-1. Moving your data from the old project to the new project. For instructions, see [Import data from Postgres](/docs/import/migrate-from-postgres).
+1. **Create a new project** in the desired region. For instructions, see [Create a project](/docs/manage/projects#create-a-project).
+2. **Migrate your data** from the source project into the new project. For instructions, see [Import data from Postgres](/docs/import/migrate-from-postgres).
 
-Moving data to a new Neon project using this method may take some time depending on the size of your data. To prevent the loss of data during the import operation, consider disabling writes from your applications before initiating the import operation. You can re-enable writes when the import is completed. Neon does not currently support disabling database writes. Writes must be disabled at the application level.
+Migrating data into a new Neon project using this method may take some time depending on the size of your data. To prevent the loss of data during the import operation, consider disabling writes from your applications before initiating the import operation. You can re-enable writes when the import is completed. Neon does not currently support disabling database writes. Writes must be disabled at the application level.
 
 ### Option 2: Logical replication
 

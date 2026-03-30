@@ -3,26 +3,28 @@ title: Migrate to another Neon region
 subtitle: Move your database to a new Neon project in a different region
 summary: >-
   Move a Neon database to another Neon project using the Import Data Assistant,
-  pg_dump and pg_restore, or logical replication, including cutover notes for
-  production databases.
+  pg_dump and pg_restore, or logical replication. For production cutover, see
+  the Region migration guide.
 enableTableOfContents: true
 isDraft: false
 updatedOn: '2026-03-30T12:00:00.000Z'
 ---
 
-Use this guide when you want to **stay on Neon** and run in a **different region** (often **AWS**). If you are leaving **Neon on Azure**, see the mapping table in [Region migration](/docs/guides/region-migration#azure-neon-regions-to-suggested-neon-aws-regions).
+Use this guide when you want to migrate your **database** to a **different region** on Neon. A project's region is fixed. You need to **create a new Neon project** in the target region and **migrate your database** into it.
 
-Pick **one** method in the steps below.
+If you are migrating from a Neon project in an **Azure** region, see the mapping table in [Region migration](/docs/guides/region-migration#azure-neon-regions-to-suggested-neon-aws-regions) to choose a **destination** AWS region on Neon.
 
 ## Prerequisites
 
-- A Neon **source** project in your current region.
-- Permission to create a **target** Neon project in the new region.
-- A plan for **downtime** or **near‑zero downtime** (logical replication fits the latter for many apps). See [Neon data migration guides](/docs/import/migrate-intro) for a quick comparison.
+- A Neon **source** project (your database today) in your current region.
+- Permission to create a **target** Neon project in the new region (where your migrated database will live).
+- A plan for **downtime** or **near-zero downtime** (logical replication fits the latter for many apps). See [Neon data migration guides](/docs/import/migrate-intro) for a quick comparison.
 
-<Steps>
+## Migration methods
 
-## Import Data Assistant (smaller databases)
+The subsections below are **different ways** to complete the same job. They are **not** a sequence. Pick **one** method based on database size, whether you want to use the Console, and your downtime tolerance.
+
+### Import Data Assistant (smaller databases)
 
 Best when your database is **under roughly 10 GB** and you can use the Neon Console migration flow.
 
@@ -30,38 +32,23 @@ Best when your database is **under roughly 10 GB** and you can use the Neon Cons
 2. Open the target project in the Neon Console and use the **Import Data Assistant** from the **Import** or onboarding flow. See [Import Data Assistant](/docs/import/import-data-assistant).
 3. Connect to the **source** Neon database when prompted and complete the import.
 4. **Verify** data and applications against the target.
-5. **Cut over** app connection strings and secrets. See [Cutover](#cutover) below.
+5. **Cut over** app connection strings and secrets. For a full production cutover checklist, see [Cutover for live databases](/docs/guides/region-migration#cutover-for-live-databases).
 6. **Delete** the old project when you no longer need it.
 
-## pg_dump and pg_restore
+### pg_dump and pg_restore
 
 Best for larger databases or when you want full control of dump files.
 
 1. Create a **target** Neon project and database in the new region. Match database names if that simplifies your restore.
 2. Export from the **source** with **`pg_dump`** using an **unpooled** connection string. See [Backups with pg_dump](/docs/manage/backup-pg-dump).
 3. Import to the **target** with **`pg_restore`**. See [Migrate data from Postgres](/docs/import/migrate-from-postgres).
-4. **Verify**, **cut over**, then **retire** the source project when ready.
+4. **Verify**, **cut over**, then **retire** the source project when ready. See [Cutover for live databases](/docs/guides/region-migration#cutover-for-live-databases) for detailed cutover steps.
 
-## Logical replication (near‑zero downtime)
+### Logical replication (near-zero downtime)
 
 Use when you need **ongoing replication** before switchover. Follow [Replicate data from one Neon project to another](/docs/guides/logical-replication-neon-to-neon) end to end. That guide includes **publication**, **subscription**, and **monitoring** steps.
 
-Enable **logical replication** on the source project only when you accept the **wal_level** change described in that guide.
-
-## Cutover
-
-For **live** traffic:
-
-1. **Stop or pause writes** to the source when you are ready (Neon cannot freeze writes for you).
-2. For **logical replication**, wait until **replication lag** is acceptable and run final checks. Then **promote** traffic to the target using your app’s connection strings.
-3. **Rotate** connection strings, pools, env vars, and CI secrets to the **target** project.
-4. **Monitor** errors and performance on the target.
-5. Keep the source project **read‑only** until you are past your rollback window.
-6. **Delete** the source project when you no longer need it.
-
-More detail: [Switch over your applications](/docs/postgresql/postgres-upgrade#switch-over-your-applications) and [Move project data to a new region](/docs/introduction/regions#move-project-data-to-a-new-region).
-
-</Steps>
+Enable **logical replication** on the source project only when you accept the **wal_level** change described in that guide. After replication catches up, use [Cutover for live databases](/docs/guides/region-migration#cutover-for-live-databases) when you switch traffic.
 
 ## Related docs
 

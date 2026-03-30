@@ -15,7 +15,7 @@ Start with the [Region migration](/docs/guides/region-migration) overview if you
 
 ## Prerequisites
 
-- A Neon project with the database you want to move.
+- A Neon project with the database you want to migrate to Lakebase (export from Neon, restore on Lakebase). See [Region migration](/docs/guides/region-migration) for how this fits with other paths.
 - A Databricks account and a **Lakebase** project in the target region. Databricks manages Lakebase creation and networking. See [Lakebase Postgres](https://docs.databricks.com/aws/en/oltp) on Databricks docs.
 - Matching **Postgres major versions** when possible. Check extension and feature compatibility on both sides before you run a full cutover.
 - `pg_dump` and `pg_restore` installed locally or on a stable runner (CI or VM). Long jobs should not rely on a flaky laptop Wi‑Fi link.
