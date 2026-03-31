@@ -1,24 +1,26 @@
 'use client';
 
-import copyToClipboard from 'copy-to-clipboard';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import Link from 'components/shared/link';
 import ArrowBackToTopIcon from 'icons/arrow-back-to-top.inline.svg';
-import ChatGptIcon from 'icons/docs/chat-gpt.inline.svg';
-import ClaudeIcon from 'icons/docs/claude.inline.svg';
-import CursorIcon from 'icons/docs/cursor.inline.svg';
-import DeepSeekIcon from 'icons/docs/deepseek.inline.svg';
-import GeminiIcon from 'icons/docs/gemini.inline.svg';
-import MarkdownIcon from 'icons/docs/markdown.inline.svg';
-import PerplexityIcon from 'icons/docs/perplexity.inline.svg';
-import VSCodeIcon from 'icons/docs/vscode.inline.svg';
 import GitHubIcon from 'icons/github.inline.svg';
+import StarIcon from 'icons/docs/star.inline.svg';
 import { cn } from 'utils/cn';
 import sendGtagEvent from 'utils/send-gtag-event';
 
-const ActionItem = ({ icon: Icon, text, url, onClick, iconClassName, tooltip }) => {
+import NeonInitModal from '../neon-init-modal';
+
+export const ActionItem = ({
+  icon: Icon,
+  text,
+  url,
+  onClick,
+  iconClassName,
+  tooltip,
+  className,
+}) => {
   const Tag = url ? Link : 'button';
 
   return (
@@ -27,7 +29,8 @@ const ActionItem = ({ icon: Icon, text, url, onClick, iconClassName, tooltip }) 
         className={cn(
           'relative flex h-3.5 w-full items-center justify-between rounded-sm text-gray-new-40',
           'transition-colors duration-200 hover:text-black-pure',
-          'dark:text-gray-new-70 dark:hover:text-white'
+          'dark:text-gray-new-70 dark:hover:text-white',
+          className
         )}
         to={url}
         target={url ? '_blank' : undefined}
@@ -63,47 +66,15 @@ ActionItem.propTypes = {
   onClick: PropTypes.func,
   iconClassName: PropTypes.string,
   tooltip: PropTypes.string,
+  className: PropTypes.string,
 };
 
-const CopyMarkdownButton = ({ markdownPath }) => {
-  const [status, setStatus] = useState('default'); // 'default' | 'copied' | 'failed'
+const SetUpNeonButton = ({ onClick }) => (
+  <ActionItem icon={StarIcon} text="Set up Neon with your AI" onClick={onClick} />
+);
 
-  const getButtonText = () => {
-    if (status === 'failed') return 'Failed to copy';
-    if (status === 'copied') return 'Copied!';
-    return 'Copy markdown';
-  };
-
-  const copyPageToClipboard = async () => {
-    try {
-      const response = await fetch(markdownPath);
-      const content = await response.text();
-      copyToClipboard(content);
-      setStatus('copied');
-      sendGtagEvent('Action Clicked', { text: 'Copy markdown', tag_name: 'DocsSidebar' });
-      setTimeout(() => {
-        setStatus('default');
-      }, 2000);
-    } catch (error) {
-      setStatus('failed');
-      setTimeout(() => {
-        setStatus('default');
-      }, 2000);
-    }
-  };
-
-  return (
-    <ActionItem
-      icon={MarkdownIcon}
-      text={getButtonText()}
-      tooltip="Copy this page as markdown text"
-      onClick={status === 'copied' ? undefined : copyPageToClipboard}
-    />
-  );
-};
-
-CopyMarkdownButton.propTypes = {
-  markdownPath: PropTypes.string.isRequired,
+SetUpNeonButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
 };
 
 /* Disabled for now - kept for possible future use
@@ -143,146 +114,19 @@ const CopyMCPServerButton = () => {
 };
 */
 
-const CopyNeonCLIButton = () => {
-  const [status, setStatus] = useState('default'); // 'default' | 'copied' | 'failed'
-  const cliCommand = 'npx neonctl@latest init';
-
-  const getButtonText = () => {
-    if (status === 'failed') return 'Failed to copy';
-    if (status === 'copied') return 'Copied!';
-    return 'Copy neon init command';
-  };
-
-  const copyCommand = () => {
-    try {
-      copyToClipboard(cliCommand);
-      setStatus('copied');
-      sendGtagEvent('Action Clicked', { text: 'Copy neon init command', tag_name: 'DocsSidebar' });
-      setTimeout(() => {
-        setStatus('default');
-      }, 2000);
-    } catch (error) {
-      setStatus('failed');
-      setTimeout(() => {
-        setStatus('default');
-      }, 2000);
-    }
-  };
-
-  return (
-    <ActionItem
-      icon={MarkdownIcon}
-      text={getButtonText()}
-      tooltip="Set up Neon in one command"
-      onClick={status === 'copied' ? undefined : copyCommand}
-    />
-  );
-};
-
 const Actions = ({ gitHubPath, withBorder = false, isTemplate = false }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const githubBase = process.env.NEXT_PUBLIC_GITHUB_PATH;
-  const siteUrl = process.env.NEXT_PUBLIC_DEFAULT_SITE_URL;
 
   const gitHubLink = `${githubBase}${gitHubPath}`;
-  const markdownPath = `/${gitHubPath.replace('content/', '')}`;
-  const markdownUrl = `${siteUrl}${markdownPath}`;
   const backToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const AI_CHATBOTS = [
-    {
-      name: 'ChatGPT',
-      enabled: true,
-      generateLink: (url) =>
-        `https://chatgpt.com/?hints=search&q=Read+from+${url}+so+I+can+ask+questions+about+it.`,
-      icon: ChatGptIcon,
-    },
-    {
-      name: 'Claude',
-      enabled: true,
-      generateLink: (url) =>
-        `https://claude.ai/new?q=Read+from+${url}+so+I+can+ask+questions+about+it.`,
-      icon: ClaudeIcon,
-    },
-    {
-      name: 'Perplexity',
-      enabled: false,
-      generateLink: (url) =>
-        `https://www.perplexity.ai/?q=Read+from+${url}+so+I+can+ask+questions+about+it.`,
-      icon: PerplexityIcon,
-    },
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    sendGtagEvent('Action Clicked', { text: 'Set up Neon with your AI', tag_name: 'DocsSidebar' });
+  };
 
-    // Disabled as they currently do not have a way to prefill content via URL
-    {
-      name: 'Gemini',
-      enabled: false,
-      generateLink: (url) =>
-        `https://gemini.google.com/?q=Read+from+${url}+so+I+can+ask+questions+about+it.`,
-      icon: GeminiIcon,
-    },
-    {
-      name: 'DeepSeek',
-      enabled: false,
-      generateLink: (url) =>
-        `https://chat.deepseek.com/?q=Read+from+${url}+so+I+can+ask+questions+about+it.`,
-      icon: DeepSeekIcon,
-    },
-  ];
-
-  const docsActions = (
-    <>
-      <CopyMarkdownButton markdownPath={markdownPath} />
-      {AI_CHATBOTS.filter((bot) => bot.enabled).map((bot) => (
-        <ActionItem
-          key={bot.name}
-          icon={bot.icon}
-          text={`Open in ${bot.name}`}
-          url={bot.generateLink(markdownUrl)}
-          tooltip={`Open this page in ${bot.name}`}
-          onClick={() =>
-            sendGtagEvent('Action Clicked', {
-              text: `Open in ${bot.name}`,
-              tag_name: 'DocsSidebar',
-            })
-          }
-        />
-      ))}
-      <CopyNeonCLIButton />
-      {/* <CopyMCPServerButton /> */}
-      <ActionItem
-        icon={CursorIcon}
-        text="Connect MCP on Cursor"
-        url="cursor://anysphere.cursor-deeplink/mcp/install?name=Neon&config=eyJ1cmwiOiJodHRwczovL21jcC5uZW9uLnRlY2gvbWNwIn0%3D"
-        tooltip="Connect the Neon MCP server on Cursor"
-        onClick={() =>
-          sendGtagEvent('Action Clicked', {
-            text: 'Connect MCP on Cursor',
-            tag_name: 'DocsSidebar',
-          })
-        }
-      />
-      <ActionItem
-        icon={VSCodeIcon}
-        text="Connect MCP on VS Code"
-        url="vscode:mcp/install?%7B%22name%22%3A%22Neon%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.neon.tech%2Fmcp%22%7D"
-        tooltip="Connect the Neon MCP server on VS Code"
-        onClick={() =>
-          sendGtagEvent('Action Clicked', {
-            text: 'Connect MCP on VS Code',
-            tag_name: 'DocsSidebar',
-          })
-        }
-      />
-      <ActionItem
-        icon={GitHubIcon}
-        text="Edit on GitHub"
-        url={gitHubLink}
-        tooltip="Suggest changes to this page"
-        onClick={() =>
-          sendGtagEvent('Action Clicked', { text: 'Edit on GitHub', tag_name: 'DocsSidebar' })
-        }
-      />
-    </>
-  );
+  const docsActions = <SetUpNeonButton onClick={handleOpenModal} />;
 
   const templateActions = (
     <>
@@ -305,14 +149,17 @@ const Actions = ({ gitHubPath, withBorder = false, isTemplate = false }) => {
   );
 
   return (
-    <div
-      className={cn(
-        'flex flex-col gap-3.5',
-        withBorder && 'mt-5 border-t border-gray-new-90 pt-5 dark:border-gray-new-20'
-      )}
-    >
-      {isTemplate ? templateActions : docsActions}
-    </div>
+    <>
+      <div
+        className={cn(
+          'flex flex-col gap-3.5',
+          withBorder && 'mt-5 border-t border-gray-new-90 pt-5 dark:border-gray-new-20'
+        )}
+      >
+        {isTemplate ? templateActions : docsActions}
+      </div>
+      <NeonInitModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 };
 
