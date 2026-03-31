@@ -33,7 +33,7 @@ Use these instructions to:
 - Import a database from a Neon project created in one region to a project created in another region.
 - Import a database from a Neon project created with one Postgres version to a Neon project created with another Postgres version.
 
-For planning a **region** move (methods and cutover), see **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)** and **[Region migration](/docs/guides/region-migration)**.
+For planning a **region** move (methods), see **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)** and **[Region migration](/docs/guides/region-migration)**.
 
 <Admonition type="tip" title="Other ways to move data between Neon projects">
 

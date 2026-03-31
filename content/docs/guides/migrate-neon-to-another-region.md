@@ -12,7 +12,7 @@ updatedOn: '2026-03-30T12:00:00.000Z'
 
 When your **Neon database** must run in a **different Neon region** than it does today, you are not moving the project. A project's region is fixed, so you **create a new Neon project** in the target region and **migrate** your database into it. Use the sections below to **select a migration method** that best fits your requirements (for example database size, whether you want a Console-driven flow, and how much downtime you can accept). Each section links to a guide with the full procedure.
 
-The **[Region migration](/docs/guides/region-migration)** topic explains the broader workflow: when to migrate, how this path fits alongside Lakebase or export options, verification, and **[cutover for live databases](/docs/guides/region-migration#cutover-for-live-databases)**. This page focuses only on **choosing among the three Neon-to-Neon methods** when you stay on Neon.
+The **[Region migration](/docs/guides/region-migration)** topic explains the broader workflow: when to migrate, how this path fits alongside Lakebase or export options, and how to pick a guide. This page focuses only on **choosing among the three Neon-to-Neon methods** when you stay on Neon.
 
 <a id="azure-neon-regions-to-suggested-neon-aws-regions" aria-hidden="true"></a>
 
