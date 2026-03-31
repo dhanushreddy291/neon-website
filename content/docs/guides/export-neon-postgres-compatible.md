@@ -22,7 +22,7 @@ Once you have the archive, importing it is standard Postgres tooling. The **[Res
 
 For advanced options, ownership, and piping, see [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres).
 
-## Restore on your destination with `pg_restore` (#restore-on-your-destination-with-pg-restore)
+## Restore on your destination with `pg_restore`
 
 A **custom-format** dump (`-Fc`) from Neon is restored with **`pg_restore`**. The following matches the usual export from [Backups with pg_dump](/docs/manage/backup-pg-dump) (same dump file name as in that example).
 
