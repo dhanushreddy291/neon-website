@@ -46,10 +46,16 @@ export const ActionItem = ({
       {tooltip && (
         <span
           className={cn(
-            'pointer-events-none absolute top-full left-0 z-10 mt-1.5 whitespace-nowrap',
-            'rounded-md bg-gray-new-8 px-2 py-1 text-xs text-white opacity-0',
+            'pointer-events-none absolute top-full left-0 z-10 mt-2.75 whitespace-nowrap opacity-0',
+            'h-6.5 border border-gray-new-80 bg-gray-new-98 px-2 flex items-center text-xs text-gray-new-40',
             'transition-opacity duration-150 group-hover:opacity-100',
-            'dark:bg-gray-new-90 dark:text-gray-new-8'
+            'dark:border-gray-new-20 dark:bg-gray-new-8 dark:text-gray-new-60',
+            'before:absolute before:-top-[4px] before:left-1/2 before:-translate-x-1/2',
+            'before:size-2 before:rotate-45',
+            'before:border-t before:border-l before:border-gray-new-80 before:bg-gray-new-98',
+            'dark:before:border-gray-new-20 dark:before:bg-gray-new-8',
+            'after:absolute after:top-0 after:left-1/2 after:h-px after:w-3 after:-translate-x-1/2',
+            'after:bg-gray-new-98 dark:after:bg-gray-new-8'
           )}
         >
           {tooltip}
@@ -69,8 +75,8 @@ ActionItem.propTypes = {
   className: PropTypes.string,
 };
 
-const SetUpNeonButton = ({ onClick }) => (
-  <ActionItem icon={StarIcon} text="Set up Neon with your AI" onClick={onClick} />
+const SetUpNeonButton = ({ onClick, tooltip }) => (
+  <ActionItem icon={StarIcon} text="Set up Neon with your AI" onClick={onClick} tooltip={tooltip} />
 );
 
 SetUpNeonButton.propTypes = {
@@ -126,7 +132,9 @@ const Actions = ({ gitHubPath, withBorder = false, isTemplate = false }) => {
     sendGtagEvent('Action Clicked', { text: 'Set up Neon with your AI', tag_name: 'DocsSidebar' });
   };
 
-  const docsActions = <SetUpNeonButton onClick={handleOpenModal} />;
+  const docsActions = (
+    <SetUpNeonButton onClick={handleOpenModal} tooltip="Сopy neon init command" />
+  );
 
   const templateActions = (
     <>
