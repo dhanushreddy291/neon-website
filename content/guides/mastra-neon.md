@@ -23,7 +23,7 @@ Before you begin, ensure you have the following:
 
 <Steps>
 
-## Step 1: Create a Neon project
+## Create a Neon project
 
 You need a Neon Postgres database to store your agent's memory. Mastra will automatically create the necessary tables for you on its first interaction.
 
@@ -33,7 +33,7 @@ You need a Neon Postgres database to store your agent's memory. Mastra will auto
 
 ![Connection details in Neon Console](/docs/connect/connection_details.png)
 
-## Step 2: Initialize a new Mastra project
+## Initialize a new Mastra project
 
 Open your terminal and create a new directory for your agent project. Initialize a standard Node.js project and install Mastra's core packages alongside the PostgreSQL adapter and Memory module.
 
@@ -77,7 +77,7 @@ Update your `package.json` to add `dev` and `build` scripts:
 }
 ```
 
-## Step 3: Set your environment variables
+## Set your environment variables
 
 Create a `.env` file in the root of your project to hold your API keys and Neon connection string.
 
@@ -92,7 +92,7 @@ DATABASE_URL="postgresql://<user>:<password>@<endpoint>.neon.tech/<dbname>?sslmo
 OPENROUTER_API_KEY="your-openrouter-api-key"
 ```
 
-## Step 4: Configure Mastra to use Neon Postgres for storage
+## Configure Mastra to use Neon Postgres for storage
 
 Mastra uses a central configuration file to tie your agents, workflows, and storage together. By default, agents share **instance-level storage**.
 
@@ -117,7 +117,7 @@ export const mastra = new Mastra({
 });
 ```
 
-## Step 5: Create a stateful agent
+## Create a stateful agent
 
 Create a simple agent that uses Mastra's Memory module to remember user interactions. This agent will store its memory in Neon, allowing it to recall past conversations.
 
@@ -163,7 +163,7 @@ Create a simple agent that uses Mastra's Memory module to remember user interact
    });
    ```
 
-## Step 6: Test the agent's memory
+## Test the agent's memory
 
 You can now test your agent to see how it retains memory across interactions. In this example, we will simulate a conversation where the user shares their favorite color, and the agent remembers it in a subsequent turn. The Memory module uses a combination of `resource` and `thread` identifiers to manage context:
 
