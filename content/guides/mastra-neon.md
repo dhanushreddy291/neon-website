@@ -130,7 +130,6 @@ Create a simple agent that uses Mastra's Memory module to remember user interact
 2. Create a new file `src/mastra/agents/memory-agent.ts` and add the following code:
 
    ```typescript
-   // src/mastra/agents/memory-agent.ts
    import { Agent } from '@mastra/core/agent';
    import { Memory } from '@mastra/memory';
 
@@ -146,6 +145,8 @@ Create a simple agent that uses Mastra's Memory module to remember user interact
      }),
    });
    ```
+
+   The above code defines a simple agent that uses the Memory module to retain the last 10 messages of conversation. The agent is powered by the `claude-haiku-4.5` model from OpenRouter.
 
 3. Update your Mastra configuration in `src/mastra/index.ts` to include the new agent:
 
@@ -230,7 +231,7 @@ Execute the script using `tsx` (which automatically loads your `.env` and execut
 npx tsx --env-file=.env src/test.ts
 ```
 
-You should see output similar to the following, demonstrating that the agent remembers the user's favorite color and can answer questions based on that memory:
+You should see output similar to the following:
 
 ```text shouldWrap
 Agent: Hello! Nice to meet you! I've noted that your favorite color is **Blue**. I'll remember this detail about you for our future conversations.
@@ -266,6 +267,8 @@ Agent: Of course! Here's a summary of our conversation so far:
 
 Is there anything else you'd like to discuss?
 ```
+
+You can see that the agent successfully recalls the user's favorite color and can answer questions based on that memory. Additionally, it can provide a summary of the conversation, demonstrating its ability to retain and utilize context across multiple interactions.
 
 If you log into the [Neon Console](https://console.neon.tech) and inspect your database tables, you will now see tables like `mastra_messages` and `mastra_threads` populated with these interactions.
 
