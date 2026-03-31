@@ -1,6 +1,6 @@
 ---
 title: Region migration
-subtitle: Move your Neon database to another region, or export Postgres-compatible data
+subtitle: Move your Neon database to another region
 summary: >-
   Choose a path to migrate your database to another region (new Neon project plus data migration), or to export your Neon
   data in Postgres-compatible form. Covers another Neon region, Lakebase, dump and restore, logical replication,
@@ -14,11 +14,11 @@ A Neon **project** is created in a single [region](/docs/introduction/regions). 
 
 If you need your **data** in a different region, you **create a new Neon project** in that region and **migrate your database** into it.
 
-Common reasons to migrate data:
+Common reasons to migrate to a different region:
 
 - Your app moved to a different region and you want lower latency.
 - You need a new environment in another region.
-- You are migrating away from a deprecated Neon Azure region.
+- You are migrating away from a [deprecated Neon Azure](/docs/introduction/regions#azure-regions) region.
 
 <Admonition type="note" title="Databricks Lakebase">
 If you must keep Postgres in Azure for residency or colocation, consider **[Lakebase Postgres](https://docs.databricks.com/aws/en/oltp)** on Databricks. It supports Azure regions and most Neon features.
