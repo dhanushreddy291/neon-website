@@ -142,7 +142,7 @@ const AI_CHATBOTS = [
 ];
 
 const DropdownMenu = ({ gitHubPath, className }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
   const siteUrl = process.env.NEXT_PUBLIC_DEFAULT_SITE_URL || '';
