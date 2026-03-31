@@ -30,7 +30,7 @@ You create a **new Neon project** in the **target region**, then use the **Impor
 
 **Best for** larger databases, or when you want full control of dump files and restore timing.
 
-You export from the source with **`pg_dump`** and import to the target with **`pg_restore`**, typically using **unpooled** connection strings on both sides. The full procedure (commands, flags, ownership) is **[Migrate data from Postgres](/docs/import/migrate-from-postgres)**. For Neon connection strings and installing client tools, see **[Backups with pg_dump](/docs/manage/backup-pg-dump)**.
+You export from the source with **`pg_dump`** and import to the target with **`pg_restore`**, typically using **unpooled** connection strings on both sides. For **Neon project to Neon project**, you can run them **in one piped command** (`pg_dump ... | pg_restore ...`) for smaller databases. See **[Migrate data from another Neon project](/docs/import/migrate-from-neon)**. For **separate** dump and restore steps, flags, and ownership, see **[Migrate data from Postgres](/docs/import/migrate-from-postgres)**. For Neon connection strings and installing client tools, see **[Backups with pg_dump](/docs/manage/backup-pg-dump)**.
 
 ### Logical replication
 

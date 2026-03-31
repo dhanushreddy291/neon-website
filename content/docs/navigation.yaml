@@ -76,7 +76,7 @@
               slug: import/migrate-from-render
             - title: Supabase
               slug: import/migrate-from-supabase
-            - title: Migrate from a Neon project
+            - title: Neon to Neon
               slug: import/migrate-from-neon
             - title: Schema-only
               slug: import/migrate-schema-only

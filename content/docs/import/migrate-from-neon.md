@@ -1,16 +1,28 @@
 ---
 title: Migrate data from another Neon project
 summary: >-
-  Covers the migration of a database between Neon projects using `pg_dump` and
-  `pg_restore`, including considerations for connection types, Postgres version
-  upgrades, and alternative migration methods.
+  Migrate between Neon projects by piping `pg_dump` to `pg_restore`, a compact
+  option for smaller databases and CLI workflows. Also covers alternatives
+  (Import Data Assistant, separate dump and restore, logical replication).
 enableTableOfContents: true
 redirectFrom:
   - /docs/import/import-from-neon
 updatedOn: '2026-02-06T22:07:33.071Z'
 ---
 
-This guide describes how to migrate a database from one Neon project to another by piping data from `pg_dump` to `pg_restore`.
+This guide describes how to migrate a database from one Neon project to another by **piping** output from **`pg_dump`** straight into **`pg_restore`** (`pg_dump ... | pg_restore ...`). That runs the dump and restore in one step without writing an intermediate dump file on disk.
+
+For **small** databases, piping is often enough and stays simple. It is an **alternative** to the **[Import Data Assistant](/docs/import/import-data-assistant)** if you want a **command line or scripted** flow instead of the Console. It is also different from running **`pg_dump` and `pg_restore` as separate commands** (dump to a file, then restore from that file). For the separate-file procedure, flags, and ownership notes, see [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres).
+
+<Admonition type="note" title="Why avoid piping for large databases">
+A piped migration is **one long chain**: data streams straight from `pg_dump` into `pg_restore` with **no dump file on disk**. That is convenient for small moves, but for **large** or **long-running** jobs it is riskier:
+
+- **Failures cost more.** If `pg_dump`, `pg_restore`, or the connection between them fails partway through, you usually **rerun the whole migration** from the start. You do **not** keep an archive you can re-use or debug.
+- **Longer windows for problems.** Bigger databases take longer to move, so there is more time for network blips, timeouts, or client issues to interrupt the pipe.
+- **Harder to tune per step.** A file-based dump lets you retry **restore** with different flags (for example ownership) without dumping again. See [Pipe pg_dump to pg_restore](/docs/import/migrate-from-postgres#pipe-pg_dump-to-pg_restore) for more detail.
+
+For large Neon-to-Neon moves, prefer **separate** `pg_dump` then `pg_restore` ([Migrate data from Postgres](/docs/import/migrate-from-postgres)), **logical replication** for minimal downtime ([Replicate data from one Neon project to another](/docs/guides/logical-replication-neon-to-neon)), or the **Import Data Assistant** when it fits your size and workflow ([Import Data Assistant](/docs/import/import-data-assistant)).
+</Admonition>
 
 <Admonition type="important">
 Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string) (see PgBouncer issues [452](https://github.com/pgbouncer/pgbouncer/issues/452) & [976](https://github.com/pgbouncer/pgbouncer/issues/976) for details). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.
@@ -21,21 +33,20 @@ Use these instructions to:
 - Import a database from a Neon project created in one region to a project created in another region.
 - Import a database from a Neon project created with one Postgres version to a Neon project created with another Postgres version.
 
-For planning a **region** move (methods, Azure-to-AWS pairings, cutover), see **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)** and **[Region migration](/docs/guides/region-migration)**.
+For planning a **region** move (methods and cutover), see **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)** and **[Region migration](/docs/guides/region-migration)**.
 
-<Admonition type="tip">
+<Admonition type="tip" title="Other ways to move data between Neon projects">
 
-You can also use these alternative methods to migrate data between Neon projects:
-
-- **Import Data Assistant**: A fast and simple option for databases under 10 GB. See [Import Data Assistant](/docs/import/import-data-assistant).
-- **Logical replication**: Move your data from one Neon project to another. Consider this option for large databases requiring near-zero downtime. See [Replicate data from one Neon project to another](/docs/guides/logical-replication-neon-to-neon).
+- **Import Data Assistant**: Guided migration in the Neon Console, often easiest for databases **under about 10 GB**. See [Import Data Assistant](/docs/import/import-data-assistant).
+- **Separate `pg_dump` then `pg_restore`**: Write a dump file, then restore (better for **large** datasets or when you want a reusable archive). See [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres).
+- **Logical replication**: Near-zero downtime for **large** or busy databases. See [Replicate data from one Neon project to another](/docs/guides/logical-replication-neon-to-neon).
 
 </Admonition>
 
 ## Important considerations
 
 - **Upgrading the Postgres version**: When upgrading to a new version of Postgres, always test thoroughly before migrating your production systems or applications. We also recommend familiarizing yourself with the changes in the new version of Postgres, especially those affecting compatibility. For information about those changes, please refer to the official Postgres [Release 15](https://www.postgresql.org/docs/release/15.0/) or [Release 16](https://www.postgresql.org/docs/16/release-16.html) documentation.
-- **Piping considerations**: Piping is not recommended for large datasets, as it is susceptible to failures during lengthy migration operations (see [Pipe pg_dump to pg_restore](/docs/import/migrate-from-postgres#pipe-pg_dump-to-pg_restore) for more information). If your dataset is large, we recommend performing the dump and restore as separate operations. For instructions, see [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres).
+- **Piping considerations**: For large datasets, prefer **separate** dump and restore or another method (see the note **Why avoid piping for large databases** above and [Pipe pg_dump to pg_restore](/docs/import/migrate-from-postgres#pipe-pg_dump-to-pg_restore)).
 
 ## Import data from another project
 

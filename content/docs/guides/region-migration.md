@@ -50,7 +50,7 @@ flowchart TD
 
 ## Where to go next
 
-1. **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)**. Compare the Import Data Assistant, dump and restore, and logical replication, then follow the method-specific how-to linked from that page.
+1. **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)**. Compare the Import Data Assistant, dump and restore, and logical replication, then follow the method-specific how-to linked from that page. For Neon-to-Neon **`pg_dump` / `pg_restore`**, you can **pipe** `pg_dump` to `pg_restore` for smaller databases ([Migrate data from another Neon project](/docs/import/migrate-from-neon)) or run **separate** dump and restore commands ([Migrate data from Postgres](/docs/import/migrate-from-postgres)).
 2. **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**. Create a Lakebase project, **`pg_dump`** from Neon, **`pg_restore`** on Lakebase.
 3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. When another Neon region and Lakebase do not meet your requirements. Use `pg_dump` to export your data in a Postgres-compatible for migration elsewhere.
 
