@@ -26,11 +26,11 @@ If you must keep Postgres in Azure for residency or colocation, consider **[Lake
 
 ## Choose a path
 
-Use the flowchart or table to pick a migration guide.
+Use the flowchart to pick a migration guide.
 
 ```mermaid
 flowchart TD
-  start["Need to move Neon data?"]
+  start["Need to move Neon data to a new region?"]
   q1{"Postgres must stay in Azure?"}
   lake["Migrate Neon to Lakebase"]
   q2{"Stay on Neon in a new region?"}
@@ -46,26 +46,27 @@ flowchart TD
   q3 -->|Yes| exp
 ```
 
-| Question                                                     | If yes                                                            | If no                                                                                                                                                                                                                                 |
-| ------------------------------------------------------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Must Postgres stay in **Azure**?                             | [Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase) | Stay on Neon in **AWS** ([Azure to AWS pairings](/docs/guides/migrate-neon-to-another-region#choosing-a-destination-aws-region-from-neon-on-azure)) via [Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region) |
-| Under **~10 GB** and you want the **Import Data Assistant**? | Start with the Neon region guide (Assistant section)              | Use **pg_dump** / **pg_restore** or **logical replication** in the same guide                                                                                                                                                         |
-| Need **near-zero downtime**?                                 | Prefer **logical replication** in the Neon region guide           | Plan a maintenance window for dump and restore                                                                                                                                                                                        |
-
-<Admonition type="note" title="Logical replication is Neon-to-Neon only">
-Logical replication is **not** supported for **Neon to Lakebase** migrations. For Lakebase, use **`pg_dump`** and **`pg_restore`** ([Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)).
-</Admonition>
-
 <a id="azure-neon-regions-to-suggested-neon-aws-regions" aria-hidden="true"></a>
 
 ## Where to go next
 
-1. **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)**. New Neon project in the target region, then Import Data Assistant, dump and restore, or logical replication to move your database.
-2. **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**. End-to-end guide: Lakebase setup, **`pg_dump`** from Neon, **`pg_restore`** on Lakebase, verify, and cut over.
-3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. When another Neon region and Lakebase do not fit. Standard `pg_dump` output.
+1. **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)**. Compare the Import Data Assistant, dump and restore, and logical replication, then follow the method-specific how-to linked from that page.
+2. **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**. Create a Lakebase project, **`pg_dump`** from Neon, **`pg_restore`** on Lakebase.
+3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. When another Neon region and Lakebase do not meet your requirements. Use `pg_dump` to export your data in a Postgres-compatible for migration elsewhere.
+
+## Cutover for live databases
+
+When you migrate a **production** database, plan verification and cutover together with the method you chose (Import Data Assistant, dump and restore, or logical replication). Use the how-to for that method for the exact sequence; this checklist is the common thread.
+
+- **Verify** data and application behavior against the **target** project before you switch traffic.
+- **Pause or stop writes** to the source when your migration method requires it (for example before a final **`pg_dump`** / **`pg_restore`** pass, or before the last logical replication sync).
+- **Cut over** by updating connection strings, secrets, and environment variables so applications use the **target** Neon project in the new region.
+- **Monitor** the target after cutover until you are confident, then **retire** or delete the source project when you no longer need it.
+
+Until you cut over, treat the **source** as the system of record.
 
 ## AI assistance
 
-If you want **AI help in your editor** while you migrate (for example **creating a Neon project** in your **target region**, drafting **`pg_dump`** and **`pg_restore`** commands, or working through **logical replication**), run **[`neon init`](/docs/reference/cli-init)**. It sets up the Neon CLI, **Neon MCP Server**, and the **[Neon agent skills](https://github.com/neondatabase/agent-skills)** repo for supported editors.
+If you want **AI help in your editor** while you migrate (for example **creating a Neon project** in your **target region**, drafting **`pg_dump`** and **`pg_restore`** commands, or working through **logical replication**), run **[`npx neonctl@latest init`](/docs/reference/cli-init)**. It sets up the Neon CLI, **Neon MCP Server**, and the **[Neon agent skills](https://github.com/neondatabase/agent-skills)** repo for supported editors.
 
 <NeedHelp/>
