@@ -29,10 +29,6 @@ Each Neon **project** exists in exactly one region. Your database runs in that r
 
 <AzureRegionsDeprecation/>
 
-- 🇺🇸 Azure East US 2 region (Virginia) &mdash; `azure-eastus2`
-- 🇺🇸 Azure West US 3 region (Arizona) &mdash; `azure-westus3`
-- 🇩🇪 Azure Germany West Central region (Frankfurt) &mdash; `azure-gwc`
-
 ## Request a region
 
 <RequestForm type="region" />
