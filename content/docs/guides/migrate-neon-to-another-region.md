@@ -18,11 +18,13 @@ When your **Neon database** must run in a **different Neon region** than it does
 
 Each option below is a different way to **move the same database** into a new Neon project in a different region. Pick **one** based on database size, whether you want a Console-driven flow, and how much downtime you can accept. The linked topics contain the **step-by-step** procedures.
 
+<a id="import-data-assistant" aria-hidden="true"></a>
+
 ### Import Data Assistant
 
 **Best for** smaller databases (roughly **under 10 GB**) and when you want a guided flow in the Neon Console.
 
-You create a **new Neon project** in the **target region**, then use the **Import Data Assistant** from the target project's **Import** or onboarding flow. See **[Import Data Assistant](/docs/import/import-data-assistant)** for how it works and what to connect.
+In the Neon Console, open the **[Projects](https://console.neon.tech/app/)** page and start the **Import Data Assistant**. The assistant **creates your new Neon project** in the **target region** as part of the same flow. You begin by entering the **connection string for the database you are migrating from**. See **[Import Data Assistant](/docs/import/import-data-assistant)** for instructions.
 
 ### pg_dump and pg_restore
 

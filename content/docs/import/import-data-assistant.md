@@ -22,19 +22,11 @@ You can also use the **Import Data Assistant** to migrate data between Neon proj
 
 ## Ways to import
 
-The Import Data Assistant always creates a **new branch** for your imported data. There are two ways to launch the import:
+The Import Data Assistant always creates a **new branch** for your imported data. Launch the import from the **Projects** page: start from the project list to create a new project and import your data into a new branch as part of the flow.
 
-1. **From the Projects page:**  
-   Start from the project list to create a new project and import your data into a new branch as part of the flow.
+![Import Data Assistant from Projects page](/docs/import/import_data_assistant_project.png)
 
-   ![Import Data Assistant from Projects page](/docs/import/import_data_assistant_project.png)
-
-2. **From within a project:**  
-   Use the Getting Started widget on a project dashboard to import your data into a new branch of the existing project.
-
-   ![Import Data Assistant from Quick Start widget](/docs/import/import_data_assistant_quickstart_widget.png)
-
-Both options use the same automated import process; just provide your database connection string and we'll handle the rest.
+Provide your database connection string and we'll handle the rest.
 
 ## Before you start
 
