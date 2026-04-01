@@ -28,7 +28,7 @@ In the Neon Console, open the **[Projects](https://console.neon.tech/app/)** pag
 
 ### pg_dump and pg_restore
 
-**Best for** larger databases, or when you want full control of dump files and restore timing. See **[Migrate data from Postgres](/docs/import/migrate-from-postgres)**.
+**Best for** larger databases, or when you want full control of dump files and restore timing. See **[Migrate data from another Neon project](/docs/import/migrate-from-neon)**.
 
 ### Logical replication
 
