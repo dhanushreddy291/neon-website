@@ -14,7 +14,7 @@ This topic describes how to create a backup of your Neon database using the Post
 The same **`pg_dump`** flow applies when you **export** data for a **region migration** or a **Postgres-compatible export from Neon**. For path selection (another Neon region, Lakebase, or export), see **[Region migration](/docs/guides/region-migration)**.
 
 <Admonition type="important">
-Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string) (see PgBouncer issues [452](https://github.com/pgbouncer/pgbouncer/issues/452) & [976](https://github.com/pgbouncer/pgbouncer/issues/976) for details). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.
+Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.
 </Admonition>
 
 ## Prerequisites

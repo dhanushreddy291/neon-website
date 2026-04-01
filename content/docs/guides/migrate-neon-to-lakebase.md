@@ -7,7 +7,7 @@ summary: >-
   optional Neon teardown, with Databricks docs for Lakebase console and networking.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-03-30T12:00:00.000Z'
+updatedOn: '2026-04-02T18:00:00.000Z'
 ---
 
 This guide describes how to migrate a **Neon** database to **Databricks Lakebase Postgres** using **`pg_dump`** and **`pg_restore`**.
@@ -23,8 +23,8 @@ This guide describes how to migrate a **Neon** database to **Databricks Lakebase
 - **Postgres major versions** aligned when possible between Neon and Lakebase.
 - `pg_dump` and `pg_restore` installed on a **stable** machine.
 
-<Admonition type="important" title="Auth for long restores">
-Lakebase recommends a **native Postgres password** for long `pg_restore` jobs. Short-lived OAuth tokens can expire mid-run. See [Authenticate to a database instance](https://docs.databricks.com/aws/en/oltp/instances/authentication) and [Postgres pg_dump and pg_restore](https://docs.databricks.com/aws/en/oltp/projects/pg-dump-restore) on Databricks.
+<Admonition type="important">
+Lakebase **OAuth** database tokens expire about every hour ([OAuth token authentication](https://docs.databricks.com/aws/en/oltp/projects/authentication#oauth-token-authentication)), so for **`pg_restore`** use a **native Postgres password role** and the connection string from **Connect** (the URI includes the password). See [Postgres pg_dump and pg_restore](https://docs.databricks.com/aws/en/oltp/projects/pg-dump-restore) on Databricks.
 </Admonition>
 
 <Steps>
@@ -36,16 +36,15 @@ Lakebase recommends a **native Postgres password** for long `pg_restore` jobs. S
 
 ## Create a Lakebase project and get a connection string
 
-Complete the **Databricks** side before you depend on a final restore.
-
-1. In your Databricks workspace, create a **Lakebase Postgres** project. Follow [Lakebase Postgres](https://docs.databricks.com/aws/en/oltp) for workspace prerequisites, regions, and creation flow.
-2. Create the **database** (and roles if needed) that will receive the restore.
-3. Obtain a **Postgres connection string** for the target database. See [Connect to your database](https://docs.databricks.com/aws/en/oltp/projects/connect).
-4. Set up **authentication** suitable for a long `pg_restore` (password-based as recommended in Databricks docs). See [Authenticate to a database instance](https://docs.databricks.com/aws/en/oltp/instances/authentication).
-
-Databricks also documents **`pg_dump` / `pg_restore`** patterns for Lakebase in [Postgres pg_dump and pg_restore](https://docs.databricks.com/aws/en/oltp/projects/pg-dump-restore). Use that alongside the restore step below.
+1. Create a **Lakebase Postgres** project and the target **database**. See [Lakebase Postgres](https://docs.databricks.com/aws/en/oltp).
+2. Add a **native Postgres password role** for restore: **Roles & Databases** → **Add role** → **Password**. See [Create Postgres roles](https://docs.databricks.com/aws/en/oltp/projects/postgres-roles).
+3. Open **Connect**, select that role, and copy the connection string for **`pg_restore`**. See [Connect to your database](https://docs.databricks.com/aws/en/oltp/projects/connect).
 
 ## Export data from Neon
+
+<Admonition type="important">
+Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.
+</Admonition>
 
 Dump your Neon database with **`pg_dump`** using an **unpooled** connection string.
 
@@ -60,11 +59,15 @@ See [Backups with pg_dump](/docs/manage/backup-pg-dump) for the full procedure a
 
 ## Restore into Lakebase
 
-Run **`pg_restore`** against the **Lakebase** connection string from step 2. Example shape (replace host, user, database, and password with your values):
+Neon dumps include **ownership** and **privileges** for Neon-specific roles (for example `neondb_owner`, `neon_superuser`, roles used in `ALTER DEFAULT PRIVILEGES`). Those roles do not exist on Lakebase, so a plain `pg_restore` often errors on `ALTER ... OWNER TO ...` and default-privilege grants. That does not mean your tables and data failed to restore; it means ownership and ACL replay could not be applied.
+
+Use **`--no-owner`** so objects are created as the user you connect with, and **`--no-acl`** (or **`-x`**) so Neon-specific `GRANT` / `ALTER DEFAULT PRIVILEGES` statements are skipped. You can grant privileges on Lakebase afterward if your security model needs it.
 
 ```bash
-pg_restore -v -d "postgresql://user:password@host/dbname?sslmode=require" neon-export.dump
+pg_restore -v --no-owner --no-acl -d "postgresql://user:password@host/dbname?sslmode=require" neon-export.dump
 ```
+
+For more on ownership when moving between providers, see [Database object ownership considerations](/docs/import/migrate-from-postgres#database-object-ownership-considerations) in **Migrate data from Postgres**.
 
 ## Decommission Neon (optional)
 
@@ -82,6 +85,8 @@ When Lakebase is live and retention allows, delete the Neon project from the Con
 **Databricks Lakebase**
 
 - [Lakebase Postgres](https://docs.databricks.com/aws/en/oltp)
+- [Authentication overview](https://docs.databricks.com/aws/en/oltp/projects/authentication)
+- [Create Postgres roles](https://docs.databricks.com/aws/en/oltp/projects/postgres-roles)
 - [Postgres compatibility](https://docs.databricks.com/aws/en/oltp/projects/compatibility)
 - [Postgres extensions](https://docs.databricks.com/aws/en/oltp/projects/extensions)
 - [Connect to your database](https://docs.databricks.com/aws/en/oltp/projects/connect)

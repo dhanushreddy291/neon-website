@@ -56,14 +56,4 @@ After the flowchart, open the guide that matches your requirements.
 2. **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**. Create a Lakebase project, **`pg_dump`** from Neon, **`pg_restore`** on Lakebase.
 3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. If another Neon region and Lakebase do not meet your requirements, you can use `pg_dump` to export your data in a Postgres-compatible for migration elsewhere.
 
-## AI assistance
-
-For **AI help in your editor** while you migrate (for example **creating a Neon project** in your **target region**, drafting **`pg_dump`** and **`pg_restore`** commands, or working through **logical replication**), run:
-
-```bash
-npx neonctl@latest init
-```
-
-This command sets up the **Neon MCP Server** and **[Neon agent skills](https://github.com/neondatabase/agent-skills)** for supported editors. See [CLI init](/docs/reference/cli-init).
-
 <NeedHelp/>

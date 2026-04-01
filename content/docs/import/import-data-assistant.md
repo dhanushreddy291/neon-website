@@ -84,8 +84,7 @@ During import, your source database remains untouched; we only read from it to c
 After a successful import:
 
 1. Run some test queries to ensure everything imported correctly.
-2. Click on the three dots next to the branch name and select **Set as default** to make it your default branch.
-3. If you've migrated from another Neon project, remove your old project if it's no longer needed.
-4. Switch the connection string in your app to point to your new Neon database.
+2. If you've migrated from another Neon project, remove your old project if it's no longer needed.
+3. Switch the connection string in your app to point to your new Neon database.
 
 <NeedHelp/>

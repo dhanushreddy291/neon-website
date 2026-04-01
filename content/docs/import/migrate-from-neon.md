@@ -13,13 +13,13 @@ updatedOn: '2026-04-01T20:00:00.000Z'
 This guide describes how to migrate a database from one Neon project to another by **piping** output from **`pg_dump`** straight into **`pg_restore`** (`pg_dump ... | pg_restore ...`). That runs the dump and restore in one step without writing an intermediate dump file on disk.
 
 <Admonition type="important">
-Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string) (see PgBouncer issues [452](https://github.com/pgbouncer/pgbouncer/issues/452) & [976](https://github.com/pgbouncer/pgbouncer/issues/976) for details). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.
+Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.
 </Admonition>
 
 ## Important considerations
 
 - **Upgrading the Postgres version**: When upgrading to a new version of Postgres, always test thoroughly before migrating your production systems or applications.
-- **Piping considerations**: For large datasets, we recommend a **separate** dump and restore. See [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres).
+- **Piping considerations**: Piping simplifies the operation, but for large or complex datasets, we highly recommend a **separate** dump and restore. See [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres).
 
 ## Import data from another project
 
@@ -31,7 +31,7 @@ To import your data from another Neon project:
 
 3. Retrieve the connection strings for the new and existing Neon databases.
 
-   You can find the connection details for your database by clicking the **Connect** button on your **Project Dashboard**. Connections strings have this format:
+   You can find the connection details for your database by clicking the **Connect** button on your **Project Dashboard**. Connection strings have this format:
 
    ```bash shouldWrap
    postgresql://[user]:[password]@[neon_hostname]/[dbname]
@@ -59,6 +59,8 @@ To import your data from another Neon project:
    - `-d`: Specifies the database name or connection string.
 
 5. Run the command from your terminal or command window.
-6. If you no longer require the old project, you can remove it. See [Delete a project](/docs/manage/projects#delete-a-project) for instructions.
+6. Run some test queries to ensure everything imported correctly.
+7. Switch the connection string in your app to point to your new Neon database.
+8. If you no longer need the old project, you can remove it. See [Delete a project](/docs/manage/projects#delete-a-project) for instructions.
 
 <NeedHelp/>
