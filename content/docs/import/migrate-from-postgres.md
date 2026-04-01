@@ -14,7 +14,7 @@ updatedOn: '2026-03-30T12:00:00.000Z'
 
 This topic describes migrating data from one Postgres database to another using the `pg_dump` and `pg_restore`.
 
-It is the **command reference** for dump and restore (flags, ownership, piping). If you are choosing **whether** to use another Neon region, Lakebase, logical replication, or the Import Data Assistant, read **[Region migration](/docs/guides/region-migration)** first.
+It is the **command reference** for dump and restore (flags, ownership, piping). If you are choosing **whether** to use another Neon region, Lakebase, logical replication, or the Import Data Assistant, read **[Region migration](/docs/import/region-migration)** first.
 
 <Admonition type="important">
 Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string) (see PgBouncer issues [452](https://github.com/pgbouncer/pgbouncer/issues/452) & [976](https://github.com/pgbouncer/pgbouncer/issues/976) for details). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.

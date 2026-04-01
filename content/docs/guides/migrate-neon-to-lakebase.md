@@ -79,7 +79,7 @@ When Lakebase is live and retention allows, delete the Neon project from the Con
 
 **Neon**
 
-- [Region migration](/docs/guides/region-migration)
+- [Region migration](/docs/import/region-migration)
 - [Migrate data from Postgres](/docs/import/migrate-from-postgres)
 
 **Databricks Lakebase**

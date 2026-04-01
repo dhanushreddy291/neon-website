@@ -11,7 +11,7 @@ updatedOn: '2026-03-30T12:00:00.000Z'
 
 This topic describes how to create a backup of your Neon database using the Postgres `pg_dump` utility and how to restore a backup using `pg_restore`.
 
-The same **`pg_dump`** flow applies when you **export** data for a **region migration** or a **Postgres-compatible export from Neon**. For path selection (another Neon region, Lakebase, or export), see **[Region migration](/docs/guides/region-migration)**.
+The same **`pg_dump`** flow applies when you **export** data for a **region migration** or a **Postgres-compatible export from Neon**. For path selection (another Neon region, Lakebase, or export), see **[Region migration](/docs/import/region-migration)**.
 
 <Admonition type="important">
 Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.

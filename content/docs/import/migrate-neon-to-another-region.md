@@ -7,7 +7,9 @@ summary: >-
   guide and the how-to for your chosen method.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-03-30T12:00:00.000Z'
+updatedOn: '2026-04-02T20:00:00.000Z'
+redirectFrom:
+  - /docs/guides/migrate-neon-to-another-region
 ---
 
 When your **Neon database** must run in a **different Neon region** than it does today, you are not moving the project. A project's region is fixed, so you need to **create a new Neon project** in the target region and **migrate** your database into it.
@@ -38,7 +40,7 @@ You replicate from the source project to the target and cut over when caught up.
 
 ## Related docs
 
-- [Region migration](/docs/guides/region-migration)
+- [Region migration](/docs/import/region-migration)
 - [Get started with logical replication](/docs/guides/logical-replication-guide)
 
 <NeedHelp/>

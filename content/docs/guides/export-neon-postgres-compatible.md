@@ -83,7 +83,7 @@ If restore fails on ownership or role statements, try adding **`-O`** and consul
 
 ## Related
 
-- [Region migration](/docs/guides/region-migration)
+- [Region migration](/docs/import/region-migration)
 - [Backups with pg_dump](/docs/manage/backup-pg-dump)
 - [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres)
 

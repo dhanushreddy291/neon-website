@@ -82,7 +82,7 @@ If you are unsure of your project's region, you can find this information in the
 
 A Neon project's region does not change after creation. To use another region, you create a **new** Neon project there and migrate your **database and data** into it.
 
-Start with **[Region migration](/docs/guides/region-migration)** for path selection (another Neon region, Lakebase, or export). Then use one of the following options.
+Start with **[Region migration](/docs/import/region-migration)** for path selection (another Neon region, Lakebase, or export). Then use one of the following options.
 
 ### Option 1: Dump and restore
 
