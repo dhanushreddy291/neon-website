@@ -18,7 +18,7 @@ When your **Neon database** must run in a **different Neon region** than it does
 
 ## Choose a migration method
 
-Each option below is a different way to **move the same database** into a new Neon project in a different region. Pick **one** based on database size, whether you want a Console-driven flow, and how much downtime you can accept. The linked topics contain the **step-by-step** procedures.
+Each option below is a different way to move your database into a new Neon project in a different region. Choose the option that matches your requirements.
 
 <a id="import-data-assistant" aria-hidden="true"></a>
 
@@ -30,11 +30,11 @@ In the Neon Console, open the **[Projects](https://console.neon.tech/app/)** pag
 
 ### pg_dump and pg_restore
 
-**Best for** larger databases, or when you want full control of dump files and restore timing. See **[Migrate data from another Neon project](/docs/import/migrate-from-neon)**.
+**Best for** when you want full control of dump files and restore timing. See **[Migrate data from another Neon project](/docs/import/migrate-from-neon)**.
 
 ### Logical replication
 
-**Best for** **minimal downtime** on busy databases where a long dump or restore window is not acceptable.
+**Best for minimal downtime** on busy databases where a long dump or restore window is not acceptable.
 
 You replicate from the source project to the target and cut over when caught up. See **[Replicate data from one Neon project to another](/docs/guides/logical-replication-neon-to-neon)**. Expect more configuration than other migration methods.
 

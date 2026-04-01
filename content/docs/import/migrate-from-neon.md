@@ -59,8 +59,8 @@ To import your data from another Neon project:
    - `-d`: Specifies the database name or connection string.
 
 5. Run the command from your terminal or command window.
-6. Run some test queries to ensure everything imported correctly.
+6. Run some test queries on the target database to ensure everything imported correctly.
 7. Switch the connection string in your app to point to your new Neon database.
-8. If you no longer need the old project, you can remove it. See [Delete a project](/docs/manage/projects#delete-a-project) for instructions.
+8. If you no longer need the old Neon project, you can remove it. See [Delete a project](/docs/manage/projects#delete-a-project) for instructions.
 
 <NeedHelp/>

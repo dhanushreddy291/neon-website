@@ -7,7 +7,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/conceptual-guides/regions
-updatedOn: '2026-03-30T12:00:00.000Z'
+updatedOn: '2026-04-01T12:00:00.000Z'
 ---
 
 Neon offers project deployment in multiple AWS and Azure regions. To minimize latency between your Neon database and application, we recommend choosing the region closest to your application server.
@@ -42,7 +42,7 @@ All branches and databases created in a Neon project are created in the region s
 ![Select region image](/docs/introduction/project_creation_regions.png)
 
 <Admonition type="note">
-After you select a region for a Neon project, it cannot be changed for that project. To run your database in a different region, create a **new** project there and [migrate your database and data](/docs/introduction/regions#move-your-database-to-another-region) into it.
+After you select a region for a Neon project, it cannot be changed for that project. To run your database in a different region, create a **new** project there and migrate your data. See [Region migration](/docs/import/region-migration).
 </Admonition>
 
 ## NAT Gateway IP addresses
@@ -76,21 +76,6 @@ If you are unsure of your project's region, you can find this information in the
 
 ## Move your database to another region
 
-A Neon project's region does not change after creation. To use another region, you create a **new** Neon project there and migrate your **database and data** into it.
-
-Start with **[Region migration](/docs/import/region-migration)** for path selection (another Neon region, Lakebase, or export). Then use one of the following options.
-
-### Option 1: Dump and restore
-
-Using the dump and restore method involves the following steps:
-
-1. **Create a new project** in the desired region. For instructions, see [Create a project](/docs/manage/projects#create-a-project).
-2. **Migrate your data** from the source project into the new project. For instructions, see [Import data from Postgres](/docs/import/migrate-from-postgres).
-
-Migrating data into a new Neon project using this method may take some time depending on the size of your data. To prevent the loss of data during the import operation, consider disabling writes from your applications before initiating the import operation. You can re-enable writes when the import is completed. Neon does not currently support disabling database writes. Writes must be disabled at the application level.
-
-### Option 2: Logical replication
-
-As an alternative to the dump and restore method described above, you can use **logical replication** to replicate data from one Neon project to another for a near-zero downtime data migration. For more information, see [Replicate data from one Neon project to another](/docs/guides/logical-replication-neon-to-neon).
+A Neon project's region does not change after creation. To use another region, create a **new** project there and migrate your data. See **[Region migration](/docs/import/region-migration)** for paths, prerequisites, and steps.
 
 <NeedHelp/>

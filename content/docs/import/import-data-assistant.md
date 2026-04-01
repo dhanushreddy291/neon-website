@@ -12,12 +12,12 @@ redirectFrom:
   - /docs/import/migration-assistant
 ---
 
-When you're ready to move your data to Neon, the **Import Data Assistant** can help you automatically import your existing database. The assistant supports databases **smaller than 10 GB**; you only need a connection string to get started.
+The **Import Data Assistant** can help you automatically import your existing database. The assistant supports databases **smaller than 10 GB**; you only need a connection string to get started.
 
 <FeatureBetaProps feature_name="Import Data Assistant"/>
 
 <Admonition type="tip" title="Migrate between Neon projects">
-You can also use the **Import Data Assistant** to migrate data between Neon projects. This is useful for upgrading to a newer Postgres version (for example, from Postgres 16 to 17) or moving your database to a different region. The assistant steps you through creating a new project.
+In additiion to migrating from other Postgres platforms, you can use the **Import Data Assistant** to migrate data between Neon projects. Use it to upgrade to a newer Postgres version (for example, from Postgres 16 to 17) or move your database to a different region. The assistant steps you through creating a new Neon project.
 </Admonition>
 
 ## Before you start
@@ -48,11 +48,13 @@ Launch the assistant from the **Projects** page:
 
 ## Check compatibility
 
-Enter your database connection string and click **Run Checks**. We'll verify the following:
+Enter your database connection string and click **Run Checks**.
 
 ![Import Data Assistant run checks](/docs/import/import_data_assistant_run_checks.png)
 
-- Database size is within the current 10 GB limit
+We'll verify the following:
+
+- Database size is within the 10 GB limit
 - Postgres version compatibility (Postgres 14 to 17)
 - Extension compatibility
 - Region availability
@@ -68,7 +70,7 @@ Click the **Create new Neon project** button, specify your project settings incl
 Back in the assistant, click the **Start import process** button.
 
 <Admonition type="note">
-During import, your source database remains untouched; we only read from it to create a copy in Neon.
+During import, your source database remains untouched. We only read from it to create a copy in Neon.
 </Admonition>
 
 </Steps>
@@ -76,7 +78,7 @@ During import, your source database remains untouched; we only read from it to c
 ### Known limitations
 
 - Supabase and Heroku databases are not supported due to unsupported Postgres extensions.
-- Databases running on **IPv6 are not supported yet**.
+- Databases running on **IPv6 are not supported**.
 - AWS RDS is generally supported, though some incompatibilities may exist. Support for other providers may vary.
 
 ## Next steps

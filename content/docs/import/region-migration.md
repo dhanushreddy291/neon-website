@@ -7,7 +7,7 @@ summary: >-
   and export options.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-04-03T16:00:00.000Z'
+updatedOn: '2026-04-03T20:00:00.000Z'
 redirectFrom:
   - /docs/guides/region-migration
 ---
@@ -23,12 +23,12 @@ Common reasons to migrate to a different region:
 - You are migrating away from a [deprecated Neon Azure](/docs/introduction/regions#azure-regions) region.
 
 <Admonition type="note" title="Databricks Lakebase">
-If you must keep Postgres in Azure for residency or colocation, **[Lakebase Postgres](https://docs.databricks.com/aws/en/oltp)** on Databricks supports Azure regions.
+If you must keep Postgres in Azure for residency or colocation, Databricks Lakebase Postgres supports Azure regions. See **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**.
 </Admonition>
 
 ## Choose a path
 
-Use the flowchart to pick a migration path that best fits your requirements.
+Use the flowchart to pick a migration path that fits your requirements.
 
 ```mermaid
 flowchart TD
@@ -52,10 +52,10 @@ flowchart TD
 
 ## Select a migration guide
 
-After the flowchart, open the guide that matches your requirements.
+Select the guide that matches your requirements.
 
 1. **[Migrate to another Neon region](/docs/import/migrate-neon-to-another-region)**. Compare the **Import Data Assistant**, dump and restore, and logical replication, then follow the guide linked from that page.
 2. **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**. Create a Lakebase project, **`pg_dump`** from Neon, **`pg_restore`** on Lakebase.
-3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. If another Neon region and Lakebase do not meet your requirements, you can use `pg_dump` to export your data in a Postgres-compatible for migration elsewhere.
+3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. If another Neon region and Lakebase do not meet your requirements, use `pg_dump` to export your data in a Postgres-compatible format for migration elsewhere.
 
 <NeedHelp/>
