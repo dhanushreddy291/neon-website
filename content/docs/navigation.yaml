@@ -30,17 +30,6 @@
         - title: Overview
           slug: import/migrate-intro
 
-        - title: Region migration
-          items:
-            - title: Overview
-              slug: import/region-migration
-            - title: Neon to another region
-              slug: import/migrate-neon-to-another-region
-            - title: Neon to Lakebase
-              slug: guides/migrate-neon-to-lakebase
-            - title: Postgres-compatible export
-              slug: guides/export-neon-postgres-compatible
-
         - title: Utilities
           items:
             - title: Import Data Assistant
@@ -102,6 +91,17 @@
           items:
             - title: AWS DMS
               slug: import/migrate-aws-dms
+
+        - title: Region migration
+          items:
+            - title: Overview
+              slug: import/region-migration
+            - title: Neon to another region
+              slug: import/migrate-neon-to-another-region
+            - title: Neon to Lakebase
+              slug: guides/migrate-neon-to-lakebase
+            - title: Postgres-compatible export
+              slug: guides/export-neon-postgres-compatible
 
         - title: CSV
           slug: import/import-from-csv
