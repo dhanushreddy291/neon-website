@@ -16,17 +16,17 @@ If you need your **data** in a different region, you **create a new Neon project
 
 Common reasons to migrate to a different region:
 
-- Your app moved to a different region and you want lower latency.
-- You need a new environment in another region.
+- Your app moved to a different region and you want lower latency between your app and database.
+- You need to set up a new environment in another region.
 - You are migrating away from a [deprecated Neon Azure](/docs/introduction/regions#azure-regions) region.
 
 <Admonition type="note" title="Databricks Lakebase">
-If you must keep Postgres in Azure for residency or colocation, consider **[Lakebase Postgres](https://docs.databricks.com/aws/en/oltp)** on Databricks. It supports Azure regions and most Neon features.
+If you must keep Postgres in Azure for residency or colocation, **[Lakebase Postgres](https://docs.databricks.com/aws/en/oltp)** on Databricks supports Azure regions.
 </Admonition>
 
 ## Choose a path
 
-Use the flowchart to pick a migration guide.
+Use the flowchart to pick a migration path that best fits your requirements.
 
 ```mermaid
 flowchart TD
@@ -50,20 +50,20 @@ flowchart TD
 
 ## Select a migration guide
 
-After the flowchart, open the guide that matches your situation.
+After the flowchart, open the guide that matches your requirements.
 
-1. **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)**. Compare the Import Data Assistant, dump and restore, and logical replication, then follow the method-specific how-to linked from that page. For Neon-to-Neon **`pg_dump` / `pg_restore`**, you can **pipe** `pg_dump` to `pg_restore` for smaller databases ([Migrate data from another Neon project](/docs/import/migrate-from-neon)) or run **separate** dump and restore commands ([Migrate data from Postgres](/docs/import/migrate-from-postgres)).
+1. **[Migrate to another Neon region](/docs/guides/migrate-neon-to-another-region)**. Compare the **Import Data Assistant**, dump and restore, and logical replication, then follow the guide linked from that page.
 2. **[Migrate Neon to Lakebase](/docs/guides/migrate-neon-to-lakebase)**. Create a Lakebase project, **`pg_dump`** from Neon, **`pg_restore`** on Lakebase.
-3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. When another Neon region and Lakebase do not meet your requirements. Use `pg_dump` to export your data in a Postgres-compatible for migration elsewhere.
+3. **[Postgres-compatible export from Neon](/docs/guides/export-neon-postgres-compatible)**. If another Neon region and Lakebase do not meet your requirements, you can use `pg_dump` to export your data in a Postgres-compatible for migration elsewhere.
 
 ## AI assistance
 
-If you want **AI help in your editor** while you migrate (for example **creating a Neon project** in your **target region**, drafting **`pg_dump`** and **`pg_restore`** commands, or working through **logical replication**), run:
+For **AI help in your editor** while you migrate (for example **creating a Neon project** in your **target region**, drafting **`pg_dump`** and **`pg_restore`** commands, or working through **logical replication**), run:
 
 ```bash
 npx neonctl@latest init
 ```
 
-It sets up the Neon CLI, **Neon MCP Server**, and the **[Neon agent skills](https://github.com/neondatabase/agent-skills)** repo for supported editors. See [CLI init](/docs/reference/cli-init).
+This command sets up the **Neon MCP Server** and **[Neon agent skills](https://github.com/neondatabase/agent-skills)** for supported editors. See [CLI init](/docs/reference/cli-init).
 
 <NeedHelp/>

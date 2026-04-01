@@ -20,7 +20,7 @@ This guide describes how to migrate a **Neon** database to **Databricks Lakebase
 
 - A Neon **source** project with the database you are migrating.
 - A Databricks account with permission to create **Lakebase** resources in the target region.
-- **Postgres major versions** aligned when possible between Neon and Lakebase. Confirm **extensions** and Lakebase **compatibility** in step 1 before cutover.
+- **Postgres major versions** aligned when possible between Neon and Lakebase.
 - `pg_dump` and `pg_restore` installed on a **stable** machine.
 
 <Admonition type="important" title="Auth for long restores">
@@ -29,12 +29,12 @@ Lakebase recommends a **native Postgres password** for long `pg_restore` jobs. S
 
 <Steps>
 
-## 1. Plan the migration
+## Plan the migration
 
 - **Verify Lakebase supports what you need.** Migration assumes Lakebase can run your workload. Read **[Lakebase Postgres](https://docs.databricks.com/aws/en/oltp)** for product scope, regions, and operations. Read **[Postgres compatibility](https://docs.databricks.com/aws/en/oltp/projects/compatibility)** for how Lakebase Postgres differs from standard Postgres (versions, session and scale-to-zero behavior, parameters, limitations such as tablespaces and replication, and more).
 - **Extensions.** On Neon, list installed extensions (for example run `SELECT * FROM pg_extension;`). Compare each one to **[Postgres extensions](https://docs.databricks.com/aws/en/oltp/projects/extensions)** on Databricks. If an extension you depend on is not available on Lakebase, plan an alternative.
 
-## 2. Create Lakebase and get a connection string
+## Create a Lakebase project and get a connection string
 
 Complete the **Databricks** side before you depend on a final restore.
 
@@ -45,7 +45,7 @@ Complete the **Databricks** side before you depend on a final restore.
 
 Databricks also documents **`pg_dump` / `pg_restore`** patterns for Lakebase in [Postgres pg_dump and pg_restore](https://docs.databricks.com/aws/en/oltp/projects/pg-dump-restore). Use that alongside the restore step below.
 
-## 3. Export data from Neon
+## Export data from Neon
 
 Dump your Neon database with **`pg_dump`** using an **unpooled** connection string.
 
@@ -58,7 +58,7 @@ pg_dump -Fc -v -d "<neon_connection_string>" -f neon-export.dump
 
 See [Backups with pg_dump](/docs/manage/backup-pg-dump) for the full procedure and flags.
 
-## 4. Restore into Lakebase
+## Restore into Lakebase
 
 Run **`pg_restore`** against the **Lakebase** connection string from step 2. Example shape (replace host, user, database, and password with your values):
 
@@ -66,7 +66,7 @@ Run **`pg_restore`** against the **Lakebase** connection string from step 2. Exa
 pg_restore -v -d "postgresql://user:password@host/dbname?sslmode=require" neon-export.dump
 ```
 
-## 5. Decommission Neon (optional)
+## Decommission Neon (optional)
 
 When Lakebase is live and retention allows, delete the Neon project from the Console or API.
 
@@ -78,7 +78,6 @@ When Lakebase is live and retention allows, delete the Neon project from the Con
 
 - [Region migration](/docs/guides/region-migration)
 - [Migrate data from Postgres](/docs/import/migrate-from-postgres)
-- [Get started with logical replication](/docs/guides/logical-replication-guide) (Neon-to-Neon only; not used for Lakebase yet)
 
 **Databricks Lakebase**
 
