@@ -7,7 +7,7 @@ summary: >-
   and export options.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-04-03T14:00:00.000Z'
+updatedOn: '2026-04-03T16:00:00.000Z'
 redirectFrom:
   - /docs/guides/region-migration
 ---
@@ -32,13 +32,13 @@ Use the flowchart to pick a migration path that best fits your requirements.
 
 ```mermaid
 flowchart TD
-  start["Neon data, new region?"]
-  q1{"Azure residency?"}
-  lake["Lakebase"]
-  q2{"Another Neon region?"}
-  neon["Neon region move"]
-  q3{"Other destination?"}
-  exp["Postgres export"]
+  start["Need to move Neon data<br/>to a new region?"]
+  q1{"Postgres must stay<br/>in Azure?"}
+  lake["Migrate Neon to Lakebase"]
+  q2{"Stay on Neon<br/>in a new region?"}
+  neon["Migrate to another Neon region"]
+  q3{"Lakebase and Neon<br/>both ruled out?"}
+  exp["Postgres-compatible export"]
 
   start --> q1
   q1 -->|Yes| lake
