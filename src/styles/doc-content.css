@@ -29,11 +29,11 @@
   }
 
   .table-wrapper {
-    @apply overflow-x-auto;
+    @apply my-10 max-h-[70vh] overflow-auto 2xl:-mx-4 2xl:px-4;
   }
 
   .table {
-    @apply my-10 w-full leading-normal 2xl:min-w-[500px];
+    @apply w-full leading-normal 2xl:min-w-[500px];
 
     .func_table_entry,
     .catalog_table_entry {
@@ -187,14 +187,14 @@
     }
 
     .table-wrapper {
-      @apply overflow-x-auto;
+      @apply my-10 max-h-[70vh] overflow-auto 2xl:-mx-4 2xl:px-4;
     }
 
     table {
-      @apply my-10 w-full leading-normal 2xl:min-w-[500px];
+      @apply w-full leading-normal 2xl:min-w-[500px];
 
       th {
-        @apply p-2.5 pt-0 text-left align-top;
+        @apply p-2.5 text-left align-top;
       }
 
       td {
@@ -202,6 +202,8 @@
       }
 
       thead {
+        @apply sticky top-0 z-10 bg-white dark:bg-black-pure;
+        
         tr {
           @apply border-b border-gray-new-90 dark:border-gray-new-20;
         }
