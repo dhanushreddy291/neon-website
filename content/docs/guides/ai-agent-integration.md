@@ -7,7 +7,7 @@ summary: >-
   plan.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-03-14T03:21:15.120Z'
+updatedOn: '2026-04-03T12:00:00.000Z'
 ---
 
 This guide covers the technical implementation of the Neon agent plan for your platform. You'll learn how to provision databases, implement versioning, manage user upgrades, and monitor usage at scale.
@@ -465,6 +465,8 @@ This workflow prevents common issues like development data contaminating product
 ## Monitoring and billing
 
 ### Track usage per project
+
+<ConsumptionAccountApiDeprecation/>
 
 You can use the Neon API to retrieve consumption metrics for your organizations and projects using these endpoints:
 
