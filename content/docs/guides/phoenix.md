@@ -157,4 +157,14 @@ You can find the source code for the application described in this guide on GitH
 
 </DetailIconCards>
 
+<details>
+<summary>**Notes for AI-assisted setup**</summary>
+
+- The `ssl: [cacerts: :public_key.cacerts_get()]` option is mandatory in all config files (`dev.exs`, `runtime.exs`, `test.exs`). The connection to Neon will fail without it.
+- This guide uses `hello` as the app and module name. For existing projects, read the `:app` and `:mod` values from `mix.exs` and use those consistently in config and module names.
+- Do not hardcode credentials in config files committed to version control. The `config/runtime.exs` pattern shown in this guide reads from `DATABASE_URL` at runtime, which is the recommended approach for production. For more information, see [Security overview](/docs/security/security-overview).
+- The `mix phx.new` command is interactive and requires user input. It cannot be run non-interactively.
+
+</details>
+
 <NeedHelp/>
