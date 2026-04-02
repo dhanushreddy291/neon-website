@@ -47,7 +47,7 @@ export const ActionItem = ({
         <span
           className={cn(
             'pointer-events-none absolute top-full left-0 z-10 mt-2.75 whitespace-nowrap opacity-0',
-            'h-6.5 border border-gray-new-80 bg-gray-new-98 px-2 flex items-center text-xs text-gray-new-40',
+            'flex h-6.5 items-center border border-gray-new-80 bg-gray-new-98 px-2 text-xs text-gray-new-40',
             'transition-opacity duration-150 group-hover:opacity-100',
             'dark:border-gray-new-20 dark:bg-gray-new-8 dark:text-gray-new-60',
             'before:absolute before:-top-[4px] before:left-1/2 before:-translate-x-1/2',
@@ -81,6 +81,7 @@ const SetUpNeonButton = ({ onClick, tooltip }) => (
 
 SetUpNeonButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  tooltip: PropTypes.string,
 };
 
 /* Disabled for now - kept for possible future use
@@ -133,7 +134,7 @@ const Actions = ({ gitHubPath, withBorder = false, isTemplate = false }) => {
   };
 
   const docsActions = (
-    <SetUpNeonButton onClick={handleOpenModal} tooltip="Сopy neon init command" />
+    <SetUpNeonButton onClick={handleOpenModal} tooltip="Copy neon init command" />
   );
 
   const templateActions = (

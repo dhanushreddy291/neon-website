@@ -3,6 +3,7 @@
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion';
 import PropTypes from 'prop-types';
 import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 
 import useCopyToClipboard from 'hooks/use-copy-to-clipboard';
 import CloseIcon from 'icons/close-small.inline.svg';
@@ -55,7 +56,9 @@ const NeonInitModal = ({ isOpen, onClose }) => {
     }
   };
 
-  return (
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <LazyMotion features={domAnimation}>
       <AnimatePresence>
         {isOpen && (
@@ -72,6 +75,9 @@ const NeonInitModal = ({ isOpen, onClose }) => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.15 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="neon-init-modal-title"
             >
               {/* Close button */}
               <button
@@ -85,7 +91,10 @@ const NeonInitModal = ({ isOpen, onClose }) => {
 
               {/* Content */}
               <div className="p-6">
-                <h2 className="text-lg leading-tight font-medium tracking-extra-tight text-black-pure dark:text-white">
+                <h2
+                  className="text-lg leading-tight font-medium tracking-extra-tight text-black-pure dark:text-white"
+                  id="neon-init-modal-title"
+                >
                   Get started with Neon + AI
                 </h2>
                 <p className="mt-2 text-sm leading-snug tracking-extra-tight text-gray-new-40 dark:text-gray-new-70">
@@ -102,7 +111,7 @@ const NeonInitModal = ({ isOpen, onClose }) => {
                         className={cn(
                           'mx-4 border-b-2 border-transparent py-2.5 text-sm leading-none font-medium tracking-extra-tight',
                           activeTab === tab.id
-                            ? 'border-b-2 border-black-pure text-black-pure dark:border-white dark:text-white'
+                            ? 'border-black-pure text-black-pure dark:border-white dark:text-white'
                             : 'text-gray-new-40 hover:text-gray-new-70 dark:text-gray-new-60 dark:hover:text-gray-new-50'
                         )}
                         type="button"
@@ -137,7 +146,8 @@ const NeonInitModal = ({ isOpen, onClose }) => {
           </m.div>
         )}
       </AnimatePresence>
-    </LazyMotion>
+    </LazyMotion>,
+    document.body
   );
 };
 

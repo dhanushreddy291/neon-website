@@ -8,9 +8,6 @@ import Link from 'components/shared/link';
 import CopyIcon from 'icons/copy-docs.inline.svg';
 import ChatGptIcon from 'icons/docs/chat-gpt.inline.svg';
 import ClaudeIcon from 'icons/docs/claude.inline.svg';
-// import DeepSeekIcon from 'icons/docs/deepseek.inline.svg';
-// import GeminiIcon from 'icons/docs/gemini.inline.svg';
-// import PerplexityIcon from 'icons/docs/perplexity.inline.svg';
 import ExternalIcon from 'icons/external.inline.svg';
 
 import ChevronDownIcon from 'icons/chevron-down.inline.svg';
