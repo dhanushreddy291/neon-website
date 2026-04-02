@@ -215,7 +215,7 @@ The [Ecto Getting Started Guide](https://hexdocs.pm/ecto/getting-started.html#co
 - The `ssl: [cacerts: :public_key.cacerts_get()]` option is mandatory. The connection to Neon will fail without it.
 - Include `pool_size: 10` (or an appropriate value) in the Repo configuration.
 - Use `Repo.transaction/1` to wrap related database operations that must succeed or fail together. The Ecto Getting Started Guide covers this in detail.
-- This guide hardcodes credentials in `config/config.exs` for simplicity. For production, use `config/runtime.exs` with `System.get_env/1` instead. If you use env vars, make sure they are exported (not just sourced) so child processes can access them.
+- This guide hardcodes credentials in `config/config.exs` for simplicity. For production, use `config/runtime.exs` with `System.get_env/1` instead. If you use env vars, make sure they are exported (`export DB_HOST=...`), not just sourced via `source .env` — shell variables set with `source` are not visible to child processes like `mix`.
 - Do not hardcode credentials in source files committed to version control. For more information, see [Security overview](/docs/security/security-overview).
 
 </details>
