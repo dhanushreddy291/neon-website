@@ -11,10 +11,7 @@ export default function useCopyToClipboard(resetInterval = null) {
     }
     const str = text.toString();
     if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(str).then(() => setCopied(true)).catch(() => {
-        copyToClipboard(str);
-        setCopied(true);
-      });
+      navigator.clipboard.writeText(str).then(() => setCopied(true)).catch(() => setCopied(false));
     } else {
       copyToClipboard(str);
       setCopied(true);
