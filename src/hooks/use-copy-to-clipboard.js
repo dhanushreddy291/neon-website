@@ -5,16 +5,11 @@ export default function useCopyToClipboard(resetInterval = null) {
   const [isCopied, setCopied] = useState(false);
 
   const handleCopy = useCallback((text) => {
-    if (typeof text !== 'string' && typeof text !== 'number') {
-      setCopied(false);
-      return;
-    }
-    const str = text.toString();
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(str).then(() => setCopied(true)).catch(() => setCopied(false));
-    } else {
-      copyToClipboard(str);
+    if (typeof text === 'string' || typeof text === 'number') {
+      copyToClipboard(text.toString());
       setCopied(true);
+    } else {
+      setCopied(false);
     }
   }, []);
 

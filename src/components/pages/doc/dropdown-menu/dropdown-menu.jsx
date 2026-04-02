@@ -70,21 +70,31 @@ const CopyMarkdownButton = ({
     return text;
   };
 
-  const copyPageToClipboard = async () => {
-    try {
-      const response = await fetch(markdownPath);
-      const content = await response.text();
-      copyToClipboard(content);
+  const copyPageToClipboard = () => {
+    const onSuccess = () => {
       setStatus('copied');
       sendGtagEvent('Action Clicked', { text: 'Copy markdown', tag_name: 'DocsSidebar' });
-      setTimeout(() => {
-        setStatus('default');
-      }, 2000);
-    } catch (error) {
+      setTimeout(() => setStatus('default'), 2000);
+    };
+    const onError = () => {
       setStatus('failed');
-      setTimeout(() => {
-        setStatus('default');
-      }, 2000);
+      setTimeout(() => setStatus('default'), 2000);
+    };
+
+    if (navigator.clipboard?.write && typeof ClipboardItem !== 'undefined') {
+      const textPromise = fetch(markdownPath).then((r) => r.text());
+      navigator.clipboard
+        .write([new ClipboardItem({ 'text/plain': textPromise })])
+        .then(onSuccess)
+        .catch(onError);
+    } else {
+      fetch(markdownPath)
+        .then((r) => r.text())
+        .then((content) => {
+          copyToClipboard(content);
+          onSuccess();
+        })
+        .catch(onError);
     }
   };
 
