@@ -58,6 +58,7 @@ Slack needs a public HTTPS endpoint to deliver event webhooks to your local app.
    ```bash
    ngrok http 3000
    ```
+
 3. Copy the **Forwarding** HTTPS URL (for example, `https://<your-ngrok-id>.ngrok.app`).
 4. Keep this ngrok process running while you build and test the bot.
 
@@ -114,12 +115,11 @@ You will need to create a Slack App to interact with the Slack API and receive e
      token_rotation_enabled: false
    ```
 
-     This manifest defines how your bot can communicate in Slack. Some key configurations to note:
-
-     - `oauth_config.scopes` sets the permissions your bot needs to read mentions and post replies.
-     - `event_subscriptions.bot_events` tells Slack which events should trigger webhook calls.
-     - `request_url` points Slack to your local webhook endpoint exposed through ngrok.
-     - `interactivity.request_url` enables interactive payloads (buttons, actions, and some rich responses).
+   This manifest defines how your bot can communicate in Slack. Some key configurations to note:
+   - `oauth_config.scopes` sets the permissions your bot needs to read mentions and post replies.
+   - `event_subscriptions.bot_events` tells Slack which events should trigger webhook calls.
+   - `request_url` points Slack to your local webhook endpoint exposed through ngrok.
+   - `interactivity.request_url` enables interactive payloads (buttons, actions, and some rich responses).
 
    > Replace `https://<your-ngrok-id>.ngrok.app` with your actual ngrok forwarding URL from [previous step](#start-ngrok).
 
@@ -132,7 +132,6 @@ You will need to create a Slack App to interact with the Slack API and receive e
 5. Navigate to **Basic Information** > **App Credentials** and copy your **Signing Secret**.
 
 ## Initialize a new Hono app
-
 
 You will use Hono to create a lightweight web server that can receive Slack webhooks and route them to your bot logic. The Vercel AI SDK will handle the AI generation and tool-calling, while the Chat SDK will manage conversations and Slack interactions.
 
@@ -175,18 +174,19 @@ CHAT_STATE_DATABASE_URL="postgres://[user]:[password]@[neon_hostname]/[dbname]?s
 REPLICA_DATABASE_URL="postgres://[user]:[password]@[neon_read_replica_hostname]/[dbname]?sslmode=require&channel_binding=require"
 ```
 
-This split between two database URLs is an important safety boundary:
+The two database URLs serve different purposes:
 
 - `CHAT_STATE_DATABASE_URL` is used for bot state persistence (read/write).
 - `REPLICA_DATABASE_URL` is used by AI-generated SQL (read-only).
-- Keeping them separate prevents analytics queries from touching your primary write path.
 
-## Create the AI tool-calling logic
+Keeping them separate prevents analytics queries from touching your primary write path.
+
+## Create the AI agent
 
 You will define two tools that the AI can call:
 
 1. `query_database`: Executes SQL queries against the Neon read replica and returns results as JSON.
-2. `generate_chart`: Takes data and generates a chart image URL using the QuickChart API
+2. `generate_chart`: Takes data and generates a chart image URL using the [QuickChart API](https://quickchart.io)
 
 With these tools, the AI can autonomously run queries and generate visualizations based on user requests in Slack.
 
@@ -215,10 +215,7 @@ By routing all AI queries through this function via the `REPLICA_DATABASE_URL`, 
 
 ### Configure the Vercel AI SDK Tools
 
-Next, configure the AI agent. You will provide the LLM with access to two distinct tools:
-
-1. `query_database`: Executes SQL using your replica helper.
-2. `generate_chart`: Generates a visualization URL using the open-source QuickChart API.
+Next, you will set up the AI agent with the two tools: one for querying the database and another for generating charts. The agent will use these tools to fulfill user requests in Slack.
 
 Create `lib/ai.ts`:
 
@@ -434,11 +431,11 @@ You can now test your bot locally. With your ngrok tunnel running and your Hono 
 
      ![Example slack bot interaction](/docs/guides/slack_bot_interaction_example.png)
 
-Congratulations! You have successfully built an AI-powered Slack assistant that can safely run analytical queries against your production data using Neon Read Replicas.
+Congratulations! You have successfully built an AI-powered Slack assistant that can safely run analytical queries against your production data using Neon Read Replicas and the Vercel AI SDK.
 
 ## Deploying to production
 
-Once your bot performs as expected in the development environment, you can deploy it to production. For a streamlined process, follow the deployment guide on [Hono Docs: Vercel](https://hono.dev/docs/getting-started/vercel).
+Once your bot performs as expected in the development environment, you can deploy it to production. Follow the deployment instructions on [Hono Docs](https://hono.dev/docs/getting-started/vercel) to deploy your Hono app.
 
 After deployment, update the Event Subscription `request_url` in your Slack app's manifest to point to your production webhook endpoint (e.g., `https://yourdomain.com/api/webhooks/slack`).
 
@@ -447,6 +444,8 @@ After deployment, update the Event Subscription `request_url` in your Slack app'
 ## Extending this workflow
 
 Once your assistant is working, you can evolve it from an on-demand Q&A bot into a lightweight analytics platform inside Slack.
+
+This guide intentionally uses basic tools to demonstrate the core workflow end-to-end. For example, QuickChart is used as a simple charting option, but in production you can replace it with more advanced visualization frameworks or libraries that better match your product requirements. Treat this tutorial as a foundation, then tailor the architecture, tools, and guardrails to your team's specific needs. For example, you could add:
 
 - **Scheduled executive digests:** Post daily or weekly KPI summaries to a channel (for example: revenue, conversion rate, top regions, and week-over-week deltas). Pair each summary with a chart for quick scanning. See [Vercel Chat SDK scheduled posts](https://chat-sdk.dev/docs/guides/scheduled-posts-neon) for implementation ideas.
 - **Artifact generation tools:** Add tools that return CSV links, shareable PDF summaries with charts, or even Google Sheets exports. This allows users to take AI-generated insights and easily share them or perform further analysis.
