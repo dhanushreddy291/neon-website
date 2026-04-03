@@ -101,6 +101,10 @@ const getComponents = (withoutAnchorHeading, isReleaseNote, isPostgres, isTempla
   img: (props) => {
     const { className, title, src, ...rest } = props;
 
+    // AVIF/WebP optimization can flatten PNG/GIF alpha to black; keep originals for local /docs/ rasters.
+    const unoptimizedPreserveAlpha =
+      typeof src === 'string' && /^\/docs\/.+\.(png|gif)$/i.test(src);
+
     // No zoom on PostgreSQLTutorial Images
     if (!isPostgres) {
       return (
@@ -116,6 +120,7 @@ const getComponents = (withoutAnchorHeading, isReleaseNote, isPostgres, isTempla
             height={isReleaseNote ? 428 : 447}
             style={{ width: '100%', height: '100%' }}
             title={title !== 'no-border' ? title : undefined}
+            unoptimized={unoptimizedPreserveAlpha}
             {...rest}
           />
           {isTemplate && <GradientBorder className="rounded-lg" withBlend />}

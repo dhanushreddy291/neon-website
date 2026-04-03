@@ -19,6 +19,7 @@ const sharedMdxComponents = {
   EarlyAccessProps: 'shared-content/early-access-props',
   AgentSkillsTip: 'shared-content/agent-skills-tip',
   AzureRegionsDeprecation: 'shared-content/azure-regions-deprecation',
+  ConsumptionAccountApiDeprecation: 'shared-content/consumption-account-api-deprecation',
   // neon-auth-sdk-shared
   SdkOverview: 'shared-content/neon-auth-sdk-shared/overview',
   SdkStackApp: 'shared-content/neon-auth-sdk-shared/objects/stack-app',
