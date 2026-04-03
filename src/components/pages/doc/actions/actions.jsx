@@ -76,7 +76,7 @@ ActionItem.propTypes = {
 };
 
 const SetUpNeonButton = ({ onClick, tooltip }) => (
-  <ActionItem icon={StarIcon} text="Set up Neon with your AI" onClick={onClick} tooltip={tooltip} />
+  <ActionItem icon={StarIcon} text="Set up Neon with AI" onClick={onClick} tooltip={tooltip} />
 );
 
 SetUpNeonButton.propTypes = {
