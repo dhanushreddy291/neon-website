@@ -11,7 +11,7 @@ previousLink:
   slug: 'postgresql-string-functions/postgresql-ascii'
 nextLink:
   title: 'PostgreSQL INITCAP() Function'
-  slug: 'postgresql-string-functions/postgresql-letter-case-functions'
+  slug: 'postgresql-string-functions/postgresql-initcap'
 ---
 
 The PostgreSQL `CHR()` function converts an integer ASCII code to a character or a Unicode code point to a UTF8 character.
@@ -20,7 +20,7 @@ The PostgreSQL `CHR()` function converts an integer ASCII code to a character or
 
 The following shows the syntax of the `CHR()` function:
 
-```
+```sql
 CHR(num)
 ```
 
@@ -42,7 +42,7 @@ The `CHR()` function returns a character that corresponds the ASCII code value o
 
 The following example shows how to use the `CHR()` function to get the characters whose ASCII code value is 65 and 97:
 
-```
+```sql
 SELECT
     CHR(65),
     CHR(97);
@@ -53,7 +53,7 @@ The query returns character A for 65 and a for 97:
 ![PostgreSQL CHR - ASCII example](/postgresqltutorial/PostgreSQL-CHR-ASCII-example.png)
 Here is an example of getting the UTF8 character based on the Unicode code point 937:
 
-```
+```sql
 SELECT
     CHR(937);
 ```

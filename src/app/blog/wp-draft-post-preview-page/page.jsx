@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { notFound } from 'next/navigation';
 
 import Aside from 'components/pages/blog-post/aside';
@@ -14,6 +13,7 @@ import Admonition from 'components/shared/admonition';
 import LINKS from 'constants/links';
 import { getWpPreviewPostData } from 'utils/api-wp';
 import getFormattedDate from 'utils/get-formatted-date';
+import getHtmlTableOfContents from 'utils/get-html-table-of-contents';
 import getMetadata from 'utils/get-metadata';
 import getReactContentWithLazyBlocks from 'utils/get-react-content-with-lazy-blocks';
 
@@ -28,7 +28,8 @@ import getReactContentWithLazyBlocks from 'utils/get-react-content-with-lazy-blo
   WARNING:
   You can't have a post in Wordpress with the "wp-draft-post-preview-page" slug. Please be careful.
 */
-const BlogDraft = async ({ searchParams }) => {
+const BlogDraft = async (props0) => {
+  const searchParams = await props0.searchParams;
   // TODO: this is a temporary fix for a known problem with accessing serachParams on the Vercel side - https://github.com/vercel/next.js/issues/54507
   await Promise.resolve(JSON.stringify(searchParams));
 
@@ -43,6 +44,8 @@ const BlogDraft = async ({ searchParams }) => {
   const { slug, title, content, pageBlogPost, date, dateGmt, modifiedGmt, categories, seo } = post;
   const shareUrl = `${process.env.NEXT_PUBLIC_DEFAULT_SITE_URL}${LINKS.blog}/${slug}`;
   const formattedDate = getFormattedDate(date);
+
+  const tableOfContents = getHtmlTableOfContents(content);
 
   const contentWithLazyBlocks = getReactContentWithLazyBlocks(
     content,
@@ -75,36 +78,31 @@ const BlogDraft = async ({ searchParams }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="safe-paddings bg-black-pure">
-        <article className="dark mx-auto grid max-w-[1472px] grid-cols-12 gap-x-10 pb-40 pt-16 2xl:px-10 xl:gap-x-6 xl:pb-32 xl:pt-12 lg:max-w-none lg:px-8 lg:pb-28 lg:pt-10 md:gap-x-0 md:px-4 md:pb-20 md:pt-8">
+      <div className="bg-black-pure safe-paddings">
+        <article className="dark relative mx-auto grid max-w-[1536px] grid-cols-12 gap-x-10 pt-20 pb-40 2xl:px-10 xl:gap-x-6 xl:pt-12 xl:pb-32 lg:max-w-3xl lg:px-8 lg:pt-10 lg:pb-28 md:gap-x-0 md:px-4 md:pt-8 md:pb-20">
           <Hero
-            className="col-start-4 col-end-10 xl:col-start-1 xl:col-end-9 lg:col-span-full"
+            className="col-start-4 col-end-10 mx-5 xl:col-start-1 xl:col-end-9 lg:col-span-full"
             title={title}
             date={formattedDate}
             category={categories.nodes[0]}
             {...pageBlogPost}
           />
-
           <Content
-            className="col-start-4 col-end-10 row-start-2 mt-10 xl:col-start-1 xl:col-end-9 lg:col-span-full lg:row-start-3"
+            className="post-content col-start-4 col-end-10 mx-5 mt-4 xl:col-start-1 xl:col-end-9 lg:col-span-full lg:row-start-3"
             html={contentWithLazyBlocks}
           />
-          <Aside
-            className="col-span-3 col-end-13 row-start-2 mt-10 xl:col-span-4 lg:col-span-full lg:mt-5"
-            title={title}
-            slug={shareUrl}
-            authors={pageBlogPost.authors}
-            posts={relatedPosts}
-          />
+          <Aside title={title} slug={shareUrl} tableOfContents={tableOfContents} />
           <SocialShare
             className="col-span-full hidden lg:mt-14 lg:flex md:mt-12"
             title={title}
             slug={shareUrl}
           />
-          <MoreArticles
-            className="col-span-10 col-start-2 mt-16 xl:col-span-full xl:mt-14 lg:mt-12 md:mt-11"
-            posts={relatedPosts}
-          />
+          {relatedPosts.length > 0 && (
+            <MoreArticles
+              className="col-start-4 col-end-10 mx-5 mt-16 xl:col-start-1 xl:col-end-9 xl:mt-14 lg:mt-12 md:mt-11"
+              posts={relatedPosts}
+            />
+          )}
         </article>
       </div>
       <PreviewWarning />
@@ -112,7 +110,8 @@ const BlogDraft = async ({ searchParams }) => {
   );
 };
 
-export async function generateMetadata({ searchParams }) {
+export async function generateMetadata(props) {
+  const searchParams = await props.searchParams;
   if (!searchParams?.id || !searchParams?.status) {
     return null;
   }

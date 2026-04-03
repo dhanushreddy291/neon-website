@@ -47,8 +47,13 @@ const getAllWpBlogCategories = cache(async () => {
 });
 
 const getAllCategories = async () => {
-  const wpCategories = await getAllWpBlogCategories();
-  return [...wpCategories, ...EXTRA_CATEGORIES];
+  try {
+    const wpCategories = await getAllWpBlogCategories();
+    return [...wpCategories, ...EXTRA_CATEGORIES];
+  } catch (error) {
+    console.error('Failed to fetch blog categories:', error);
+    return [];
+  }
 };
 
 const getCategoryBySlug = async (slug) => {
@@ -72,7 +77,7 @@ const fetchWpPostsByCategorySlug = async (slug, first, after) => {
           slug
           date
           title(format: RENDERED)
-          content(format: RENDERED)
+          excerpt(format: RENDERED)
           pageBlogPost {
             largeCover {
               altText
@@ -129,7 +134,6 @@ const getWpPostsByCategorySlug = cache(async (slug) => {
   const first = isProduction ? BLOG_POSTS_PER_PAGE : BLOG_POSTS_FOR_PREVIEW;
 
   while (true) {
-    // eslint-disable-next-line no-await-in-loop
     const { nodes: posts, pageInfo } = await fetchWpPostsByCategorySlug(slug, first, afterCursor);
 
     allPosts = allPosts.concat(posts);

@@ -34,9 +34,7 @@ updatedOn: '2026-02-15T20:51:54.265Z'
 
 Neon supports the [neon-api - Python client for the Neon API](https://pypi.org/project/neon-api/), a wrapper for the [Neon API](https://api-docs.neon.tech/reference/getting-started-with-neon-api). This SDK simplifies integration of Python applications with the Neon platform, providing methods to programmatically manage API keys, Neon projects, branches, databases, endpoints, roles, and operations.
 
-<Admonition type="tip" title="AI Rules available">
-Working with AI coding assistants? Check out our [AI rules for the Neon Python SDK](/docs/ai/ai-rules-neon-python-sdk) to help your AI assistant generate better code when managing Neon resources with Python.
-</Admonition>
+<AgentSkillsTip skill_topic="the Neon Python SDK for managing resources programmatically" />
 
 ## Installation
 
@@ -124,6 +122,10 @@ projects = neon.projects(org_id=org_id)
 - `role_delete(project_id, branch_id, role_name)`: Deletes a given role.
 - `role_password_reveal(project_id, branch_id, role_name)`: Reveals the password for a given role.
 - `role_password_reset(project_id, branch_id, role_name)`: Resets the password for a given role.
+
+### Manage Organizations
+
+- `organization(org_id)`: Returns details for a specific organization.
 
 ### Manage Operations
 

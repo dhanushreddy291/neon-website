@@ -46,7 +46,7 @@ export default function getMetadata({
         'text/markdown': markdownPath ? `${SITE_URL}${markdownPath}` : null,
       },
     },
-    manifest: `${SITE_URL}/manifest.json`,
+    manifest: '/manifest.json',
     keywords: Array.from(new Set(keywords?.split(',').map((keyword) => keyword.trim()))).join(', '), // Remove duplicates
     robots,
     icons: {
@@ -54,7 +54,11 @@ export default function getMetadata({
         { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
         { url: '/favicon/favicon.ico', sizes: '32x32' },
       ],
-      apple: [{ url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+      apple: [
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+        { url: '/apple-touch-icon-152x152.png', sizes: '152x152', type: 'image/png' },
+        { url: '/apple-touch-icon-120x120.png', sizes: '120x120', type: 'image/png' },
+      ],
     },
     openGraph: {
       title: metaTitle,

@@ -1,5 +1,4 @@
 import { Fit } from '@rive-app/react-canvas';
-import clsx from 'clsx';
 import Image from 'next/image';
 
 import Container from 'components/shared/container';
@@ -7,6 +6,7 @@ import RiveAnimation from 'components/shared/rive-animation';
 import anonymIcon from 'icons/home/branching/anonym-icon.svg';
 import copyIcon from 'icons/home/branching/copy-icon.svg';
 import ephemeralityIcon from 'icons/home/branching/ephemerality-icon.svg';
+import { cn } from 'utils/cn';
 
 import Heading from '../heading';
 
@@ -32,11 +32,11 @@ const FEATURES = [
 
 const Branching = () => (
   <section
-    className="branching safe-paddings relative scroll-mt-[60px] overflow-hidden pb-60 pt-40 xl:py-[136px] lg:scroll-mt-0 lg:pb-[104px] lg:pt-20 md:pb-20 md:pt-16"
+    className="branching relative scroll-mt-[60px] overflow-hidden pt-40 safe-paddings pb-60 xl:py-[136px] lg:scroll-mt-0 lg:pt-20 lg:pb-[104px] md:pt-16 md:pb-20"
     id="branching"
   >
     <Container
-      className="relative grid grid-cols-[224px_1fr] gap-x-32 before:block xl:grid-cols-1 xl:px-16 xl:before:hidden lg:!px-16 md:!px-5"
+      className="relative grid grid-cols-[224px_1fr] gap-x-32 before:block xl:grid-cols-1 xl:px-16 xl:before:hidden lg:px-16! md:px-5!"
       size="1600"
     >
       <div className="min-w-0">
@@ -46,13 +46,14 @@ const Branching = () => (
         />
         <RiveAnimation
           className="pointer-events-none aspect-[1184/500] w-full"
-          wrapperClassName={clsx(
+          wrapperClassName={cn(
             'relative mt-14 w-full',
             'xl:-mr-16 xl:-ml-7 xl:mt-12 xl:w-[calc(100%+92px)] xl:max-w-none',
             'lg:-ml-5 xl:w-[calc(100%+84px)]',
             'sm:-mr-5 sm:-ml-2.5 sm:w-[calc(100%+30px)]'
           )}
           src="/animations/pages/home/branching.riv?20260114"
+          autoBind={false}
           fit={Fit.Contain}
         />
         <ul className="mt-11 grid grid-cols-3 gap-x-16 xl:mt-9 lg:mt-12 lg:gap-x-8 lg:px-8 md:mt-10 md:grid-cols-1 md:gap-y-7 md:px-0">

@@ -1,8 +1,9 @@
 'use client';
 
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
+
+import { cn } from 'utils/cn';
 
 let mermaidAPI;
 
@@ -84,6 +85,8 @@ const Mermaid = ({ chart, className }) => {
   useEffect(() => {
     const renderChart = async () => {
       try {
+        await document.fonts.ready;
+
         const isDark = document.documentElement.classList.contains('dark');
 
         if (!mermaidAPI) {
@@ -91,6 +94,7 @@ const Mermaid = ({ chart, className }) => {
           mermaid.initialize({
             startOnLoad: false,
             ...getNeonTheme(isDark),
+            flowchart: { padding: 25 },
           });
           mermaidAPI = mermaid;
         }
@@ -100,7 +104,6 @@ const Mermaid = ({ chart, className }) => {
         setSvg(renderedSvg);
         setError(null);
       } catch (err) {
-        // eslint-disable-next-line
         console.error('Mermaid rendering error:', err);
         setError(err.message);
       }
@@ -130,7 +133,7 @@ const Mermaid = ({ chart, className }) => {
   if (error) {
     return (
       <div
-        className={clsx(
+        className={cn(
           'my-8 rounded-lg border p-6',
           'border-secondary-1/50 bg-secondary-4/20 dark:bg-secondary-1/10'
         )}
@@ -147,7 +150,7 @@ const Mermaid = ({ chart, className }) => {
 
   return (
     <div
-      className={clsx('mermaid-container', className)}
+      className={cn('mermaid-container not-prose', className)}
       ref={containerRef}
       dangerouslySetInnerHTML={{ __html: svg }}
     />

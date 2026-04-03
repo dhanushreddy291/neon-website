@@ -20,7 +20,7 @@ nextLink:
 
 To rename a column of a table, you use the [`ALTER TABLE`](postgresql-alter-table) statement with `RENAME COLUMN` clause as follows:
 
-```shellsql
+```sql
 ALTER TABLE table_name
 RENAME COLUMN column_name TO new_column_name;
 ```
@@ -50,7 +50,7 @@ ALTER TABLE table_name
 RENAME column_name2 TO new_column_name2;
 ```
 
-If you rename a column referenced by other database objects such as [views](../postgresql-views), [foreign key constraints](postgresql-foreign-key), [triggers](../postgresql-triggers), and [stored procedures](/postgresql/postgresql-stored-procedures/), PostgreSQL will automatically change the column name in the dependent objects.
+If you rename a column referenced by other database objects such as [views](../postgresql-views), [foreign key constraints](postgresql-foreign-key), [triggers](../postgresql-triggers), and [stored procedures](/postgresql/postgresql-plpgsql/introduction-to-postgresql-stored-procedures), PostgreSQL will automatically change the column name in the dependent objects.
 
 ## PostgreSQL RENAME COLUMN examples
 
@@ -137,7 +137,7 @@ The output indicates that the `name` column has been changed to `group_name`.
 
 These statements rename two columns `name` and `phone` of the `customers` table to `customer_name` and `contact_phone` respectively:
 
-```
+```sql
 ALTER TABLE customers
 RENAME COLUMN name TO customer_name;
 

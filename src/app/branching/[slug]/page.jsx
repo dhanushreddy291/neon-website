@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import Breadcrumbs from 'components/pages/branching/breadcrumbs';
 import Container from 'components/shared/container';
 import Content from 'components/shared/content';
-// import DocFooter from 'components/shared/doc-footer';
+import DocFooter from 'components/shared/doc-footer';
 import NavigationLinks from 'components/shared/navigation-links';
 import VERCEL_URL from 'constants/base';
 import { BRANCHING_BASE_PATH } from 'constants/branching';
@@ -24,7 +24,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const { slug } = params;
   const post = getPostBySlug(slug, BRANCHING_DIR_PATH);
 
@@ -47,12 +48,12 @@ export async function generateMetadata({ params }) {
   });
 }
 
-const BranchingPage = ({ params }) => {
+const BranchingPage = async (props) => {
+  const params = await props.params;
   const { slug } = params;
 
   const {
-    // data: { title, updatedOn },
-    data: { title },
+    data: { title, updatedOn },
     content,
   } = getPostBySlug(slug, BRANCHING_DIR_PATH);
 
@@ -60,12 +61,12 @@ const BranchingPage = ({ params }) => {
 
   return (
     <Container
-      className="w-full pb-[120px] pt-[88px] xl:pb-24 xl:pt-16 lg:pb-20 lg:pt-11 md:pb-[72px] md:pt-8"
+      className="w-full pt-[88px] pb-[120px] xl:pt-16 xl:pb-24 lg:pt-11 lg:pb-20 md:pt-8 md:pb-[72px]"
       size="xxs"
     >
       <Breadcrumbs />
       <article>
-        <h1 className="text-balance font-sans text-5xl font-normal leading-dense tracking-tighter xl:text-5xl lg:text-[36px] md:text-[32px]">
+        <h1 className="font-sans text-5xl leading-dense font-normal tracking-tighter text-balance xl:text-5xl lg:text-[36px] md:text-[32px]">
           {title}
         </h1>
         <Content className="mt-16 lg:mt-12 md:mt-10" content={content} />
@@ -83,14 +84,12 @@ const BranchingPage = ({ params }) => {
           showLabel
         />
       </div>
-      {/* TO:DO bring back updated DocFooter for branching layout
       <DocFooter
-        className="mt-0"
+        className="mt-10! border-t border-gray-new-20 pt-6!"
         updatedOn={updatedOn}
         withFeedback={false}
         tocLink={LINKS.branching}
       />
-      */}
     </Container>
   );
 };

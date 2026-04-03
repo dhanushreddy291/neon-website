@@ -26,7 +26,7 @@ When you install a PostgreSQL instance, you will have a corresponding PostgreSQL
 
 ## Databases
 
-A database is a container of other objects such as tables, [views](../postgresql-views), [functions](/postgresql/postgresql-stored-procedures/), and [indexes](../postgresql-indexes). You can create as many databases as you want inside a PostgreSQL server.
+A database is a container of other objects such as tables, [views](../postgresql-views), [functions](/postgresql/postgresql-plpgsql/postgresql-create-function), [stored procedures](/postgresql/postgresql-plpgsql/postgresql-create-procedure), and [indexes](../postgresql-indexes). You can create as many databases as you want inside a PostgreSQL server.
 
 ![](/postgresqltutorial/postgresql-databases.png)
 
@@ -65,7 +65,7 @@ The following picture shows the default tablespaces:
 
 ## Functions
 
-A [function](/postgresql/postgresql-stored-procedures/) is a reusable block of SQL code that returns a scalar value of a set of rows.
+A [function](/postgresql/postgresql-plpgsql/introduction-to-postgresql-stored-procedures) is a reusable block of SQL code that returns a scalar value of a set of rows.
 
 ![](/postgresqltutorial/postgresql-functions.png)
 
@@ -75,7 +75,7 @@ Operators are symbolic functions. PostgreSQL allows you to define custom operato
 
 ## Casts
 
-Casts enable you to convert one data type into another data type. Casts backed by functions to perform the conversion. You can also create your casts to override the default casting provided by PostgreSQL.
+Casts enable you to convert one data type into another data type. Casts are backed by functions to perform the conversion. You can also create your casts to override the default casting provided by PostgreSQL.
 
 ## Sequence
 

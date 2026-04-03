@@ -20,11 +20,11 @@ nextLink:
 
 The `continue` statement prematurely skips the current iteration of the loop and starts the next one.
 
-In practice, you can use the `continue` statement within the loops including [unconditional loops,](plpgsql-loop-statements) [while loops](/postgresql/plpgsql-while-loop/), and [for loops](plpgsql-for-loop).
+In practice, you can use the `continue` statement within the loops including [unconditional loops,](plpgsql-loop-statements) [while loops](/postgresql/postgresql-plpgsql/pl-pgsql-while-loop), and [for loops](plpgsql-for-loop).
 
 Here’s the syntax of the `continue` statement:
 
-```css
+```sql
 continue [loop_label] [when condition]
 ```
 
@@ -38,7 +38,7 @@ The `condition` is a boolean expression that specifies the condition to skip the
 
 The following example uses the `continue` statement in an unconditional loop to print out the odd numbers from 1 to 10:
 
-```sql
+```plsql
 do
 $$
 declare
@@ -64,7 +64,7 @@ $$;
 
 Output:
 
-```http
+```
 NOTICE:  1
 NOTICE:  3
 NOTICE:  5

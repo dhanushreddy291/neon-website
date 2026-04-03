@@ -18,23 +18,23 @@ nextLink:
 
 ## Introduction to PL/pgSQL record types
 
-PostgreSQL provides a “type” called the `record` that is similar to the [row\-type](/postgresql/plpgsql-row-types/).
+PostgreSQL provides a “type” called the `record` that is similar to the [row\-type](/postgresql/postgresql-plpgsql/pl-pgsql-row-types).
 
 It’s important to note that a record isn’t a true type but rather a placeholder. Furthermore, the structure of a record variable will change when you reassign it to another value.
 
 To declare a `record` variable, you simply use a variable name followed by the `record` keyword like this:
 
-```sql
+```plsql
 variable_name record;
 ```
 
-A `record` variable is similar to a [row\-type variable](/postgresql/plpgsql-row-types/), which can hold only one row of a result set.
+A `record` variable is similar to a [row\-type variable](/postgresql/postgresql-plpgsql/pl-pgsql-row-types), which can hold only one row of a result set.
 
 Unlike a row\-type variable, a `record` variable lacks a predefined structure. Instead, the structure of a `record` variable is determined when an actual row is assigned to it via the [`select`](/postgresql/postgresql-plpgsql/pl-pgsql-select-into/) or [`for`](plpgsql-for-loop) statement.
 
 To access a field in the record, you use the dot notation (`.`) syntax like this:
 
-```sql
+```plsql
 record_variable.field_name;
 ```
 
@@ -48,7 +48,7 @@ Let’s take some examples of using the record variables.
 
 The following example illustrates how to use the record variable with the `select into` statement:
 
-```sql
+```plsql
 do
 $$
 declare
@@ -77,7 +77,7 @@ How it works.
 
 The following shows how to use a record variable in a `for loop` statement:
 
-```sql
+```plsql
 do
 $$
 declare
@@ -96,7 +96,7 @@ $$;
 
 Here is the partial output:
 
-```shell
+```
 NOTICE:  Hall Cassidy (51)
 NOTICE:  Champion Flatliners (51)
 NOTICE:  Deep Crusade (51)

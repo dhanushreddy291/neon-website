@@ -31,10 +31,6 @@ description="Pre-built prompt for connecting Node/TypeScript applications to Neo
 
 Drizzle is a modern ORM for TypeScript that provides a simple and type-safe way to interact with your database. This guide demonstrates how to connect your application to a Neon Postgres database using Drizzle ORM.
 
-<Admonition type="tip" title="AI Rules available">
-Working with AI coding assistants? Check out our [AI rules for Drizzle ORM with Neon](/docs/ai/ai-rules-neon-drizzle) to help your AI assistant generate better code when using Drizzle with your Neon database.
-</Admonition>
-
 To connect a TypeScript/Node.js project to Neon using Drizzle ORM, follow these steps:
 
 <Steps>
@@ -340,6 +336,27 @@ Successfully queried the database: [ { id: 1, name: 'John Doe' } ]
 ```
 
 </Steps>
+
+## Using Neon branches with Drizzle
+
+You can point Drizzle at different Neon [branches](/docs/introduction/branching) per environment by selecting the connection string based on `NODE_ENV` (or any other environment variable):
+
+```typescript
+import { drizzle } from 'drizzle-orm/neon-http';
+import { neon } from '@neondatabase/serverless';
+
+const getBranchUrl = () => {
+  const env = process.env.NODE_ENV;
+  if (env === 'development') return process.env.DEV_DATABASE_URL;
+  if (env === 'test') return process.env.TEST_DATABASE_URL;
+  return process.env.DATABASE_URL;
+};
+
+const sql = neon(getBranchUrl()!);
+export const db = drizzle({ client: sql });
+```
+
+Each branch has its own connection string, available in the Neon Console or via the CLI (`neonctl connection-string --branch-id <branch-id>`).
 
 ## Resources
 

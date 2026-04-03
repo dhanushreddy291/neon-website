@@ -26,13 +26,13 @@ We provide you with a 3\-page PostgreSQL cheat sheet in PDF format. You can down
 
 Access the PostgreSQL server from **psql** with a specific user:
 
-```csssql
+```bash
 psql -U [username];
 ```
 
 For example, the following command uses the `postgres` user to access the PostgreSQL database server:
 
-```
+```bash
 psql -U postgres
 ```
 
@@ -67,7 +67,7 @@ List all schemas:
 \dn
 ```
 
-List all [stored procedures](/postgresql/postgresql-stored-procedures/) and functions:
+List all [stored procedures](/postgresql/postgresql-plpgsql/introduction-to-postgresql-stored-procedures) and functions:
 
 ```text
 \df
@@ -97,7 +97,7 @@ Get detailed information on a table.
 \d+ table_name
 ```
 
-Show a [stored procedure](/postgresql/postgresql-stored-procedures/) or function code:
+Show a [stored procedure](/postgresql/postgresql-plpgsql/postgresql-create-procedure) or [function](/postgresql/postgresql-plpgsql/postgresql-create-function) code:
 
 ```
 \df+ function_name
@@ -117,25 +117,25 @@ List all users:
 
 Create a new [role](postgresql-administration/postgresql-roles):
 
-```
+```sql
 CREATE ROLE role_name;
 ```
 
 Create a new role with a `username` and `password`:
 
-```
+```sql
 CREATE ROLE username NOINHERIT LOGIN PASSWORD password;
 ```
 
 Change the role for the current session to the `new_role`:
 
-```
+```sql
 SET ROLE new_role;
 ```
 
 Allow `role_1` to set its role as `role_2:`
 
-```
+```sql
 GRANT role_2 TO role_1;
 ```
 
@@ -202,7 +202,7 @@ ADD PRIMARY KEY (column,...);
 
 Remove the primary key from a table.
 
-```
+```sql
 ALTER TABLE table_name
 DROP CONSTRAINT primary_key_constraint_name;
 ```
@@ -217,7 +217,7 @@ RENAME TO new_table_name;
 [Drop a table](postgresql-tutorial/postgresql-drop-table) and its dependent objects:
 
 ```sql
- DROP TABLE [IF EXISTS] table_name CASCADE;
+DROP TABLE [IF EXISTS] table_name CASCADE;
 ```
 
 ## Managing views
@@ -426,7 +426,7 @@ UNION
 SELECT * FROM table2;
 ```
 
-Minus a result set using [`EXCEPT`](/postgresql/postgresql-tutorial/postgresql-tutorial/postgresql-except/) operator:
+Minus a result set using [`EXCEPT`](/postgresql/postgresql-tutorial/postgresql-except/) operator:
 
 ```sql
 SELECT * FROM table1

@@ -23,7 +23,7 @@ DBeaver is a versatile database management tool that allows you to interact with
 
 ## Provisioning a Serverless Postgres
 
-1. To get started, go to the the [Neon Console](https://console.neon.tech/) or [neon.new](https://neon.new/) and create a new project by entering a project name of your choice.
+1. To get started, go to the [Neon Console](https://console.neon.tech/) and create a new project by entering a project name of your choice.
 
 2. Retrieve connection details for your Neon Postgres database:
    - Navigate to the **Dashboard** of your Neon project.
@@ -65,6 +65,10 @@ Save the connection details as you will need them in the next steps.
 4. **Test the Connection**:
    - Click the "Test Connection" button to verify the connection details.
    - If successful, click "Finish" to save the connection. Your new database connection will appear in the left sidebar.
+
+<Admonition type="tip">
+To prevent Neon's scale-to-zero feature from interrupting an idle connection, configure a keepalive ping in DBeaver. Right-click your connection, select **Edit Connection**, go to **Connection Settings** > **Initialization**, and set **Keep-Alive (seconds)** to `60`. This sends a periodic ping to keep the connection active.
+</Admonition>
 
 ## Basic Operations in DBeaver
 

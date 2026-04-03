@@ -22,7 +22,7 @@ The PostgreSQL `STRING_AGG()` function is an aggregate function that concatenate
 
 The following shows the syntax of the `STRING_AGG()` function:
 
-```csssqlsql
+```sql
 STRING_AGG ( expression, separator [order_by_clause] )
 ```
 
@@ -33,11 +33,11 @@ The `STRING_AGG()` function accepts two arguments and an optional `ORDER BY` cla
 
 The `order_by_clause` is an optional clause that specifies the order of concatenated results. It has the following form:
 
-```
+```sql
 ORDER BY expression1 {ASC | DESC}, [...]
 ```
 
-The `STRING_AGG()` is similar to the [`ARRAY_AGG()`](/postgresql/postgresql-aggregate-functions/postgresql-array_agg-function/) function except for the return type. The return value of the `STRING_AGG()` function is a string whereas the return value of the `ARRAY_AGG()` function is an [array](../postgresql-tutorial/postgresql-array).
+The `STRING_AGG()` is similar to the [`ARRAY_AGG()`](/postgresql/postgresql-aggregate-functions/postgresql-array_agg) function except for the return type. The return value of the `STRING_AGG()` function is a string whereas the return value of the `ARRAY_AGG()` function is an [array](../postgresql-tutorial/postgresql-array).
 
 Like other aggregate functions such as [`AVG()`](postgresql-avg-function), [`COUNT()`](postgresql-count-function), [`MAX()`](postgresql-max-function), [`MIN()`](postgresql-min-function), and [`SUM()`](postgresql-sum-function), the `STRING_AGG()` function is often used with the [`GROUP BY`](../postgresql-tutorial/postgresql-group-by) clause.
 
@@ -82,7 +82,7 @@ Here is the partial output:
 
 The following example uses the `STRING_AGG()` function to build an email list for each country, with emails separated by semicolons:
 
-```
+```sql
 SELECT
     country,
     STRING_AGG (email, ';') email_list

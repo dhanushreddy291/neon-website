@@ -1,5 +1,5 @@
 ---
-updatedOn: '2026-02-15T20:51:54.024Z'
+updatedOn: '2026-03-23T12:18:17.899Z'
 ---
 
 # Docs
@@ -339,17 +339,6 @@ The `ExternalCode` component allows embedding code content from external sources
 | showLineNumbers | boolean | false      | Shows line numbers in the code block                          |
 | className       | string  | ''         | Additional CSS classes to apply to the component              |
 
-### Examples
-
-```markdown
-<ExternalCode
-  url="https://raw.githubusercontent.com/neondatabase-labs/ai-rules/main/neon-auth.mdc"
-  language="markdown"
-  shouldWrap
-  showLineNumbers
-/>
-```
-
 ### Best Practices
 
 1. Always use raw URLs from the GitHub repository (for example, `https://raw.githubusercontent.com/...`).
@@ -516,7 +505,7 @@ The `TwoColumnLayout` component creates a two-column layout for tutorial pages a
 
 > **Note:** Pages using `TwoColumnLayout` should include `layout: wide` prop to hide the right sidebar (Table of Contents) and provide more space for the two-column layout.
 
-Check [Neon Auth with Next.js](https://neon.com/docs/auth/quick-start/nextjs) and [Neon Auth & Data API TypeScript SDKs](https://neon.com/docs/reference/javascript-sdk) for usage examples.
+Check [Neon Auth with Next.js](https://neon.com/docs/auth/quick-start/nextjs-api-only) and [Neon TypeScript SDK](https://neon.com/docs/reference/javascript-sdk) for usage examples.
 
 ````md
 <TwoColumnLayout>

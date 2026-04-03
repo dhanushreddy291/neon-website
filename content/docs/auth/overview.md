@@ -6,20 +6,18 @@ summary: >-
   integrates with your Neon database, allowing for branch-aware authentication
   and seamless testing of authentication workflows in isolated environments.
 enableTableOfContents: true
-updatedOn: '2026-02-23T11:56:42.929Z'
+updatedOn: '2026-03-23T15:16:28.131Z'
 redirectFrom:
   - /docs/neon-auth/quick-start/nextjs
   - /docs/auth/migrate/from-stack-auth
   - /docs/neon-auth/overview
   - /docs/neon-auth/claim-project
   - /docs/neon-auth/create-users
-  - /docs/neon-auth/api
   - /docs/neon-auth/how-it-works
   - /docs/neon-auth/best-practices
   - /docs/neon-auth/concepts/backend-integration
   - /docs/neon-auth/concepts/custom-user-data
   - /docs/guides/neon-auth-claim-project
-  - /docs/guides/neon-auth-api
   - /docs/guides/neon-auth-how-it-works
   - /docs/guides/neon-auth-best-practices
 ---
@@ -28,8 +26,27 @@ redirectFrom:
 
 Neon Auth is a managed authentication service that stores users, sessions, and auth configuration directly in your Neon database. When you branch your database, your entire auth state branches with it. This lets you test real authentication workflows in preview environments.
 
-<Admonition type="note" title="Before you start">
-Neon Auth is in active development. Check the [roadmap](/docs/auth/roadmap) to see what's supported and what's coming next.
+## Quick start guides
+
+Choose your framework to get started:
+
+<TechCards>
+
+<a href="/docs/auth/quick-start/nextjs-api-only" title="Next.js" description="Quick start with API methods" icon="next-js"></a>
+
+<a href="/docs/auth/quick-start/react" title="React" description="Quick start with API methods" icon="react"></a>
+
+<a href="/docs/auth/quick-start/tanstack-router" title="TanStack Router" description="With UI components" icon="tanstack"></a>
+
+</TechCards>
+
+<Admonition type="tip" title="Using an AI coding tool?">
+Run [`neonctl init`](/docs/reference/cli-init) to configure your editor with the Neon MCP server and agent skills, including Neon Auth setup guidance:
+
+```bash
+npx neonctl@latest init
+```
+
 </Admonition>
 
 ## Why Neon Auth?
@@ -47,7 +64,7 @@ Neon Auth is in active development. Check the [roadmap](/docs/auth/roadmap) to s
 
 Neon Auth is powered by [Better Auth](https://www.better-auth.com/), which means you get familiar APIs. You can use Better Auth UI components or call auth methods directly to build your own UI.
 
-Neon Auth currently supports Better Auth version **1.4.6**.
+Neon Auth currently supports Better Auth version **1.4.18**.
 
 ### When to use Neon Auth vs. self-hosting Better Auth
 
@@ -132,21 +149,9 @@ export default function App() {
 
 See [Branching authentication](/docs/auth/branching-authentication) for details on how auth branches with your database.
 
-## Quick start guides
+## Example applications
 
-Choose your framework to get started:
-
-<TechCards>
-
-<a href="/docs/auth/quick-start/nextjs" title="Next.js" description="With UI components" icon="next-js"></a>
-
-<a href="/docs/auth/quick-start/react" title="React (API methods)" description="Build your own auth UI" icon="react"></a>
-
-<a href="/docs/auth/quick-start/react-router-components" title="React" description="With UI components" icon="react"></a>
-
-<a href="/docs/auth/quick-start/tanstack-router" title="TanStack Router" description="With UI components" icon="tanstack"></a>
-
-</TechCards>
+Beyond the quick starts on this site, the [neondatabase/neon-js](https://github.com/neondatabase/neon-js) monorepo ships **more runnable Neon Auth and `neon-js` samples** under [`examples/`](https://github.com/neondatabase/neon-js/tree/main/examples)—Next.js and React apps, cross-subdomain setups, the Organization plugin, alternative UI stacks, and Data API patterns. Each folder includes its own README (many workflows use **bun** from the repository root). Browse there when you want a full project to clone next to the guides here.
 
 ## Availability
 

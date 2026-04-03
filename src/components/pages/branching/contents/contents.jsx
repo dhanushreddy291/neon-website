@@ -6,26 +6,22 @@ import { BRANCHING_BASE_PATH } from 'constants/branching';
 import ArrowRightIcon from 'icons/arrow-right.inline.svg';
 
 const Contents = ({ contents }) => (
-  <section className="safe-paddings table-of-contents w-full pb-[220px] pt-[180px] xl:pt-[136px] lg:pt-[88px] md:pb-20 md:pt-20">
+  <section className="table-of-contents w-full pt-[180px] safe-paddings pb-[220px] xl:pt-[136px] lg:pt-[88px] md:pt-20 md:pb-20">
     <Container className="w-full text-left" size="branching">
-      <h2 className="mb-14 font-sans text-5xl font-normal leading-dense tracking-tighter xl:text-[36px] lg:mb-11 md:mb-9 md:text-[28px]">
+      <h2 className="mb-14 font-sans text-5xl leading-dense font-normal tracking-tighter xl:text-[36px] lg:mb-11 md:mb-9 md:text-[28px]">
         Branching Workflows
       </h2>
-      <ul className="w-full">
+      <ul className="flex w-full flex-col gap-y-10">
         {contents.map(({ section, id, items }) => (
-          <li
-            className="flex flex-col gap-8 py-8 first:pt-0 last:pb-0 lg:gap-6 lg:py-7 md:gap-5"
-            key={id}
-            id={id}
-          >
-            <h3 className="font-mono text-xs font-medium uppercase leading-3 text-gray-new-60 md:text-[10px] md:leading-none">
+          <li className="flex flex-col gap-8 lg:gap-6 md:gap-5" key={id} id={id}>
+            <h3 className="font-mono text-xs leading-3 font-medium text-gray-new-60 uppercase md:text-[10px] md:leading-none">
               {section}
             </h3>
             <ol className="flex flex-col">
               {items.map(({ title, description, slug }) => (
                 <li className="group/item -mt-px border-t border-gray-new-20" key={slug}>
                   <Link
-                    className="group flex w-full items-center gap-x-16 py-6 font-sans text-base group-last/item:pb-0 lg:py-[18px] md:py-[14px]"
+                    className="group flex w-full items-center gap-x-16 py-6 font-sans text-base lg:py-[18px] md:py-[14px]"
                     to={`${BRANCHING_BASE_PATH}${slug}`}
                   >
                     <span className="flex flex-row items-center gap-x-16 lg:flex-col lg:items-baseline lg:gap-y-1">
@@ -33,12 +29,12 @@ const Contents = ({ contents }) => (
                         {title}
                       </span>
 
-                      <span className="font-normal leading-snug tracking-tight text-gray-new-50 md:hidden">
+                      <span className="leading-snug font-normal tracking-tight text-gray-new-50 md:hidden">
                         {description}
                       </span>
                     </span>
 
-                    <span className="ml-auto inline-flex shrink-0 items-center gap-2 font-medium leading-none tracking-extra-tight">
+                    <span className="ml-auto inline-flex shrink-0 items-center gap-2 leading-none font-medium tracking-extra-tight">
                       <span className="lg:hidden">Learn more</span>
                       <ArrowRightIcon
                         aria-hidden="true"

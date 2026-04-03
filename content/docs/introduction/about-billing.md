@@ -8,7 +8,7 @@ summary: >-
 redirectFrom:
   - /docs/introduction/billing-overview
   - /docs/introduction/how-billing-works
-updatedOn: '2026-02-06T22:07:33.080Z'
+updatedOn: '2026-03-10T16:52:46.211Z'
 ---
 
 ## Neon plans
@@ -27,7 +27,11 @@ updatedOn: '2026-02-06T22:07:33.080Z'
 
 <a href="/docs/introduction/monitor-usage" description="Learn how to monitor billing and usage in Neon" icon="setup">Monitor billing and usage</a>
 
-<a href="/docs/introduction/cost-optimization" description="Strategies to manage and reduce your Neon costs across compute, storage, and data transfer" icon="setup">Cost optimization</a>
+<a href="/docs/introduction/usage-calculations" description="Convert raw API metrics into billing units and calculate your costs" icon="setup">Usage and cost calculations</a>
+
+<a href="/docs/introduction/cost-optimization" description="Strategies to manage and reduce your Neon costs" icon="setup">Cost optimization</a>
+
+<a href="/docs/introduction/network-transfer" description="Monitor and reduce network transfer costs" icon="setup">Network transfer costs</a>
 
 </DetailIconCards>
 

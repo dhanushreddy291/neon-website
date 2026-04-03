@@ -1,12 +1,13 @@
 ---
-title: Neon CLI commands — init
-subtitle: Use the Neon CLI to manage Neon directly from the terminal
+title: 'Neon CLI command: init'
+subtitle: Initialize an app project with Neon, including auth, MCP server, extensions,
+  and agent skills
 summary: >-
   Step-by-step guide for initializing an app project with Neon using the CLI,
   including authentication, configuring the Neon MCP Server, and installing
   necessary extensions and agent skills for supported editors.
 enableTableOfContents: true
-updatedOn: '2026-02-24T15:28:05.880Z'
+updatedOn: '2026-03-20T18:23:32.457Z'
 ---
 
 ## The `init` command
@@ -19,7 +20,12 @@ This command will:
 - Create a Neon API key
 - For Cursor and VS Code, install the [Neon Local Connect extension](https://marketplace.visualstudio.com/items?itemName=databricks.neon-local-connect) and configure the MCP server
 - For Claude Code, configure the MCP server in `~/.claude.json`
+- For many other assistants (Claude Desktop, Codex, Zed, Gemini CLI, GitHub Copilot CLI, Cline, OpenCode, and others), write MCP config via [add-mcp](https://github.com/neondatabase/add-mcp) as part of the wizard
 - Install [Neon agent skills](https://github.com/neondatabase/agent-skills)
+
+### Coding assistant support
+
+**init** is backed by the **neon-init** package bundled with **neonctl**. Besides Cursor, VS Code, and Claude Code, the interactive flow can configure any client that [add-mcp supports](/docs/ai/connect-mcp-clients-to-neon#supported-agents-add-mcp). To register **only** the Neon MCP server in a client config (no **init**, no agent skills, no extension install), run **`npx add-mcp https://mcp.neon.tech/mcp`**. See [Connect MCP clients to Neon](/docs/ai/connect-mcp-clients-to-neon).
 
 ### What gets created
 
@@ -71,7 +77,7 @@ Skills are installed at the project level in the current working directory. Run 
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | `-a, --agent <name>` | Configure a specific editor, skipping the interactive selection prompt. Supported values: `cursor`, `copilot` (VS Code), `claude`. |
 
-When no `--agent` is specified, `init` is an interactive wizard that detects installed editors and lets you choose which to configure.
+When no `--agent` is specified, `init` is an interactive wizard that detects installed tools and lets you choose which to configure. If nothing is detected, you go straight to that list.
 
 ## Example
 

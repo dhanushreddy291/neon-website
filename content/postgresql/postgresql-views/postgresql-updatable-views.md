@@ -34,7 +34,7 @@ Second, the defining query must not contain one of the following clauses at the 
 - [WITH](../postgresql-tutorial/postgresql-cte)
 - [UNION](../postgresql-tutorial/postgresql-union)
 - [INTERSECT](../postgresql-tutorial/postgresql-intersect)
-- [EXCEPT](/postgresql/postgresql-tutorial/postgresql-tutorial/postgresql-except/)
+- [EXCEPT](../postgresql-tutorial/postgresql-except)
 
 Third, the selection list of the defining query must not contain any:
 
@@ -56,7 +56,7 @@ We’ll take some examples of creating updatable views.
 
 The following statements create a table called `cities` and [insert some rows](../postgresql-tutorial/postgresql-insert-multiple-rows) into the table:
 
-```phpsql
+```sql
 CREATE TABLE cities (
     id SERIAL PRIMARY KEY ,
     name VARCHAR(255),
@@ -154,7 +154,7 @@ Output:
 
 Sixth, delete a row from the `cities` table via the `city_us` view:
 
-```
+```sql
 DELETE FROM city_us
 WHERE id = 21;
 ```

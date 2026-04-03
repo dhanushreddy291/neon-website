@@ -6,10 +6,14 @@ summary: >-
   Row-Level Security (RLS) and authentication, demonstrating how to write
   queries from frontend code securely.
 enableTableOfContents: true
-updatedOn: '2026-02-17T17:13:56.570Z'
+updatedOn: '2026-03-23T18:27:00.720Z'
 ---
 
 In this tutorial, we'll walk through our note-taking app to show how Neon's Data API works with the `@neondatabase/neon-js` client library to write queries from your frontend code, with proper authentication and Row-Level Security (RLS) policies ensuring your data stays secure. The Data API is compatible with PostgREST, so you can use any PostgREST client library.
+
+<Admonition type="tip" title="Data API works with any auth provider">
+This tutorial uses [Neon Auth](/docs/auth/overview) for convenience, but the Data API works with any authentication provider that issues JWTs. The query patterns, RLS policies, and `auth.user_id()` function shown here apply regardless of your auth provider. See [Custom authentication providers](/docs/data-api/custom-authentication-providers) for setup details with Auth0, Clerk, Firebase, and others.
+</Admonition>
 
 ## About the sample application
 
@@ -32,7 +36,7 @@ Before you begin, ensure you have:
 
 ### Create a Neon project with Auth and Data API
 
-1. Go to [neon.new](https://neon.new) to create a new Neon project
+1. Go to the [Neon Console](https://console.neon.tech) to create a new Neon project
 2. In the Neon Console, navigate to your project and go to the **Data API** page in the left sidebar
 3. Select **Neon Auth** as your authentication option (the default), then click **Enable**
 
@@ -133,7 +137,9 @@ export const notes = pgTable(
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
     shared: boolean('shared').default(false),
   }
-  // ... RLS policies defined here
+  (table) => [
+    // ... RLS policies defined here
+  ]
 ).enableRLS();
 
 export const paragraphs = pgTable(
@@ -144,7 +150,9 @@ export const paragraphs = pgTable(
     content: text('content').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   }
-  // ... RLS policies defined here
+  (table) => [
+    // ... RLS policies defined here
+  ]
 ).enableRLS();
 ```
 
@@ -425,6 +433,6 @@ Now test deleting a note that has paragraphs; both the note and its paragraphs s
 - [Generate TypeScript types](/docs/data-api/generate-types)
 - [SQL to REST Converter](/docs/data-api/sql-to-rest)
 - [Neon Auth documentation](/docs/auth/overview)
-- [Neon Auth & Data API TypeScript SDKs](/docs/reference/javascript-sdk)
+- [Neon TypeScript SDK](/docs/reference/javascript-sdk)
 - [PostgREST documentation](https://docs.postgrest.org/en/v13/)
 - [Simplify RLS with Drizzle](/docs/guides/rls-drizzle)

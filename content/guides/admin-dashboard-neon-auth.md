@@ -28,7 +28,7 @@ Before you begin, ensure you have the following:
 
 You'll need to create a Neon project and enable Neon Auth.
 
-1.  **Create a Neon project:** Navigate to [neon.new](https://neon.new) to create a new Neon project. Give your project a name, such as `admin-dashboard-demo`.
+1.  **Create a Neon project:** Navigate to the [Neon Console](https://console.neon.tech) to create a new Neon project. Give your project a name, such as `admin-dashboard-demo`.
 2.  **Enable Neon Auth:**
     - In your project's dashboard, go to the **Neon Auth** tab.
     - Click on the **Enable Neon Auth** button to set up authentication for your project.
@@ -176,7 +176,7 @@ createRoot(document.getElementById('root')!).render(
 
 Neon Auth provides pre‑built UI components for handling the complete flow of authentication, including Sign In, Sign Up, and Account management.
 
-As outlined in the [Neon Auth React UI guide](/docs/auth/quick-start/react-router-components), you can use the `AuthView` and `AccountView` components to quickly set up these pages.
+As outlined in the [UI components reference](/docs/auth/reference/ui-components), you can use the `AuthView` and `AccountView` components to quickly set up these pages.
 
 Create `src/pages/Auth.tsx`:
 
@@ -763,7 +763,7 @@ The complete source code for this example is available on GitHub.
 - [Neon Auth Admin API Reference](/docs/auth/guides/plugins/admin)
 - [Neon Auth Overview](/docs/neon-auth/overview)
 - [Neon Auth UI components](/docs/auth/reference/ui-components)
-- [React with Neon Auth UI (UI Components)](/docs/auth/quick-start/react-router-components)
-- [Neon Auth & Data API TypeScript SDKs](/docs/reference/javascript-sdk)
+- [UI components reference](/docs/auth/reference/ui-components)
+- [Neon TypeScript SDK](/docs/reference/javascript-sdk)
 
 <NeedHelp />
