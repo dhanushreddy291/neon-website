@@ -32,10 +32,10 @@ const Footer = ({ hasThemesSupport = false }) => (
 
         <div className="flex flex-col items-start justify-between gap-y-5 lg:w-full lg:flex-row sm:flex-col">
           <StatusBadge />
-          <p
+          <div
             className={cn(
-              'flex gap-x-1 gap-y-1.5 text-[13px] leading-none tracking-extra-tight text-gray-new-40',
-              '2xl:flex-col lg:flex-row sm:flex-col'
+              'flex max-w-2xl flex-col gap-y-2 text-[13px] leading-none tracking-extra-tight text-gray-new-40',
+              'dark:text-gray-new-60'
             )}
           >
             <p>
