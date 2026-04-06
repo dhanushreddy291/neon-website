@@ -115,7 +115,7 @@ This section demonstrates how to create a simple API endpoint in your Phoenix ap
 
 Create a new file named `lib/hello_web/controllers/db_check_controller.ex` and add the following code:
 
-```elixir title="lib/hello_web/controllers/db_check_controller.ex"
+```elixir
 defmodule HelloWeb.DBCheckController do
   use HelloWeb, :controller
 
@@ -138,7 +138,7 @@ end
 
 Open `lib/hello_web/router.ex`. Inside the existing `scope "/api", HelloWeb do` block, add the following route:
 
-```elixir title="lib/hello_web/router.ex" {3}
+```elixir {3}
 scope "/api", HelloWeb do
   # ...
   get "/db_version", DBCheckController, :version
@@ -161,7 +161,7 @@ curl http://localhost:4000/api/db_version
 
 If successful, the output will return your database version as JSON:
 
-```json title="Output"
+```json
 {"version":"PostgreSQL 17.8 (a48d9ca) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit"}
 ```
 
