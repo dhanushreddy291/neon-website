@@ -9,7 +9,6 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/security/security
   - /docs/security
-  - /docs/security/acceptable-use-policy
 updatedOn: '2026-04-09T18:00:00.000Z'
 ---
 

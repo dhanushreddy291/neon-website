@@ -7,7 +7,7 @@ summary: >-
   Covers the management of user access, project resources, and collaboration
   within the Neon platform, including account types, permissions, project setup,
   and database management.
-updatedOn: '2026-02-06T22:07:33.120Z'
+updatedOn: '2026-04-09T18:30:00.000Z'
 ---
 
 ## Access & collaboration
@@ -103,6 +103,8 @@ Learn how Neon secures your projects and data, and explore the security features
 <a href="/docs/security/compliance" description="Learn how Neon complies with various standards" icon="check">Compliance</a>
 
 <a href="/docs/security/hipaa" description="HIPAA compliance with Neon" icon="privacy">HIPAA</a>
+
+<a href="/docs/security/acceptable-use-policy" description="Read about Neon's acceptable use policies" icon="privacy">Acceptable Use Policy</a>
 
 <a href="/docs/security/ai-use-in-neon" description="Learn about how AI is used in Neon" icon="openai">AI use in Neon</a>
 
