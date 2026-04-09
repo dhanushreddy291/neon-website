@@ -104,8 +104,6 @@ Learn how Neon secures your projects and data, and explore the security features
 
 <a href="/docs/security/hipaa" description="HIPAA compliance with Neon" icon="privacy">HIPAA</a>
 
-<a href="/docs/security/acceptable-use-policy" description="Read about Neon's acceptable use policies" icon="privacy">Acceptable Use Policy</a>
-
 <a href="/docs/security/ai-use-in-neon" description="Learn about how AI is used in Neon" icon="openai">AI use in Neon</a>
 
 </DetailIconCards>
