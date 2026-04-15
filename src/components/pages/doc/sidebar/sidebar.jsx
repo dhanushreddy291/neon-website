@@ -54,7 +54,9 @@ const Sidebar = ({ className = null, navigation, basePath, customType, sdkNaviga
   }, [menu]);
 
   const isChangelogIndex = !!currentSlug.match('changelog')?.length;
-  const hasBorder = !currentSlug.includes('guides');
+  const routePath = `/${currentSlug.replace(/^\/+/, '')}`;
+  const isGuidesRoute = /^\/guides(?:\/|$)/.test(routePath);
+  const hasBorder = !isGuidesRoute;
 
   if (isChangelogIndex) {
     return null;
