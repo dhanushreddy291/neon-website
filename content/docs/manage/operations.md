@@ -359,7 +359,7 @@ If the API returns **`423 Locked`**, retry the same request after a short wait, 
 # Set PROJECT_ID and NEON_API_KEY. Replace br-main-abc123 with a parent branch id from your project.
 
 MAX_RETRIES=5
-DELAY=0.1
+DELAY=0.1  # 100 msec
 
 for ATTEMPT in $(seq 1 "$MAX_RETRIES"); do
   response=$(curl -s -w "\n%{http_code}" \
