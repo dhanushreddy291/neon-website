@@ -2,8 +2,8 @@
 title: Updates
 summary: >-
   Covers the process for applying updates to Neon computes and Postgres
-  instances, including scheduling options, types of updates, and handling brief
-  connection drops during the update process.
+  instances, including cache prewarming, scheduling options, types of updates,
+  and handling brief connection drops during the update process.
 enableTableOfContents: true
 isDraft: false
 updatedOn: '2026-02-15T20:51:54.243Z'
@@ -11,7 +11,13 @@ updatedOn: '2026-02-15T20:51:54.243Z'
 
 To keep your Neon [computes](/docs/reference/glossary#compute) and Postgres instances up to date with the latest patches and features, Neon applies updates to your project's computes. We notify you of updates in advance so that you can plan for them if necessary. On Neon's paid plans, you can select an update window (a specific day and hour for updates).
 
-Neon briefly restarts a compute to apply an update. The entire process takes just a few seconds, minimizing any potential disruption.
+## How Neon applies updates
+
+To apply updates to your compute (Postgres upgrades, security patches, and similar changes), Neon restarts the compute where Postgres runs. On paid plans, this happens within the [update window](#updates-on-paid-plans) you choose. On the Free plan, Neon schedules updates for you. The restart itself typically takes only a few seconds.
+
+To protect performance, Neon **prewarms** your compute's cache during the update process, without adding time to the restart. Prewarming means repopulating Postgres's in-memory buffer cache from storage before your workload continues, so frequently used data is already in memory instead of being read cold from storage after the restart. Prewarming runs automatically. You do not configure it. There are no additional compute or storage costs associated with this behavior.
+
+For technical details, see [Zero-Downtime Patching Part 1: Prewarming](https://neon.com/blog/prewarming).
 
 <Admonition type="important">
 Brief connection drops are expected during compute updates. Verify that your application has a retry policy configured to handle these brief interruptions. For guidance on implementing retry logic, see [Building resilient applications with Postgres](/guides/building-resilient-applications-with-postgres).
@@ -164,6 +170,8 @@ Neon typically releases compute updates weekly, so we recommend scheduling weekl
 For restart instructions, see [Restart a compute](/docs/manage/computes#restart-a-compute).
 
 ## Handling connection disruptions during compute updates
+
+Prewarming helps keep the cache warm through the update, so query performance is not affected by a cold cache, but you may still experience a brief connection drop due to the compute restart.
 
 Most Postgres connection drivers include built-in retry mechanisms that automatically handle short-lived connection interruptions. This means that for most applications, a brief restart should result in minimal disruption, as the driver will reconnect automatically.
 
