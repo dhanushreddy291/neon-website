@@ -175,12 +175,6 @@ UPDATE 5
 The following statement retrieves data from the `courses` table to verify the update:
 
 ```sql
-SELECT * FROM courses;
-```
-
-Output:
-
-```sql
 SELECT
   course_name,
   price
