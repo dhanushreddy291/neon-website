@@ -7,7 +7,7 @@ summary: >-
 description: >-
   Install the Neon Postgres plugin in OpenAI Codex for MCP-backed database
   management plus skills for Neon workflows and egress cost optimization.
-updatedOn: '2026-04-16T00:00:00.000Z'
+updatedOn: '2026-04-17T22:00:00.000Z'
 ---
 
 The **Neon Postgres** Codex plugin helps you manage **Neon Serverless Postgres** projects and databases. It adds Neon-specific [Agent Skills](https://developers.openai.com/codex/skills/) and Neon API access to [OpenAI Codex](https://developers.openai.com/codex/), including the **Neon MCP Server** for project and database management and skills that cover connection methods, branching, autoscaling, [Neon Auth](/docs/auth/overview), and more.
@@ -58,22 +58,45 @@ The **Neon Postgres Egress Optimizer** skill is for tasks focused on finding and
 
 ## Install the plugin in Codex
 
-1. **Open the plugin directory**
+### Codex CLI
 
-   - **Codex app:** Open **Plugins** and browse or search for **Neon Postgres**.
-   - **Codex CLI:** Start Codex (`codex`), then run `/plugins` to open the plugin list.
+If the `codex` command is not available yet, install the [Codex CLI](https://developers.openai.com/codex/cli) first:
 
-2. **Install Neon Postgres**
+<Tabs labels={["npm", "Homebrew"]}>
 
-   Open the plugin details, then choose **Add to Codex**.
+<TabItem>
 
-3. **Complete any prompts**
+```bash
+npm install -g @openai/codex
+codex
+```
 
-   Some plugins ask you to authenticate when you install or the first time you use them. Follow the prompts to connect Neon if asked.
+</TabItem>
 
-4. **Start a new thread and try it**
+<TabItem>
 
-   Describe what you want in natural language, or type `@` to pick the **Neon Postgres** plugin or a specific bundled skill. See [Codex app commands](https://developers.openai.com/codex/app/commands) and [Skills](https://developers.openai.com/codex/skills/) in the OpenAI Codex documentation.
+```bash
+brew install --cask codex
+codex
+```
+
+</TabItem>
+
+</Tabs>
+
+The second line starts Codex in your terminal. For Windows, release binaries, and other install options, see the [Codex CLI](https://developers.openai.com/codex/cli) documentation.
+
+With Codex running, run `/plugins` to open the plugin list, open **Neon Postgres**, and choose **Add to Codex**.
+
+### Codex app
+
+Open **Plugins**, browse or search for **Neon Postgres**, open the plugin, then choose **Add to Codex**.
+
+### Complete setup (both paths)
+
+Some plugins ask you to authenticate when you install or the first time you use them. Follow the prompts to connect Neon if asked.
+
+Start a new thread and describe what you want in natural language, or type `@` to pick the **Neon Postgres** plugin or a specific bundled skill. See [Codex app commands](https://developers.openai.com/codex/app/commands) and [Skills](https://developers.openai.com/codex/skills/) in the OpenAI Codex documentation.
 
 ## Use with Neon quick setup
 
