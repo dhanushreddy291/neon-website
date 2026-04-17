@@ -8,6 +8,7 @@ const path = require('path');
 const API_URL = 'https://api.github.com/repos/neondatabase/neon';
 const SNAPSHOT_PATH = path.join(process.cwd(), 'src/utils/data/github-stars.generated.json');
 const SNAPSHOT_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+const FAILED_FETCH_RETRY_DELAY_MS = 60 * 60 * 1000;
 const DEFAULT_STARS_COUNT = 21500;
 const FETCH_TIMEOUT_MS = 10000;
 
@@ -134,7 +135,9 @@ async function main() {
     }
   } catch (error) {
     await writeSnapshot({
-      checked_at: snapshot?.checked_at ?? null,
+      checked_at: new Date(
+        Date.now() - (SNAPSHOT_MAX_AGE_MS - FAILED_FETCH_RETRY_DELAY_MS)
+      ).toISOString(),
       stargazers_count: currentStarsCount,
     });
     console.warn(`GitHub stars: ${error.message}`);
