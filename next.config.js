@@ -2430,6 +2430,21 @@ const defaultConfig = {
         destination: '/docs/introduction',
         permanent: true,
       },
+      {
+        source: '/neon-on-azure',
+        destination: '/docs/guides/neon-azure-integration',
+        permanent: true,
+      },
+      {
+        source: '/neon-business-sla',
+        destination: '/sla',
+        permanent: true,
+      },
+      {
+        source: '/msa',
+        destination: '/platform-terms',
+        permanent: true,
+      },
       ...docsRedirects,
       ...changelogRedirects,
     ];
