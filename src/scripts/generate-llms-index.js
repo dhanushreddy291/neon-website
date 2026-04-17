@@ -275,7 +275,7 @@ function generateIndexText(organized, collapsedEntries = []) {
     lines.push('## Common Queries');
     lines.push('');
     for (const q of config.commonQueries) {
-      lines.push(`- ${q.label}: ${q.url}`);
+      lines.push(`- [${q.label}](${q.url})`);
     }
     lines.push('');
   }
@@ -313,7 +313,9 @@ function generateIndexText(organized, collapsedEntries = []) {
     // Sub-indexed sections: show only highlights + link to full sub-index
     if (sectionConf && sectionConf.subIndex) {
       const allDocs = getAllDocsForSection(sectionData);
-      lines.push(`All ${allDocs.length} pages: ${sectionConf.subIndex.url} — key pages below`);
+      lines.push(
+        `- [All ${allDocs.length} ${section} pages](${sectionConf.subIndex.url}) — key pages below`
+      );
       lines.push('');
       const highlightSet = new Set(sectionConf.subIndex.highlights || []);
       const highlighted = allDocs.filter((d) => highlightSet.has(d.path));
@@ -390,7 +392,7 @@ function generateSubIndexText(sectionName, sectionConf, sectionData) {
     lines.push('');
   }
 
-  lines.push(`Parent index: ${BASE_URL}/docs/llms.txt`);
+  lines.push(`[Parent index](${BASE_URL}/docs/llms.txt)`);
   lines.push('');
 
   const directFiles = sectionData._files.sort((a, b) => a.title.localeCompare(b.title));
