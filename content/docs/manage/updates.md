@@ -6,7 +6,7 @@ summary: >-
   and handling brief connection drops during the update process.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-02-15T20:51:54.243Z'
+updatedOn: '2026-04-16T19:00:00.000Z'
 ---
 
 To keep your Neon [computes](/docs/reference/glossary#compute) and Postgres instances up to date with the latest patches and features, Neon applies updates to your project's computes. We notify you of updates in advance so that you can plan for them if necessary. On Neon's paid plans, you can select an update window (a specific day and hour for updates).
@@ -44,7 +44,7 @@ Neon applies updates to computes based on the following rules:
 - Computes that have been active for 30 days or more receive updates.
 - Computes that are restarted receive available updates immediately.
 - Computes in a transition state (for example, shutting down or restarting) at the time of an update are not updated.
-- Computes larger than 8 CU or that can scale past 8 CU are not updated automatically. See [Updating large computes](#updating-large-computes).
+- Computes whose **maximum** autoscale size is **greater than 8 CU** are not updated automatically. If your maximum is **exactly 8 CU**, your compute is **not** treated as a large compute and receives scheduled updates like smaller sizes. See [Updating large computes](#updating-large-computes).
 
 If a compute is excluded from an update, Neon will apply the missed update with the next update, assuming the compute meets the update criteria mentioned above.
 
@@ -163,7 +163,7 @@ For compute restart instructions, see [Restart a compute](/docs/manage/computes#
 
 ## Updating large computes
 
-Computes larger than 8 CU or set to scale beyond 8 CU are not updated automatically (_scheduled updates do not apply_). To apply updates, you'll need to restart them manually. A restart may occur automatically due to [scale to zero](/docs/introduction/scale-to-zero), but if scale to zero is disabled or your compute runs continuously, please plan for manual restarts.
+Computes whose **maximum** autoscale size is **greater than 8 CU** are not updated automatically (_scheduled updates do not apply_). Computes capped at **exactly 8 CU** follow the usual [automatic update rules](#how-often-are-updates-applied) above. To apply updates on a large compute, you'll need to restart it manually. A restart may occur automatically due to [scale to zero](/docs/introduction/scale-to-zero), but if scale to zero is disabled or your compute runs continuously, please plan for manual restarts.
 
 Neon typically releases compute updates weekly, so we recommend scheduling weekly compute restarts.
 
