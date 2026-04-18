@@ -24,13 +24,11 @@ When the user asks "what doc AI tools are available" or "what AI tools for docs"
 - **navigation-principles** — Reference for how `navigation.yaml` works: nav, subnav, items, and placement.
 - **docs-prime** — Primes the agent with project structure and key paths for the doc ecosystem.
 - **create-doc-ticket** — Create a JIRA task in the Databricks LKB project, assigned to yourself. Databricks employees only — requires the JIRA MCP. Non-employees should open a GitHub issue at github.com/neondatabase/website instead.
-- **list-doc-ai-tools** — Run this (or ask "what doc AI tools are available") to print this list.
-- **triage-changelog** — *(Deprecated — use `/create-pr-report` instead.)* Extracts PRs from Console, CLI, MCP, Storage, Compute repos using parallel agents and drafts a changelog.
+- **list-doc-tools** — Run this (or ask "what doc tools are available") to print this list.
 
 **Agents** (`.claude/agents/`)
 
 - **content-drafter**, **content-planner**, **content-refiner**, **ia-specialist**, **syntax-validator**, **supervisor** — Write/revise, plan specs, review, structure/nav, MDX/build validation, orchestrate multi-step workflows.
-- **extract-analyze-console**, **-cli**, **-mcp**, **-storage**, **-compute** — Changelog extraction and analysis by repo.
 
 ---
 

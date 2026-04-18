@@ -11,7 +11,7 @@ updatedOn: '2026-04-18T00:00:00.000Z'
 
 The Neon website repo includes Claude commands for common documentation tasks. All changes are reviewed by humans via pull requests.
 
-Run `/list-doc-ai-tools` in Claude to see the full list with descriptions, or browse the files under `.claude/commands/` in the [website repository](https://github.com/neondatabase/website).
+Run `/list-doc-tools` in Claude to see the full list with descriptions, or browse the files under `.claude/commands/` in the [website repository](https://github.com/neondatabase/website).
 
 ## Writing content
 
@@ -54,7 +54,7 @@ Run `/list-doc-ai-tools` in Claude to see the full list with descriptions, or br
 | ------------------------ | ---------------------------------------------------------------------------- |
 | `/navigation-principles` | Reference for `navigation.yaml` structure and how to add pages and sections. |
 | `/docs-prime`            | Load project structure and key paths into context.                           |
-| `/list-doc-ai-tools`     | Print the full list of available commands with descriptions.                 |
+| `/list-doc-tools`     | Print the full list of available commands with descriptions.                 |
 
 ## Agents
 
