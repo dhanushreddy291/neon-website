@@ -139,7 +139,7 @@ Regardless of the method or location through which Neon provides Support, commun
 
 ### Customer responsibilities
 
-To ensure efficient resolution of issues, customers are expected to (1) provide detailed information about the issue, (2) cooperate with the Support team during troubleshooting, and (3) utilize available self-service resources for basic inquiries.
+To ensure efficient resolution of issues, customers are expected to (1) provide detailed information about the issue, (2) cooperate with the Support team during troubleshooting, and (3) use available self-service resources for basic inquiries.
 
 ### Changes to the support policy
 

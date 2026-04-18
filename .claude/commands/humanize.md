@@ -43,7 +43,7 @@ Transform a documentation page to sound like one human explaining something to a
 - "Due to the fact that" → "because"
 - "At this point in time" → "now"
 - "On a regular basis" → "regularly"
-- Em dashes (—) → rewrite using a comma, parentheses, or a new sentence
+- Em dashes (—) → rewrite using a comma, parentheses, or a new sentence. Never introduce a new em dash in a rewrite.
 
 ### AI-specific tells
 
@@ -51,6 +51,7 @@ Transform a documentation page to sound like one human explaining something to a
 - Overuse of "seamlessly", "robust", "straightforward", "powerful", "comprehensive" → cut or replace with specifics
 - Closing sentences that restate the page title ("In this guide, you learned how to...") → cut
 - Transition sentences that only summarize the previous paragraph ("In summary...") → cut
+- Introducing abbreviations without expanding them first → spell out in full on first use, with the abbreviation in parentheses. For example: "natural language processing (NLP)", not just "NLP". Do not introduce an abbreviation that wasn't already present in the original text.
 
 ### Minimizing language
 
