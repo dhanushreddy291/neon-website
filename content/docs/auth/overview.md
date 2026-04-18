@@ -68,7 +68,7 @@ Neon Auth currently supports Better Auth version **1.4.18**.
 
 ### When to use Neon Auth vs. self-hosting Better Auth
 
-Neon Auth is a managed authentication service that integrates seamlessly with Neon's architecture and offerings:
+Neon Auth is a managed authentication service built into Neon's architecture:
 
 - **Branch-aware authentication**: Every Neon branch gets its own isolated auth environment, so you can test authentication features without affecting your production branch.
 - **Built-in Data API integration**: JWT token validation for the Data API has native support for Neon Auth.

@@ -9,7 +9,7 @@ enableTableOfContents: true
 updatedOn: '2026-02-06T22:07:32.850Z'
 ---
 
-The `unaccent` extension for Postgres enables handling of text data in a more user-friendly and language-tolerant way. It allows you to remove [accents/stress](<https://en.wikipedia.org/wiki/Stress_(linguistics)>) ([diacritic signs](https://en.wikipedia.org/wiki/Diacritic)) from text strings, making it easier to perform searches and comparisons that are insensitive to accents. This is particularly useful in multilingual applications where users might not consistently use accents when typing search queries.
+The `unaccent` extension for Postgres enables handling of text data in a more user-friendly and language-tolerant way. It allows you to remove [accents/stress](<https://en.wikipedia.org/wiki/Stress_(linguistics)>) ([diacritic signs](https://en.wikipedia.org/wiki/Diacritic)) from text strings, making it easier to perform searches and comparisons that are insensitive to accents. Use it in multilingual applications where users might not consistently use accents when typing search queries.
 
 Imagine a user searching for "Hôtel" but only typing "Hotel". Without `unaccent`, the database might not find the intended results. With `unaccent`, you can ensure that searches are more forgiving and return relevant results regardless of accent variations.
 

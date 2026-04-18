@@ -483,7 +483,7 @@ Simple, clean lists for documentation links with optional theming. DocsList prov
 
 ### InfoBlock
 
-InfoBlock creates a multi-column layout for organizing related content sections. It's particularly useful for creating "at-a-glance" summaries at the top of documentation pages, combining learning objectives with related resources. Use two columns.
+InfoBlock creates a multi-column layout for organizing related content sections. Use it for "at-a-glance" summaries at the top of documentation pages, combining learning objectives with related resources. Use two columns.
 
 **Key Features:**
 

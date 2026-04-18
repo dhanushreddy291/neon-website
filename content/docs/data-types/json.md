@@ -167,7 +167,7 @@ Postgres supports GIN (Generalized Inverted Index) indexes for `JSONB` data, whi
 CREATE INDEX idxgin ON user_profiles USING GIN (profile);
 ```
 
-This makes evaluation of `key-exists (?)` and `containment (@>)` operators efficient. For example, the query to fetch all users who have music as an interest can leverage this index.
+This makes evaluation of `key-exists (?)` and `containment (@>)` operators efficient. For example, the query to fetch all users who have music as an interest can use this index.
 
 ```sql
 SELECT *

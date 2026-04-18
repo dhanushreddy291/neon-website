@@ -4,7 +4,7 @@ subtitle: Understand how the Data API authenticates requests and enforces databa
   permissions.
 summary: >-
   Covers the authentication process of the Neon Data API, detailing how it
-  utilizes PostgreSQL's security model to enforce role privileges and Row-Level
+  uses PostgreSQL's security model to enforce role privileges and Row-Level
   Security for database access control.
 enableTableOfContents: true
 updatedOn: '2026-02-15T20:51:54.069Z'
