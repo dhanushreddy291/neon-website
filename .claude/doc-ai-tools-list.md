@@ -8,27 +8,27 @@ When the user asks "what doc AI tools are available" or "what AI tools for docs"
 
 **Commands** (`.claude/commands/`) — run with `/command-name`
 
-- **create-pr-report** — Generates a weekly report of merged PRs across monitored Neon repositories to identify documentation needs. Default range: since last Friday. Also supports PR deep dives and follow-on docs PR or changelog workflows.
-- **create-changelog** — Generates next Friday's changelog draft (or a specific date) with placeholder content and titled dropdown sections. Timezone: America/New_York.
-- **post-changelog** — Posts the weekly changelog preview to all Lakebase Slack channels for team review. Requires a Vercel preview URL and PR URL. Databricks employees only — requires the Slack MCP.
-- **update-roadmap** — Reviews the changelog (default: past 1 month) and syncs the introduction roadmap: moves shipped items from "What we're working on now" to "What we've shipped recently" and adds missing changelog features.
-- **write-content** — Full orchestrated workflow for new pages or substantial rewrites: IA specialist → content-drafter → content-refiner → syntax-validator. Heavyweight — use for new pages or major rewrites.
-- **simple-content** — Lighter single-thread workflow with user confirmation at each step (plan, draft, review). Use for edits to existing pages or smaller additions.
-- **review-content** — One-off review of content for style, standards, and technical accuracy.
-- **validate** — Pre-commit check: verifies frontmatter has `title`, no stray h1 headings, new files are in `navigation.yaml`, image paths exist, `redirectFrom` is well-formed, no em dashes. Then runs lint and format.
-- **check-consistency** — Finds other places in the docs that say the same thing as the current page; suggests a single source or aligned wording.
-- **update-glossary** — Compares a doc to the glossary and lists missing or reviewable terms (Mode A), or audits the glossary itself for order, cross-links, best practices, and obsolete entries (Mode B).
-- **redirect-update** — Step-by-step for moving or renaming docs: add `redirectFrom`, update links and navigation, preserve redirect chains.
-- **golden-corpus** — Curated exemplary doc files by type (tutorial, get-started, concept, how-to, reference, etc.). Use for style, tone, and structure reference.
-- **improve-intro** — Improves the first paragraph of a doc page to match Neon style.
-- **navigation-principles** — Reference for how `navigation.yaml` works: nav, subnav, items, and placement.
-- **docs-prime** — Primes the agent with project structure and key paths for the doc ecosystem.
-- **create-doc-ticket** — Create a JIRA task in the Databricks LKB project, assigned to yourself. Databricks employees only — requires the JIRA MCP. Non-employees should open a GitHub issue at github.com/neondatabase/website instead.
+- **create-pr-report** — Runs a report of merged PRs across monitored Neon repos (default: since last Friday) so you can see what shipped and what may need documenting. Also supports deep-diving into a specific PR to assess documentation impact and follow on to draft a changelog entry or open a docs PR.
+- **create-changelog** — Creates the changelog file for next Friday (or a date you specify) with the correct structure and placeholder content. Run this at the start of changelog week to get the file ready to fill in.
+- **post-changelog** — Posts the changelog preview link and PR to all Lakebase Slack channels so the team can review before it publishes. Databricks employees only — requires Slack MCP access.
+- **update-roadmap** — Reads the recent changelog (default: past month) and updates the introduction roadmap page: moves shipped items out of "What we're working on now" and into "What we've shipped recently," and adds any major changelog features that are missing.
+- **write-content** — Writes a new doc page end-to-end using a pipeline of specialized agents: structure is planned, content is drafted, style is reviewed, and MDX is validated. Use for new pages or major rewrites where you want a thorough, well-structured first draft.
+- **simple-content** — Walks you through writing or updating a page in a single conversation, with a confirmation step after each stage (plan → draft → review). Use for edits to existing pages, shorter additions, or when you want more control at each step.
+- **review-content** — Reviews a page against Neon standards and produces a structured findings report grouped by category: terminology violations, voice and style issues, structure problems, and MDX errors. Each finding includes the original text, the issue, and a suggested fix. You can apply fixes interactively or use the report as a reference.
+- **validate** — Catches common errors before you commit: missing `title` frontmatter, stray h1 headings, new pages not added to `navigation.yaml`, broken image paths, malformed `redirectFrom` entries, and em dashes. Then runs lint and format.
+- **check-consistency** — Checks whether a doc page duplicates instructions or definitions that exist elsewhere. Surfaces overlapping content so you can align wording, add a cross-reference, or consolidate into shared content. Outputs a report only — does not rewrite anything.
+- **update-glossary** — Mode A: reads a doc file and lists Neon product terms that are missing from the glossary, with suggested definitions. Mode B: audits the glossary itself for alphabetical order, missing cross-links, best-practice violations, and obsolete entries.
+- **redirect-update** — Handles the full redirect workflow after moving or renaming a doc: adds `redirectFrom` to the destination file, finds and updates all internal links, updates `navigation.yaml`, and flags any redirect chain issues.
+- **golden-corpus** — Loads curated examples of well-written Neon docs by page type (tutorial, how-to, reference, concept, integration, etc.). Use before writing or reviewing to understand what good looks like for that type — structure, voice, component usage, and level of detail.
+- **improve-intro** — Rewrites the opening paragraph of a doc page so it clearly tells the reader what the page covers and what they'll be able to do. Removes generic filler ("In this guide, you will...") and makes the intro useful to someone who arrives from search.
+- **navigation-principles** — Reference for how `navigation.yaml` is structured. Use when adding a new page or section to the docs nav — explains nav, subnav, section, items, slug, and tag with examples of each.
+- **docs-prime** — Loads context about how this repo is organized (directory structure, key files, content conventions) so Claude can give accurate answers without reading the whole codebase first. Run at the start of a session when asking structural or architectural questions.
+- **create-doc-ticket** — Creates a JIRA task in the Databricks LKB project and assigns it to you. Accepts a Slack thread URL, PR link, or plain description as input and drafts the ticket from it. Databricks employees only — requires the JIRA MCP.
 - **list-doc-tools** — Run this (or ask "what doc tools are available") to print this list.
 
 **Agents** (`.claude/agents/`)
 
-- **content-drafter**, **content-planner**, **content-refiner**, **ia-specialist**, **syntax-validator**, **supervisor** — Write/revise, plan specs, review, structure/nav, MDX/build validation, orchestrate multi-step workflows.
+- **content-drafter**, **content-planner**, **content-refiner**, **ia-specialist**, **syntax-validator**, **supervisor** — Specialized agents used by `/write-content`. Not invoked directly.
 
 ---
 
