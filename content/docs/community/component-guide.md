@@ -545,13 +545,13 @@ Install the required packages.
 
 ```bash
 npm install @neondatabase/neon-js
-````
+```
 
 </TwoColumnLayout.Block>
 </TwoColumnLayout.Step>
 
 </TwoColumnLayout>
-```
+````
 
 **Subcomponents:**
 
