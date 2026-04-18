@@ -227,7 +227,7 @@ When using `pgcrypto`, it's crucial to adhere to security best practices:
 
 ## Conclusion
 
-`pgcrypto` brings a broad set of cryptographic functions into Postgres, covering password hashing, data encryption, and general-purpose hashing — all available through standard SQL queries.
+`pgcrypto` brings a broad set of cryptographic functions into Postgres, covering password hashing, data encryption, and general-purpose hashing, all available through standard SQL queries.
 
 ## Resources
 

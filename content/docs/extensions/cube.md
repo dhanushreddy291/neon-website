@@ -358,7 +358,7 @@ LIMIT 3;
 
 ## Conclusion
 
-The `cube` extension adds a data type for multidimensional data in Postgres. Its operators and functions, combined with GiST indexing, enable efficient storage, querying, and analysis of n-dimensional points and regions — from GIS to scientific computing.
+The `cube` extension adds a data type for multidimensional data in Postgres. Its operators and functions, combined with GiST indexing, enable efficient storage, querying, and analysis of n-dimensional points and regions, with applications ranging from GIS to scientific computing.
 
 ## Resources
 
