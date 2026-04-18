@@ -1,5 +1,5 @@
 ---
-description: 'Find other places in the docs that say the same thing as the current page, so the author can align wording or consolidate into shared content.'
+description: 'Check whether a doc page duplicates instructions or definitions that exist elsewhere in the docs. Surfaces overlapping content so you can align wording, add a cross-reference, or consolidate into shared content. Does not rewrite anything — outputs a report for the author to act on.'
 ---
 
 # Check Consistency
