@@ -114,7 +114,7 @@ id | name
 
 ### Case-insensitive and accent-insensitive searching with `ILIKE`
 
-For even more flexible searching, you can combine `unaccent()` with the [`ILIKE`](/postgresql/postgresql-tutorial/postgresql-like#postgresql-extensions-of-the-like-operator) operator for case-insensitive and accent-insensitive searches. This is particularly useful for free-text search scenarios.
+For even more flexible searching, you can combine `unaccent()` with the [`ILIKE`](/postgresql/postgresql-tutorial/postgresql-like#postgresql-extensions-of-the-like-operator) operator for case-insensitive and accent-insensitive searches. This comes in handy for free-text search scenarios.
 
 ```sql
 SELECT * FROM product WHERE unaccent(name) ILIKE unaccent('%cafe%');
@@ -172,7 +172,7 @@ Once you have this `IMMUTABLE` wrapper function, you can create indexes on it:
 CREATE INDEX idx_products_name_unaccent ON products (f_unaccent(name));
 ```
 
-Now, queries using `f_unaccent(name)` in the `WHERE` clause can effectively utilize this index, significantly improving performance for accent-insensitive searches.
+Now, queries using `f_unaccent(name)` in the `WHERE` clause can use this index, significantly improving performance for accent-insensitive searches.
 
 ```sql
 SELECT * FROM products WHERE f_unaccent(name) = f_unaccent('cafe');
