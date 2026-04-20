@@ -635,7 +635,7 @@ See [CONN_MAX_AGE](https://example.com).
       const navMap = buildNavigationMap(rootDir);
 
       // Check a known postgresql page
-      const selectEntry = navMap.get('postgresql-tutorial/postgresql-select');
+      const selectEntry = navMap.get('tutorial/select');
       expect(selectEntry).toBeDefined();
       expect(selectEntry.urlPrefix).toBe('postgresql');
       expect(selectEntry.siblings.length).toBeGreaterThan(0);
