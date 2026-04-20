@@ -48,7 +48,7 @@ const Steps = ({ children }) => {
           )}
           key={index}
         >
-          <div className="w-[calc(100%-100px)] flex-1 [&>*_*:last-child]:mb-0 [&>*:first-child]:mt-0 [&>*:first-child]:pt-0 [&>*:last-child]:mb-0">
+          <div className="w-[calc(100%-100px)] flex-1 [&>*_*:last-child]:mb-0 [&>*:first-child]:mt-0 [&>*:first-child]:pt-0 md:[&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
             {step}
           </div>
         </li>
