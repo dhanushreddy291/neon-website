@@ -31,7 +31,7 @@ const Steps = ({ children }) => {
 
   return (
     <ol
-      className="numbered-steps mt-0! inline-flex w-full flex-col pl-0!"
+      className="numbered-steps mt-6! inline-flex w-full flex-col pl-0!"
       style={{
         counterReset: 'section',
       }}
