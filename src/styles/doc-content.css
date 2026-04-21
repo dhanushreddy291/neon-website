@@ -58,18 +58,6 @@
       word-spacing: 0.25em;
     }
   }
-
-  .tab-item {
-    > * {
-      &:first-child {
-        @apply mt-0;
-      }
-
-      &:last-child {
-        @apply mb-0;
-      }
-    }
-  }
 }
 
 @layer utilities {
@@ -162,6 +150,27 @@
       > li {
         @apply text-[18px] leading-normal font-normal;
         @apply before:absolute before:top-0 before:-left-4 before:text-[18px] before:leading-normal before:font-normal before:text-gray-new-30 before:content-['-'] dark:before:text-gray-new-85 before:md:-left-3.5;
+      }
+    }
+
+    .tab-item {
+      > * {
+        &:first-child {
+          @apply mt-0;
+        }
+
+        &:last-child {
+          @apply mb-0;
+        }
+      }
+
+      ul > li,
+      ol > li {
+        @apply text-base leading-snug tracking-extra-tight;
+      }
+
+      ul > li::before {
+        @apply text-base leading-snug;
       }
     }
 
