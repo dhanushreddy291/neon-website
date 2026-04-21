@@ -7,7 +7,7 @@ createdAt: '2026-04-21T02:00:00.000Z'
 updatedOn: '2026-04-21T02:00:00.000Z'
 ---
 
-If you are adding authentication to a Next.js or Node.js service that already uses Postgres, you will run into three options that sound similar but behave very differently in practice: [Auth.js (NextAuth.js)](https://authjs.dev/), [Neon Auth](https://neon.com/docs/auth/overview), and [Better Auth](https://www.better-auth.com/).
+If you are adding authentication to a Next.js application that already uses Postgres, you will run into three options that sound similar but behave very differently in practice: [Auth.js (NextAuth.js)](https://authjs.dev/), [Neon Auth](https://neon.com/docs/auth/overview), and [Better Auth](https://www.better-auth.com/).
 
 They are not interchangeable implementations of the same idea. Two of them are libraries you run inside your app. One is a managed service that is tightly integrated with a specific Postgres platform. The right choice usually comes down to how you want identity data to live in Postgres, how you want sessions to be managed, and how much infrastructure you want to own.
 
