@@ -139,7 +139,7 @@ On the objective side, pay attention to where the schema is actually defined. So
 
 There are also plenty of subjective factors to weigh. Some teams have deep SQL expertise and are comfortable staying close to the database, while others would rather work at a higher level of abstraction. How quickly new contributors can get up to speed is another real-world factor, especially for larger teams or projects that expect turnover. The structure of your application plays a role too! are you mostly doing straightforward CRUD with lots of nested includes, or are you piecing together custom queries, advanced transactions, and reporting logic with hand-written joins?s
 
-Community benchmarks [[3](https://db-latency.vercel.app/)] can be a useful place to start if you are concerned about latency or performance, and projects like the ones referenced on Prisma’s Drizzle comparison page give you some reference points. Still, it is essential to actually measure with your own queries, data shapes, and traffic. Microbenchmarks can help you spot broad differences, but your own tests on the real workload should guide the final call.
+Community benchmarks [[3](https://db-latency.vercel.app/)] can be a useful place to start if you are concerned about latency or performance, but it is essential to actually measure with your own queries, data shapes, and traffic. Microbenchmarks can help you spot broad differences, but your own tests on the real workload should guide the final call.
 
 ## Where Neon Fits When Using These ORMs
 
