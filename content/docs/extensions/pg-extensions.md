@@ -137,20 +137,6 @@ Extensions installations and updates are automatically applied to any read repli
 
 _We appreciate all extension requests. While we can’t guarantee support, we regularly review requests and prioritize them based on factors like user demand, popularity in the Postgres ecosystem, and Neon’s product direction. Some extensions are simple to add, while others require significant integration work._
 
-## Custom-built extensions
-
-For [Scale](/docs/introduction/plans) plan customers, Neon supports custom-built Postgres extensions for exclusive use with your Neon account. If you developed your own Postgres extension and want to use it with Neon, please reach out to us as described above. Please include the following information in your request:
-
-- A repository link or archive file containing the source code for your extension
-- A description of what the extension does, instructions for compiling it, and any prerequisites
-- Whether an NDA or licensing agreement is necessary for Neon to provide support for your extension
-
-Please keep in mind that certain restrictions may apply with respect to Postgres privileges and local file system access. Additionally, Neon features such as _Autoscaling_ and _Scale to Zero_ may limit the types of extensions we can support.
-
-Depending on the nature of your extension, Neon may also request a liability waiver.
-
-Custom-built extensions are not yet supported for Neon projects provisioned on Azure.
-
 ## Extension support
 
 Neon supports a large number of Postgres extensions. When we say an extension is “supported,” we mean that it's available for you to enable and use in your project.
