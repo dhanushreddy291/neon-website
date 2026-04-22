@@ -383,67 +383,12 @@ Neon supports creating Postgres roles with the `NOLOGIN` attribute. This allows 
 CREATE ROLE my_role NOLOGIN;
 ```
 
-Roles with `NOLOGIN` are commonly used for permission management.
+Roles with `NOLOGIN` are commonly used for permission management. For an example, see [Transfer database table ownership between roles](/docs/manage/databases#transfer-database-table-ownership-between-roles).
 
 The Neon API and CLI also support creating `NOLOGIN` roles:
 
 - The Neon API [Create role](https://api-docs.neon.tech/reference/createprojectbranchrole) endpoint supports a `no_login` attribute.
 - The Neon CLI [`neon roles create`](/docs/reference/cli-roles#create) command supports a `--no-login` option.
-
-## Transfer table ownership between roles
-
-In Neon, roles created via the Console, CLI, or API are members of `neon_superuser` but are not full Postgres superusers. This means you can't directly transfer table ownership from one role to another using `ALTER TABLE ... OWNER TO`.
-The workaround is to introduce a shared group role that both roles belong to. You transfer ownership to the group, then the destination role can claim ownership for itself.
-
-**Prerequisites:** Both roles must have been created using the Neon Console, CLI, or API so they have `neon_superuser` membership. Connect to your database using an SQL client such as [psql](/docs/connect/query-with-psql-editor) to perform the transfer. The Neon SQL Editor doesn't support connecting as different roles, so it can't be used for steps that require switching roles.
-
-### Step 1: Create a group role for table ownership
-
-Connect as the database owner role and run:
-
-```sql
--- Create a group role with no login
-CREATE ROLE table_owners NOLOGIN;
-
--- Grant schema access to the group
-GRANT USAGE, CREATE ON SCHEMA public TO table_owners;
-
--- Add both roles to the group
-GRANT table_owners TO current_owner;
-GRANT table_owners TO new_owner;
-```
-
-Replace `current_owner` and `new_owner` with the actual role names.
-
-### Step 2: Transfer ownership to the group
-
-Still connected as `current_owner`, transfer the table to the group:
-
-```sql
-ALTER TABLE your_table OWNER TO table_owners;
-```
-
-### Step 3: Claim ownership as the destination role
-
-Disconnect, then reconnect as `new_owner`. Transfer ownership from the group to yourself:
-
-```sql
-ALTER TABLE your_table OWNER TO new_owner;
-```
-
-### Step 4: Verify
-
-```sql
-\dt your_table
-```
-
-The **Owner** column should now show `new_owner`.
-
-You can leave the `table_owners` group role in place if you need to transfer other tables later, or drop it when you're done:
-
-```sql
-DROP ROLE table_owners;
-```
 
 ## Reserved role names
 
