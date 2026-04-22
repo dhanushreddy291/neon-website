@@ -243,7 +243,7 @@
     }
 
     .sticky-table {
-      @apply lg:[--docs-header-height:0px];
+      @apply relative lg:[--docs-header-height:0px];
     }
 
     .sticky-table-header {
