@@ -71,6 +71,10 @@ This adds the MCP config to your editor's configuration files. Add `-g` for glob
 
 For Local setup, you'll need a [Neon API key](/docs/manage/api-keys#creating-api-keys).
 
+## Kiro
+
+Use the **Add to Kiro** badge at the top of the [**Neon MCP Server** README on GitHub](https://github.com/neondatabase/mcp-server-neon) (next to **Install in Cursor**) for one-click setup with the Neon remote MCP URL. The same badges also appear on [Neon MCP Server overview](/docs/ai/neon-mcp-server#one-click-install-cursor-and-kiro). For manual configuration, Kiro reads **`~/.kiro/settings/mcp.json`** (global) or **`.kiro/settings/mcp.json`** (project). See [Kiro MCP documentation](https://kiro.dev/docs/mcp/) and [neondatabase/mcp-server-neon#228](https://github.com/neondatabase/mcp-server-neon/pull/228).
+
 ## Cursor
 
 <Tabs labels={["Quick Setup", "OAuth", "Local"]}>
