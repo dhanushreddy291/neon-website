@@ -58,18 +58,6 @@
       word-spacing: 0.25em;
     }
   }
-
-  .tab-item {
-    > * {
-      &:first-child {
-        @apply mt-0;
-      }
-
-      &:last-child {
-        @apply mb-0;
-      }
-    }
-  }
 }
 
 @layer utilities {
@@ -114,7 +102,7 @@
       @apply mt-10;
     }
 
-    @apply prose-h2:mt-7 prose-h2:mb-0 prose-h2:text-[28px] prose-h2:leading-tight prose-h2:font-medium prose-h2:tracking-tighter;
+    @apply prose-h2:mt-14 prose-h2:mb-0 prose-h2:text-[28px] prose-h2:leading-tight prose-h2:font-medium prose-h2:tracking-tighter md:prose-h2:mt-11;
     @apply prose-h3:text-xl prose-h3:leading-snug prose-h3:font-medium prose-h3:tracking-extra-tight;
     @apply prose-h4:text-lg prose-h4:leading-snug prose-h4:font-medium prose-h4:tracking-extra-tight;
     @apply prose-p:mt-[1.125rem] prose-p:mb-6 prose-p:text-lg prose-p:leading-normal prose-p:font-normal prose-p:tracking-tight prose-p:text-gray-new-30 dark:prose-p:text-gray-new-80;
@@ -165,6 +153,27 @@
       }
     }
 
+    .tab-item {
+      > * {
+        &:first-child {
+          @apply mt-0;
+        }
+
+        &:last-child {
+          @apply mb-0;
+        }
+      }
+
+      ul > li,
+      ol > li {
+        @apply text-base leading-snug tracking-extra-tight;
+      }
+
+      ul > li::before {
+        @apply text-base leading-snug;
+      }
+    }
+
     ol {
       @apply list-decimal pl-9.5 md:pl-5;
 
@@ -211,7 +220,7 @@
       }
 
       th {
-        @apply p-3 pt-0 text-left align-top leading-snug font-medium tracking-extra-tight;
+        @apply p-3 text-left align-top leading-snug font-medium tracking-extra-tight;
       }
 
       td {
@@ -229,6 +238,26 @@
       tbody {
         tr {
           @apply border-b border-gray-new-80 text-gray-new-30 dark:border-gray-new-20 dark:text-white;
+        }
+      }
+    }
+
+    .sticky-table {
+      @apply lg:[--docs-header-height:0px];
+    }
+
+    .sticky-table-header {
+      @apply pointer-events-none fixed top-(--docs-header-height) z-40 overflow-hidden bg-white dark:bg-black-pure 2xl:px-4;
+
+      table {
+        @apply my-0;
+      }
+
+      thead {
+        @apply static;
+
+        tr {
+          @apply border-b border-gray-new-80 dark:border-gray-new-20;
         }
       }
     }
