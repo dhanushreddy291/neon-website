@@ -1,15 +1,22 @@
 ---
-title: Full Twin
+title: pg_dump / pg_restore — Full Twin
 subtitle: Create a full Twin of your production database
+summary: >-
+  Step-by-step guide for creating a full Neon Twin of your production database
+  using `pg_dump` and `pg_restore` within a GitHub Actions workflow.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2025-03-03T16:46:05.777Z'
+updatedOn: '2026-04-01T22:00:00.000Z'
 ---
 
 This workflow will create a full Neon Twin using `pg_dump` and `pg_restore`.
 
 <Admonition type="note">
-To use this workflow, you'll need the Postgres connection string for your Neon database. Follow our [Getting Started Guide](/docs/get-started-with-neon/signing-up#sign-up) to learn how.
+To use this workflow, you'll need the Postgres connection string for your Neon database. Follow our [Getting Started Guide](/docs/get-started/signing-up#sign-up) to learn how.
+</Admonition>
+
+<Admonition type="important">
+Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) for `PROD_DATABASE_URL` and `DEV_DATABASE_URL` when they point to Neon.
 </Admonition>
 
 ## Create the workflow
@@ -164,5 +171,5 @@ If your dump/restore process takes longer, consider using [self-hosted runners](
 
 ## Further reading
 
-- [Neon Twin: Move Dev/Test/Staging to Neon, Keep Production on RDS](https://neon.tech/blog/optimizing-dev-environments-in-aws-rds-with-neon-postgres-part-ii-using-github-actions-to-mirror-rds-in-neon)
-- [Neon Twin: How to deploy a change tested in Neon to prod in RDS](https://neon.tech/blog/neon-twin-deploy-workflow)
+- [Neon Twin: Move Dev/Test/Staging to Neon, Keep Production on RDS](/blog/optimizing-dev-environments-in-aws-rds-with-neon-postgres-part-ii-using-github-actions-to-mirror-rds-in-neon)
+- [Neon Twin: How to deploy a change tested in Neon to prod in RDS](/blog/neon-twin-deploy-workflow)

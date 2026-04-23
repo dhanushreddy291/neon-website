@@ -1,112 +1,144 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import clsx from 'clsx';
+import Image from 'next/image';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useCookie from 'react-use/lib/useCookie';
-import useLocation from 'react-use/lib/useLocation';
 import * as yup from 'yup';
 
 import Button from 'components/shared/button';
 import Field from 'components/shared/field';
 import Link from 'components/shared/link';
-import { FORM_STATES, HUBSPOT_CONTACT_SALES_FORM_ID } from 'constants/forms';
+import { FORM_STATES } from 'constants/forms';
 import LINKS from 'constants/links';
+import CloseIcon from 'icons/close.inline.svg';
+import formPattern from 'images/pages/contact-sales/form-pattern.png';
 import { checkBlacklistEmails } from 'utils/check-blacklist-emails';
-import { doNowOrAfterSomeTime, sendHubspotFormData } from 'utils/forms';
+import { doNowOrAfterSomeTime } from 'utils/forms';
+import sendGtagEvent from 'utils/send-gtag-event';
+
+const ErrorMessage = ({ onClose }) => (
+  <div className="absolute inset-0 flex items-center justify-center p-5" data-test="error-message">
+    <div className="relative z-10 flex max-w-sm flex-col items-center text-center">
+      <h3 className="font-title text-[32px] leading-none font-medium tracking-extra-tight sm:text-[28px]">
+        Oops, looks like there&apos;s a technical problem
+      </h3>
+      <p className="mt-3.5 max-w-[236px] leading-tight tracking-extra-tight text-gray-new-70">
+        Please reach out to us directly at{' '}
+        <Link
+          className="border-b border-green-45/40 hover:border-green-45"
+          theme="green"
+          to="mailto:atli@neon.tech"
+        >
+          atli@neon.tech
+        </Link>
+      </p>
+    </div>
+    <button className="absolute top-4 right-4 z-20" type="button" onClick={onClose}>
+      <CloseIcon className="size-4 text-white opacity-50 transition-opacity duration-300 hover:opacity-100" />
+      <span className="sr-only">Close error message</span>
+    </button>
+    <span className="absolute inset-0 bg-[#0E0E11]/40 backdrop-blur-md" />
+  </div>
+);
+
+ErrorMessage.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
 
 const schema = yup
   .object({
-    name: yup.string().required('Your name is a required field'),
+    firstname: yup.string().required('Required Field'),
+    lastname: yup.string().required('Required Field'),
     email: yup
       .string()
       .email('Please enter a valid email')
-      .required('Email address is a required field')
+      .required('Required Field')
       .test(checkBlacklistEmails({ validation: { useDefaultBlockList: true } })),
     companySize: yup.string().notOneOf(['hidden'], 'Required field'),
-    message: yup.string().required('Message is a required field'),
+    reasonForContact: yup.string().notOneOf(['hidden'], 'Required field'),
+    message: yup.string().required('Required Field'),
   })
   .required();
 
-const labelClassName = 'text-sm text-gray-new-90';
-const errorClassName = '!top-0';
+const labelClassName = 'text-[15px] leading-snug tracking-tight text-gray-new-90 md:text-sm';
+const inputClassName =
+  '!mt-0 !h-11 !rounded-none border-gray-new-20 !bg-black-pure !px-4 !text-base !leading-snug !tracking-tight text-white placeholder:!text-gray-new-50 focus:!border-white';
+const selectClassName = `${inputClassName} !pr-10 !bg-[url(/images/chevron-down-gray.svg)]`;
+const textareaClassName = `${inputClassName} !min-h-[132px] !items-start !py-[11px] xl:!min-h-[120px] focus:outline-offset-2 focus:outline-2 focus:outline-primary-1`;
+
+const AZURE_MIGRATION_MESSAGE = "I'd like to migrate my Azure managed account.";
 
 const ContactForm = () => {
   const [formState, setFormState] = useState(FORM_STATES.DEFAULT);
+  const [isBroken, setIsBroken] = useState(false);
 
   const {
     register,
     reset,
+    setValue,
     handleSubmit,
-    formState: { errors },
+    formState: { isValid, errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      companySize: 'hidden',
+      reasonForContact: 'hidden',
+      message: '',
+    },
   });
 
-  const [hubspotutk] = useCookie('hubspotutk');
-  const { href } = useLocation();
-  const [formError, setFormError] = useState('');
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('message') === 'azure-migration') {
+      setValue('message', AZURE_MIGRATION_MESSAGE);
+    }
+  }, [setValue]);
 
-  const context = {
-    hutk: hubspotutk,
-    pageUri: href,
-  };
+  useEffect(() => {
+    const hasErrors = Object.keys(errors).length > 0;
+    if (formState !== FORM_STATES.LOADING && formState !== FORM_STATES.SUCCESS) {
+      if (hasErrors) setFormState(FORM_STATES.ERROR);
+      else setFormState(FORM_STATES.DEFAULT);
+    }
+  }, [errors, isValid, formState]);
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    const { name, email, companyWebsite, companySize, message } = data;
+    const { firstname, lastname, email, companyWebsite, companySize, reasonForContact, message } =
+      data;
     const loadingAnimationStartedTime = Date.now();
-    setFormError('');
+    setIsBroken(false);
     setFormState(FORM_STATES.LOADING);
 
     try {
-      const response = await sendHubspotFormData({
-        formId: HUBSPOT_CONTACT_SALES_FORM_ID,
-        context,
-        values: [
-          {
-            name: 'full_name',
-            value: name,
-          },
-          {
-            name: 'email',
-            value: email,
-          },
-          {
-            name: 'company_website',
-            value: companyWebsite,
-          },
-          {
-            name: 'company_size',
-            value: companySize,
-          },
-          {
-            name: 'TICKET.subject',
-            value: 'Contact sales',
-          },
-          {
-            name: 'TICKET.content',
-            value: message,
-          },
-        ],
-      });
+      const eventName = 'Contact Sales Form Submitted';
+      const eventProps = {
+        email,
+        first_name: firstname,
+        last_name: lastname,
+        company_website: companyWebsite,
+        company_size: companySize,
+        reason_for_contact: reasonForContact,
+        message,
+      };
 
-      if (response.ok) {
-        doNowOrAfterSomeTime(() => {
-          setFormState(FORM_STATES.SUCCESS);
-          reset();
-          setFormError('');
-        }, loadingAnimationStartedTime);
-      } else {
-        throw new Error('Something went wrong. Please reload the page and try again.');
+      if (window.zaraz && email) {
+        await sendGtagEvent('identify', { email });
+        await sendGtagEvent(eventName, eventProps);
       }
+
+      doNowOrAfterSomeTime(() => {
+        setFormState(FORM_STATES.SUCCESS);
+        reset();
+        setIsBroken(false);
+      }, loadingAnimationStartedTime);
     } catch (error) {
       if (error.name !== 'AbortError') {
         doNowOrAfterSomeTime(() => {
-          setFormState(FORM_STATES.ERROR);
-          setFormError(error?.message ?? error);
+          setFormState(FORM_STATES.BROKEN);
+          setIsBroken(true);
         }, 2000);
       }
     }
@@ -116,127 +148,157 @@ const ContactForm = () => {
 
   return (
     <form
-      className={clsx(
-        'relative z-10 grid gap-y-6 rounded-xl border border-gray-new-10 bg-[#020203] p-8 shadow-contact xl:gap-y-5 xl:p-[30px] lg:gap-y-6 sm:p-5',
-        'bg-[radial-gradient(131.75%_102.44%_at_16.67%_0%,_rgba(20,24,31,.5),_rgba(20,24,31,0.30)_47.96%,_rgba(20,24,31,0))]'
-      )}
+      className="relative z-10 grid grid-cols-2 gap-6 gap-y-6 overflow-hidden border border-gray-new-20 bg-black-pure/80 px-8 py-7 xl:gap-5 xl:px-7 xl:py-6 lg:max-w-full md:grid-cols-1 md:px-5 md:py-5"
       method="POST"
+      id="contact-sales-form"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Field
-        name="name"
-        label="Your Name *"
-        autoComplete="name"
-        placeholder="Marques Hansen"
+        className="gap-y-2"
+        errorTheme="tooltip"
+        name="firstname"
+        label="First Name*"
+        autoComplete="given-name"
+        placeholder="Marques"
         theme="transparent"
         labelClassName={labelClassName}
-        errorClassName={errorClassName}
-        error={errors.name?.message}
+        inputClassName={inputClassName}
+        error={errors.firstname?.message}
         isDisabled={isDisabled}
-        {...register('name')}
+        {...register('firstname')}
       />
       <Field
+        className="gap-y-2"
+        errorTheme="tooltip"
+        name="lastname"
+        label="Last Name*"
+        autoComplete="family-name"
+        placeholder="Hansen"
+        theme="transparent"
+        labelClassName={labelClassName}
+        inputClassName={inputClassName}
+        error={errors.lastname?.message}
+        isDisabled={isDisabled}
+        {...register('lastname')}
+      />
+      <Field
+        className="gap-y-2"
+        errorTheme="tooltip"
         name="email"
-        label="Work Email *"
+        label="Work Email*"
         type="email"
         autoComplete="email"
         placeholder="info@acme.com"
         theme="transparent"
         labelClassName={labelClassName}
-        errorClassName={errorClassName}
+        inputClassName={inputClassName}
         isDisabled={isDisabled}
         error={errors.email?.message}
         {...register('email')}
       />
-      <div className="flex gap-5 xl:gap-4 md:flex-col sm:contents sm:flex-col">
-        <Field
-          className="shrink-0 basis-[55%]"
-          name="companyWebsite"
-          label="Company Website"
-          theme="transparent"
-          labelClassName={labelClassName}
-          errorClassName={errorClassName}
-          isDisabled={isDisabled}
-          {...register('companyWebsite')}
-        />
-        <Field
-          className="grow"
-          name="companySize"
-          label="Company Size *"
-          tag="select"
-          defaultValue="hidden"
-          theme="transparent"
-          labelClassName={labelClassName}
-          errorClassName={errorClassName}
-          isDisabled={isDisabled}
-          error={errors.companySize?.message}
-          {...register('companySize')}
-        >
-          <option value="hidden" disabled hidden>
-            &nbsp;
-          </option>
-          <option value="0_1">0-1 employees</option>
-          <option value="2_4">2-4 employees</option>
-          <option value="5_19">5-19 employees</option>
-          <option value="20_99">20-99 employees</option>
-          <option value="100_499">100-499 employees</option>
-          <option value="500">&ge; 500 employees</option>
-        </Field>
-      </div>
       <Field
+        className="gap-y-2"
+        errorTheme="tooltip"
+        name="companyWebsite"
+        label="Company Website"
+        placeholder="acme.com"
+        theme="transparent"
+        labelClassName={labelClassName}
+        inputClassName={inputClassName}
+        isDisabled={isDisabled}
+        {...register('companyWebsite')}
+      />
+      <Field
+        className="gap-y-2"
+        errorTheme="tooltip"
+        name="reasonForContact"
+        label="Reason for Contact*"
+        tag="select"
+        theme="transparent"
+        labelClassName={labelClassName}
+        inputClassName={selectClassName}
+        isDisabled={isDisabled}
+        error={errors.reasonForContact?.message}
+        {...register('reasonForContact')}
+      >
+        <option value="hidden" disabled hidden />
+        <option value="Demo/POC">Demo/POC</option>
+        <option value="Enterprise Pricing">Enterprise Pricing</option>
+        <option value="HIPAA">HIPAA</option>
+      </Field>
+      <Field
+        className="gap-y-2"
+        errorTheme="tooltip"
+        name="companySize"
+        label="Company Size"
+        tag="select"
+        theme="transparent"
+        labelClassName={labelClassName}
+        inputClassName={selectClassName}
+        isDisabled={isDisabled}
+        error={errors.companySize?.message}
+        {...register('companySize')}
+      >
+        <option value="hidden" disabled hidden />
+        <option value="0_1">0-1 Employees</option>
+        <option value="2_4">2-4 Employees</option>
+        <option value="5_19">5-19 Employees</option>
+        <option value="20_99">20-99 Employees</option>
+        <option value="100_499">100-499 Employees</option>
+        <option value="500">&ge; 500 Employees</option>
+      </Field>
+      <Field
+        className="relative z-10 col-span-full gap-y-2"
+        errorTheme="tooltip"
         name="message"
-        label="Message *"
+        label="Message*"
         tag="textarea"
         theme="transparent"
         labelClassName={labelClassName}
-        textareaClassName="min-h-[170px] xl:min-h-[148px]"
-        errorClassName={errorClassName}
+        inputClassName={textareaClassName}
         isDisabled={isDisabled}
         error={errors.message?.message}
+        placeholder="Your message..."
         {...register('message')}
       />
 
-      <div className="relative flex items-center justify-between gap-6 xl:gap-5 lg:gap-6 sm:flex-col sm:items-start sm:gap-5">
-        <p className="text-light text-sm leading-snug text-gray-new-70 xl:tracking-tighter">
+      <div className="relative z-0 col-span-full mt-1 flex items-end justify-between gap-6 sm:flex-col sm:items-start sm:gap-4">
+        <p className="max-w-[300px] text-sm leading-[1.5] tracking-tight text-gray-new-60 sm:max-w-full">
           By submitting you agree to the{' '}
-          <Link className="text-nowrap text-white" to={LINKS.terms} theme="white-underlined">
-            Terms Service
+          <Link className="decoration-dashed" to={LINKS.terms} theme="grey-85-underlined">
+            Terms of Use
           </Link>{' '}
           and acknowledge the{' '}
-          <Link
-            className="text-nowrap text-white"
-            to={LINKS.privacyPolicy}
-            theme="white-underlined"
-          >
-            Privacy Policy
+          <Link className="decoration-dashed" to={LINKS.privacyPolicy} theme="grey-85-underlined">
+            Privacy Notice
           </Link>
           .
         </p>
         <Button
-          className="min-w-[176px] py-[15px] font-medium 2xl:text-base xl:min-w-[138px] lg:min-w-[180px] sm:w-full sm:py-[13px]"
+          className="min-w-[152px] px-10 sm:w-full sm:min-w-0"
           type="submit"
-          theme="primary"
-          size="xs"
-          disabled={formState === FORM_STATES.LOADING || formState === FORM_STATES.SUCCESS}
+          theme="white-filled"
+          size="new"
+          disabled={
+            formState === FORM_STATES.LOADING ||
+            formState === FORM_STATES.SUCCESS ||
+            formState === FORM_STATES.ERROR
+          }
         >
           {formState === FORM_STATES.SUCCESS ? 'Sent!' : 'Submit'}
         </Button>
-        {formError && (
-          <span
-            className="absolute left-1/2 top-[calc(100%+1rem)] w-full -translate-x-1/2 text-sm leading-none text-secondary-1"
-            data-test="error-message"
-          >
-            {formError}
-          </span>
-        )}
       </div>
+      <Image
+        className="absolute -right-px -bottom-px -z-10 max-w-none"
+        src={formPattern}
+        alt=""
+        width={576}
+        height={228}
+        priority
+      />
+      {isBroken && <ErrorMessage onClose={() => setIsBroken(false)} />}
     </form>
   );
-};
-
-ContactForm.propTypes = {
-  formState: PropTypes.oneOf(Object.values(FORM_STATES)).isRequired,
-  setFormState: PropTypes.func.isRequired,
 };
 
 export default ContactForm;

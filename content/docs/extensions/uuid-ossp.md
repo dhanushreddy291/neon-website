@@ -1,8 +1,12 @@
 ---
 title: The uuid-ossp extension
 subtitle: Generate Universally Unique Identifiers (UUIDs) in your Postgres database
+summary: >-
+  Covers the setup of the `uuid-ossp` extension in Postgres on Neon, detailing
+  how to enable it and use various functions for generating different types
+  of UUIDs for unique data identification.
 enableTableOfContents: true
-updatedOn: '2025-04-09T10:37:44.425Z'
+updatedOn: '2026-02-06T22:07:32.851Z'
 ---
 
 The `uuid-ossp` extension provides a suite of functions for generating Universally Unique Identifiers (UUIDs) directly within your Postgres database. UUIDs are essential for ensuring data uniqueness across distributed systems and are widely used as primary keys and for various other applications requiring unique IDs. This extension offers a variety of UUID generation methods, including time-based, random, and name-based UUIDs, providing flexibility for different use cases.
@@ -17,7 +21,7 @@ This guide provides an introduction to the `uuid-ossp` extension. You'll learn h
 
 ## Enable the `uuid-ossp` extension
 
-You can enable the extension by running the following `CREATE EXTENSION` statement in the [Neon SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor) or from a client such as [psql](/docs/connect/query-with-psql-editor) that is connected to your Neon database.
+You can enable the extension by running the following `CREATE EXTENSION` statement in the [Neon SQL Editor](/docs/get-started/query-with-neon-sql-editor) or from a client such as [psql](/docs/connect/query-with-psql-editor) that is connected to your Neon database.
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -37,7 +41,7 @@ The version 1 UUID generation functions in `uuid-ossp` are based on the time of 
 
 - `uuid_generate_v1()`:
 
-  The `uuid_generate_v1()` function generates UUIDs based on the [version 1 algorithm](https://datatracker.ietf.org/doc/html/rfc4122#section-4.2.2). Version 1 UUIDs are time-based, meaning they incorporate the current timestamp and the MAC address of the computer where the UUID is generated. This approach leverages the uniqueness of hardware identifiers and precise time to create UUIDs that are likely to be unique across different systems and over time.
+  The `uuid_generate_v1()` function generates UUIDs based on the [version 1 algorithm](https://datatracker.ietf.org/doc/html/rfc4122#section-4.2.2). Version 1 UUIDs are time-based, meaning they incorporate the current timestamp and the MAC address of the computer where the UUID is generated. This approach uses hardware identifiers and precise timestamps to create UUIDs that are likely to be unique across different systems and over time.
 
   ```sql
   SELECT uuid_generate_v1();
@@ -46,7 +50,6 @@ The version 1 UUID generation functions in `uuid-ossp` are based on the time of 
 
   <Admonition type="important" title="Privacy and Security Considerations for Version 1 UUIDs">
   It's crucial to be aware that Version 1 UUIDs embed the MAC address of the generating computer. This can present privacy and security concerns because:
-
   - **Machine identification:** The MAC address can potentially be used to identify the specific machine that generated the UUID, raising privacy issues if this information should remain confidential.
   - **Predictability:** The time component and the structure of Version 1 UUIDs make them somewhat predictable, which could be a security risk in certain applications where UUIDs are used for security-sensitive purposes.
 
@@ -78,7 +81,6 @@ The version 1 UUID generation functions in `uuid-ossp` are based on the time of 
   Available predefined namespace UUIDs are discussed in the [UUID Constants](#uuid-constants) section below.
 
   **Use cases:**
-
   - Generating consistent identifiers for entities based on a name, such as creating a UUID for a URL, DNS name, or any other string identifier.
   - Scenarios where you need to ensure that generating a UUID for the same entity (identified by name within a namespace) always results in the same UUID across different systems or over time.
   - Content Management Systems where stable identifiers for content pieces are required, regardless of access time or location.
@@ -95,12 +97,10 @@ The version 1 UUID generation functions in `uuid-ossp` are based on the time of 
   ```
 
   **Key characteristics of Version 4 UUIDs:**
-
   - **Randomly generated:** Based on high-quality random number generators.
   - **High uniqueness probability:** Extremely low probability of collision, making them suitable for most applications requiring unique identifiers.
 
   **Use Cases:**
-
   - General-purpose unique identifiers where predictability or specific ordering is not required.
   - Primary keys for database tables, especially in distributed systems.
   - Identifying records in systems where high randomness and uniqueness are paramount.
@@ -123,7 +123,7 @@ The version 1 UUID generation functions in `uuid-ossp` are based on the time of 
 
 ### UUID constants
 
-`uuid-ossp` also provides functions to return predefined UUID constants, which are particularly useful as standard namespace identifiers for Version 3 and Version 5 UUID generation:
+`uuid-ossp` also provides functions to return predefined UUID constants. These are the standard namespace identifiers used for Version 3 and Version 5 UUID generation:
 
 - **`uuid_nil()`: The Nil UUID constant**
 
@@ -134,19 +134,16 @@ The version 1 UUID generation functions in `uuid-ossp` are based on the time of 
   ```
 
   **Purpose of the Nil UUID:**
-
   - **Representing absence:** Similar to `NULL` for other data types, the nil UUID is often used to indicate the absence of a UUID value or as a default placeholder.
   - **Special value:** It does not correspond to any real-world generated UUID and is a specific, non-existent UUID value for particular use cases.
 
   **Use cases:**
-
   - Initializing UUID columns when a valid UUID is not yet available.
   - Using it as a sentinel value in code or database operations to represent "no UUID".
 
 - **Namespace UUID constants (`uuid_ns_dns()`, `uuid_ns_url()`, `uuid_ns_oid()`, `uuid_ns_x500()`):**
 
   These functions return constant UUIDs that are specifically designated as namespaces for different identifier types, as per the UUID specification. They are intended to be used as the `namespace` argument in `uuid_generate_v3()` and `uuid_generate_v5()` functions.
-
   - `uuid_ns_dns()`
 
     Represents the DNS namespace, intended for generating UUIDs from DNS names.

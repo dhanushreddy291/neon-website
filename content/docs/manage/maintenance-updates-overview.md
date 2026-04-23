@@ -1,9 +1,12 @@
 ---
 title: Maintenance & updates overview
+summary: >-
+  Covers the types of updates performed by Neon, including platform maintenance
+  and individual compute updates, along with guidance on checking for upcoming
+  maintenance and updates to ensure a stable and optimized environment.
 enableTableOfContents: true
 isDraft: false
-tag: new
-updatedOn: '2025-03-05T21:09:38.755Z'
+updatedOn: '2026-02-06T22:07:33.117Z'
 ---
 
 Neon performs two types of updates: **platform maintenance** and **updates** to your Neon [computes](/docs/reference/glossary#compute). While both are essential for maintaining a stable, secure, and optimized environment, they serve different purposes.

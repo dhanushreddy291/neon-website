@@ -1,8 +1,12 @@
 ---
 title: The timescaledb extension
 subtitle: Work with time-series data in Postgres with the timescaledb extension
+summary: >-
+  Covers the setup and usage of the `timescaledb` extension in Neon for
+  efficient storage and retrieval of time-series data, including enabling the
+  extension, creating hypertables, and running queries.
 enableTableOfContents: true
-updatedOn: '2025-02-03T20:41:57.303Z'
+updatedOn: '2026-02-13T21:49:13.619Z'
 ---
 
 `timescaledb` enables the efficient storage and retrieval of time-series data. Time-series data is a sequential collection of observations or measurements recorded over time. For example, IoT devices continuously generate data points with timestamps, representing measurements or events. `timescaledb` is designed to handle large volumes of time-stamped data and provides SQL capabilities on top of a time-oriented data model such as IoT data, sensor readings, financial market data, and other time-series datasets.
@@ -15,14 +19,7 @@ This guide provides an introduction to the `timescaledb` extension. You’ll lea
 `timescaledb` is an open-source extension for Postgres that can be installed on any Neon Project using the instructions below.
 </Admonition>
 
-**Version availability:**
-
-The version of `timescaledb` available on Neon depends on the version of Postgres you select for your Neon project.
-
-- Postgres 14 - `timescaledb` 2.10.1
-- Postgres 15 - `timescaledb` 2.10.1
-- Postgres 16 - `timescaledb` 2.13.0
-- Postgres 17 - `timescaledb` 2.17.1
+**Version availability:** For version availability, refer to our [Postgres extensions](/docs/extensions/pg-extensions) page, which includes a table of supported extension versions by Postgres version.
 
 _Only [Apache-2](https://docs.timescale.com/about/latest/timescaledb-editions/) licensed features are supported. Compression is not supported._
 
@@ -34,7 +31,7 @@ You can enable the extension by running the following `CREATE EXTENSION` stateme
 CREATE EXTENSION IF NOT EXISTS timescaledb;
 ```
 
-For information about using the Neon SQL Editor, see [Query with Neon's SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor). For information about using the `psql` client with Neon, see [Connect with psql](/docs/connect/query-with-psql-editor).
+For information about using the Neon SQL Editor, see [Query with Neon's SQL Editor](/docs/get-started/query-with-neon-sql-editor). For information about using the `psql` client with Neon, see [Connect with psql](/docs/connect/query-with-psql-editor).
 
 ## Create a hypertable
 
@@ -108,7 +105,7 @@ tar -xvzf weather_small.tar.gz
 Load the data into Neon database - enter the username, password, host and database name. You can find these details by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
 
 ```shell shouldWrap
-psql 'postgresql://<username>:<password>@<host>/<database_name>?sslmode=require' -c "\COPY weather_conditions FROM weather_small_conditions.csv CSV"
+psql 'postgresql://<username>:<password>@<host>/<database_name>?sslmode=require&channel_binding=require' -c "\COPY weather_conditions FROM weather_small_conditions.csv CSV"
 ```
 
 You should receive the following output:

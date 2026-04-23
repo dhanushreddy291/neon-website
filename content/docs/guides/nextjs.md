@@ -1,21 +1,25 @@
 ---
 title: Connect a Next.js application to Neon
 subtitle: Set up a Neon project in seconds and connect from a Next.js application
+summary: >-
+  Covers the setup of a Neon project and the connection process from a Next.js
+  application, including project creation, dependency installation, and
+  credential management.
 enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/vercel
   - /docs/integrations/vercel
-updatedOn: '2025-02-18T15:25:38.976Z'
+updatedOn: '2026-02-06T22:07:33.027Z'
 ---
+
+<CopyPrompt src="/prompts/nextjs-prompt.md"
+description="Pre-built prompt for connecting Next.js applications to Neon"/>
 
 Next.js by Vercel is an open-source web development framework that enables React-based web applications. This topic describes how to create a Neon project and access it from a Next.js application.
 
 To create a Neon project and access it from a Next.js application:
 
-1. [Create a Neon project](#create-a-neon-project)
-2. [Create a Next.js project and add dependencies](#create-a-nextjs-project-and-add-dependencies)
-3. [Configure a Postgres client](#configure-the-postgres-client)
-4. [Run the app](#run-the-app)
+<Steps>
 
 ## Create a Neon project
 
@@ -52,7 +56,7 @@ If you do not have one already, create a Neon project. Save your connection deta
 Add a `.env` file to your project directory and add your Neon connection string to it. You can find your Neon database connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 ## Configure the Postgres client
@@ -128,6 +132,18 @@ export default async function Page() {
 
 </CodeTabs>
 
+#### Understanding Caching in Server Components
+
+The examples above will work in development, but in production builds, Next.js will statically render these pages at build time. This means the database query runs once during build, not on every request.
+
+If you need fresh data on each request, add this to your page:
+
+```typescript
+export const dynamic = 'force-dynamic';
+```
+
+For other scenarios like periodic updates, see [Time-based Revalidation](https://nextjs.org/docs/app/building-your-application/caching#time-based-revalidation) in the Next.js docs.
+
 #### Server Actions
 
 In your server actions using the App Router, add the following code snippet to connect to your Neon database:
@@ -187,7 +203,7 @@ export default async function Page() {
     const sql = neon(process.env.DATABASE_URL);
     await sql`CREATE TABLE IF NOT EXISTS comments (comment TEXT)`;
     const comment = formData.get("comment");
-    await sql("INSERT INTO comments (comment) VALUES ($1)", [comment]);
+    await sql`INSERT INTO comments (comment) VALUES (${comment})`;
   }
   return (
     <form action={create}>
@@ -391,7 +407,7 @@ import { neon } from '@neondatabase/serverless';
 
 const sql = neon(process.env.DATABASE_URL);
 
-export default async function handler(req, res) {
+export default async function handler(req: Request) {
   const response = await sql`SELECT version()`;
   const { version } = response[0];
   return Response.json({ version });
@@ -400,11 +416,17 @@ export default async function handler(req, res) {
 
 ## Run the app
 
-When you run `npm run dev` you can expect to see the following on [localhost:3000](localhost:3000):
+When you run `npm run dev` you can expect to see the following on `localhost:3000`:
 
 ```shell shouldWrap
-PostgreSQL 16.0 on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+PostgreSQL 17.7 on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
 ```
+
+</Steps>
+
+### Where to upload and serve files?
+
+Neon does not provide a built-in file storage service. For managing binary file data (blobs), we recommend using dedicated, specialized storage services. Follow our guide on [File Storage](/docs/guides/file-storage) to learn more about how to store files in external object storage and file management services and track metadata in Neon.
 
 ## Source code
 

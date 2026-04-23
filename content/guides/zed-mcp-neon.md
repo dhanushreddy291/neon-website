@@ -11,15 +11,19 @@ Imagine you could interact with your database using plain English, whether you'r
 
 In this guide, we'll explore how to set up the Neon MCP Server within [Zed](https://zed.dev), a next-generation AI-powered code editor, to handle various database operations. These include creating projects, managing database branches, running SQL queries, and performing safe database migrations.
 
-<Admonition type="note">
-MCP support in Zed is currently in **preview**. Ensure you're using the Preview version of Zed to add MCP servers. You can download the **Preview** version from [zed.dev/releases/preview](https://zed.dev/releases/preview).
+<Admonition type="important" title="Neon MCP Server Security Considerations">
+The Neon MCP Server grants powerful database management capabilities through natural language requests. **Always review and authorize actions requested by the LLM before execution.** Ensure that only authorized users and applications have access to the Neon MCP Server.
+
+The Neon MCP Server is intended for local development and IDE integrations only. **We do not recommend using the Neon MCP Server in production environments.** It can execute powerful operations that may lead to accidental or unauthorized changes.
+
+For more information, see [MCP security guidance →](/docs/ai/neon-mcp-server#mcp-security-guidance).
 </Admonition>
 
 ## Setting up Neon MCP Server in Zed
 
 You have two options for connecting Zed to the Neon MCP Server:
 
-1.  **Remote MCP Server (Preview):** Connect to Neon's managed MCP server using OAuth for authentication. This method is more convenient as it eliminates the need to manage API keys in Zed. Additionally, you will automatically receive the latest features and improvements as soon as they are released.
+1.  **Remote MCP Server:** Connect to Neon's managed MCP server using OAuth for authentication. This method is more convenient as it eliminates the need to manage API keys in Zed. Additionally, you will automatically receive the latest features and improvements as soon as they are released.
 
 2.  **Local MCP Server:** Run the Neon MCP server locally on your machine, authenticating with a Neon API key.
 
@@ -27,9 +31,9 @@ You have two options for connecting Zed to the Neon MCP Server:
 
 Before you begin, ensure you have the following:
 
-1.  **Zed editor:** Download and install preview version of Zed from [zed.dev/releases/preview](https://zed.dev/releases/preview).
-2.  **A Neon account and project:** You'll need a Neon account and a project. You can quickly create a new Neon project here [pg.new](https://pg.new)
-3.  **Neon API Key (for Local MCP server):** After signing up, get your Neon API Key from the [Neon console](https://console.neon.tech/app/settings/api-keys). This API key is needed to authenticate your application with Neon. For instructions, see [Manage API keys](https://neon.tech/docs/manage/api-keys).
+1.  **Zed editor:** Download and install Zed from [zed.dev](https://zed.dev/download).
+2.  **A Neon account and project:** You'll need a Neon account and a project. You can create a new Neon project in the [Neon Console](https://console.neon.tech)
+3.  **Neon API Key (for Local MCP server):** After signing up, get your Neon API Key from the [Neon console](https://console.neon.tech/app/settings/api-keys). This API key is needed to authenticate your application with Neon. For instructions, see [Manage API keys](/docs/manage/api-keys).
 
     <Admonition type="warning" title="Neon API Key Security">
     Keep your Neon API key secure, and never share it publicly. It provides access to your Neon projects.
@@ -37,40 +41,38 @@ Before you begin, ensure you have the following:
 
 4.  **Node.js (>= v18) and npm:** Ensure Node.js (version 18 or later) and npm are installed. Download them from [nodejs.org](https://nodejs.org).
 
-<Admonition type="note">
-In Zed, MCP servers are known as **context servers**. These context servers enable context-aware capabilities, facilitating Zed's interaction with external systems such as Neon.
-</Admonition>
-
 ### Option 1: Setting up the Remote Hosted Neon MCP Server
+
+<Admonition type="note">
+By default, the Remote MCP Server connects to your personal Neon account. To connect to an organization's account, you must authenticate with an API key. For more information, see [API key-based authentication](/docs/ai/neon-mcp-server#api-key-based-authentication).
+</Admonition>
 
 This method uses Neon's managed server and OAuth authentication.
 
 1.  Open Zed.
 2.  Click the Assistant (✨) icon in the bottom right corner of Zed.
     ![Zed Assistant icon](/docs/guides/zed/assistant-icon.png)
-3.  Click **Settings** in the top right panel of the Assistant.
-    ![Zed Assistant settings](/docs/guides/zed/assistant-settings.png)
-4.  In the **Context Servers** section, click **+ Add Context Server**.
-    ![Zed add context server](/docs/guides/zed/add-context-server.png)
-5.  Configure Neon Server:
-    - Enter **Neon** in the **Name** field.
-    - In the **Command** field, enter:
-      ```bash
-      npx -y mcp-remote https://mcp.neon.tech/sse
-      ```
-      ![Zed add Neon Remote MCP server](/docs/guides/zed/add-neon-remote-mcp-server.png)
-    - Click **Add Server**.
+3.  Click **Add custom server** in the top right panel of the Assistant.
+    ![Zed add custom server](/docs/guides/zed/add-custom-server.png)
+4.  Enter the following configuration for the Neon MCP server in the JSON input field.
+    ```json
+    {
+      "Neon": {
+        "command": "npx",
+        "args": ["-y", "mcp-remote", "https://mcp.neon.tech/mcp"],
+        "env": {}
+      }
+    }
+    ```
+    ![Zed add Neon Remote MCP server](/docs/guides/zed/add-neon-remote-mcp-server.png)
+5.  Click **Add Server**.
 6.  An OAuth window will open. Follow the prompts to authorize Zed to access your Neon account
     ![Neon OAuth window](/docs/guides/neon-oauth-window.png)
 
-7.  Check the Context Servers section in Zed **Settings** to ensure the connection is successful. Neon should be listed as a context server.
-    ![Zed with Neon MCP Tools](/docs/guides/zed/with-neon-mcp-tools.png)
+7.  Check the **Model Context Protocol (MCP) Servers** section in Zed **Settings** to ensure the connection is successful. Neon should be listed as an MCP server.
+    ![Zed with Neon MCP](/docs/guides/zed/with-neon-mcp.png)
 
 8.  Zed is now connected to Neon's remote MCP server.
-
-<Admonition type="note">
-The remote hosted MCP server is in preview due to the [new OAuth MCP specification](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/authorization/), expect potential changes as we continue to refine the OAuth integration.
-</Admonition>
 
 ### Option 2: Setting up the Local Neon MCP Server
 
@@ -79,23 +81,22 @@ This method runs the Neon MCP server locally on your machine, using a Neon API k
 1.  Open Zed.
 2.  Click the Assistant (✨) icon in the bottom right corner of Zed.
     ![Zed Assistant icon](/docs/guides/zed/assistant-icon.png)
-3.  Click **Settings** in the top right panel of the Assistant.
-    ![Zed Assistant settings](/docs/guides/zed/assistant-settings.png)
-4.  In the **Context Servers** section, click **+ Add Context Server**.
-    ![Zed add context server](/docs/guides/zed/add-context-server.png)
-5.  Configure Neon Server:
-
-    - Enter **Neon** in the **Name** field.
-    - In the **Command** field, enter:
-      ```bash
-      npx -y @neondatabase/mcp-server-neon start <YOUR_NEON_API_KEY>
-      ```
-      ![Zed add Neon Local MCP server](/docs/guides/zed/add-neon-local-mcp-server.png)
-    - Click **Add Server**.
-
-6.  Check the Context Servers section in Zed Settings to ensure the connection is successful. Neon should be listed as a context server.
-    ![Zed with Neon MCP Tools](/docs/guides/zed/with-neon-mcp-tools.png)
-
+3.  Click **Add custom server** in the top right panel of the Assistant.
+    ![Zed add custom server](/docs/guides/zed/add-custom-server.png)
+4.  Enter the following configuration for the Neon MCP server in the JSON input field.
+    ```json
+    {
+      "Neon": {
+        "command": "npx",
+        "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"],
+        "env": {}
+      }
+    }
+    ```
+    ![Zed add Neon Local MCP server](/docs/guides/zed/add-neon-local-mcp-server.png)
+5.  Click **Add Server**.
+6.  Check the **Model Context Protocol (MCP) Servers** section in Zed **Settings** to ensure the connection is successful. Neon should be listed as an MCP server.
+    ![Zed with Neon MCP](/docs/guides/zed/with-neon-mcp.png)
 7.  Zed is now connected to Neon's local MCP server.
 
 ### Verification
@@ -126,27 +127,25 @@ If you experience issues adding an MCP server from the Assistant panel, you can 
 
 ```json
 "context_servers": {
-   "neon": {
-      "command": {
-         "path": "npx",
-         "args": ["-y", "mcp-remote", "https://mcp.neon.tech/sse"],
-         "env": null
-      },
-      "settings": {}
-   }
+    "Neon": {
+      "source": "custom",
+      "enabled": true,
+      "command": "npx",
+      "args": [ "-y", "mcp-remote", "https://mcp.neon.tech/mcp" ],
+      "env": {}
+    }
 }
 ```
 
 ```json
 "context_servers": {
-   "neon": {
-      "command": {
-         "path": "npx",
-         "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"],
-         "env": null
-      },
-      "settings": {}
-   }
+    "Neon": {
+      "source": "custom",
+      "enabled": true,
+      "command": "npx",
+      "args": [ "-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>" ],
+      "env": {}
+    }
 }
 ```
 
@@ -186,26 +185,9 @@ If you are using Windows, and you encounter issues with the command line, you ma
 
 </CodeTabs>
 
-## Neon MCP Server Tools
+<MCPTools />
 
-Neon MCP server exposes the following actions, which primarily map to **Neon API endpoints**:
-
-- `list_projects`: Lists all your Neon projects. This uses the Neon API to retrieve a summary of all projects associated with your Neon account.
-- `describe_project`: Retrieves detailed information about a specific Neon project. Provides comprehensive details about a chosen project, such as its ID, name, and associated branches.
-- `create_project`: Creates a new Neon project — a container in Neon for branches, databases, roles, and computes.
-- `delete_project`: Deletes an existing Neon project.
-- `create_branch`: Creates a new branch within a Neon project. Leverages Neon's branching feature, allowing you to create new branches for development or migrations.
-- `delete_branch`: Deletes an existing branch in a Neon project.
-- `describe_branch`: Retrieves details about a specific branch. Retrieves information about a particular branch, such as its name and ID.
-- `get_connection_string`: Retrieves a connection string for a specific database in a Neon project. Returns a formatted connection string that can be used to connect to the database.
-- `run_sql`: Runs a single SQL query against a Neon database. Allows you to run read or write SQL queries.
-- `run_sql_transaction`: Runs a series of SQL queries within a transaction against a Neon database. Enables running multiple SQL statements as a single atomic transaction, ensuring data consistency.
-- `get_database_tables`: Lists all tables in a specified Neon database. Provides a list of tables.
-- `describe_table_schema`: Retrieves the schema definition of a specific table. Details the structure of a table, including columns and data types.
-- `prepare_database_migration`: Initiates a database migration process, utilizing a temporary branch for safety. Begins the process of altering your database schema, safely using Neon's branching feature.
-- `complete_database_migration`: Completes a migration process, applying changes to your main database and cleaning up temporary resources.
-
-These actions enable any MCP client like Zed to interact with various functionalities of the **Neon platform via the Neon API.** Certain tools, especially database migration ones, are tailored for AI agent and LLM usage, leveraging Neon’s branching for safe preview and commit.
+These actions enable any MCP client like Zed to interact with various functionalities of the **Neon platform via the Neon API.** Certain tools, especially database migration ones, are tailored for AI agent and LLM usage, leveraging Neon's branching for safe preview and commit.
 
 ## Development Workflow: Adding a Column with Zed and Neon MCP
 
@@ -267,12 +249,12 @@ Zed: I'll use the prepare_database_migration tool to add a created_at column to 
 > - Temporary Branch Name: br-royal-mode-a1nfvzag
 > - Temporary Branch ID: br-royal-mode-a1nfvzag
 > - Migration Result: Success
-> Would you like to commit this migration to the main branch?
+> Would you like to commit this migration to the production branch?
 
 User: yes do it
 Zed: I'll complete the migration using the provided migration ID:
 > Run MCP tool `complete_database_migration`
-> The migration has been successfully completed. The `created_at` column has been added to the `playing_with_neon` table in the main branch, and the temporary branch has been deleted.
+> The migration has been successfully completed. The `created_at` column has been added to the `playing_with_neon` table in the production branch, and the temporary branch has been deleted.
 ```
 
 ![Zed completing migration](/docs/guides/zed/mcp-neon-adding-column-3.png)
@@ -282,7 +264,7 @@ Zed: I'll complete the migration using the provided migration ID:
 - **Natural language interaction:** You can use simple, conversational English to interact with your database.
 - **Step-by-step guidance:** Zed (Claude) confirms each step and provides details like branch names and migration IDs.
 - **MCP Tools in action:** The underlying MCP tools (`get_database_tables`, `run_sql`, `prepare_database_migration`, `complete_database_migration`) illustrate the automated process.
-- **Branching for safety:** The agent automatically creates a temporary branch for schema changes. The user will be prompted to confirm the migration before applying it to the main branch.
+- **Branching for safety:** The agent automatically creates a temporary branch for schema changes. The user will be prompted to confirm the migration before applying it to the production branch.
 
 You can verify the changes in your Neon Console or by querying the database directly.
 
@@ -336,15 +318,15 @@ Zed will use the `create_branch` MCP tool to create the branch and provide you w
 
 ## Conclusion
 
-Zed combined with the Neon MCP Server, whether using the **Remote Hosted (Preview)** option or the **Local Server** setup, lets you use natural language to interact with your database and take advantage of Neon's branching capabilities for fast iteration. This approach is ideal for quickly testing
+Zed combined with the Neon MCP Server, whether using the **Remote Hosted** option or the **Local Server** setup, lets you use natural language to interact with your database and take advantage of Neon's branching capabilities for fast iteration. This approach is ideal for quickly testing
 database ideas and making schema changes during development.
 
 ## Resources
 
 - [MCP Protocol](https://modelcontextprotocol.org)
-- [Context Servers in Zed](https://zed.dev/docs/assistant/context-servers)
-- [Neon Docs](https://neon.tech/docs)
-- [Neon API Keys](https://neon.tech/docs/manage/api-keys#creating-api-keys)
+- [Zed MCP Docs](https://zed.dev/docs/ai/mcp)
+- [Neon Docs](/docs)
+- [Neon API Keys](/docs/manage/api-keys#creating-api-keys)
 - [Neon MCP server GitHub](https://github.com/neondatabase/mcp-server-neon)
 
 <NeedHelp/>

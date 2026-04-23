@@ -1,3 +1,4 @@
+import isEmpty from 'lodash.isempty';
 import { cache } from 'react';
 
 import { BLOG_POSTS_PER_PAGE, BLOG_POSTS_FOR_PREVIEW, EXTRA_CATEGORIES } from 'constants/blog';
@@ -46,8 +47,13 @@ const getAllWpBlogCategories = cache(async () => {
 });
 
 const getAllCategories = async () => {
-  const wpCategories = await getAllWpBlogCategories();
-  return [...wpCategories, ...EXTRA_CATEGORIES];
+  try {
+    const wpCategories = await getAllWpBlogCategories();
+    return [...wpCategories, ...EXTRA_CATEGORIES];
+  } catch (error) {
+    console.error('Failed to fetch blog categories:', error);
+    return [];
+  }
 };
 
 const getCategoryBySlug = async (slug) => {
@@ -71,7 +77,7 @@ const fetchWpPostsByCategorySlug = async (slug, first, after) => {
           slug
           date
           title(format: RENDERED)
-          content(format: RENDERED)
+          excerpt(format: RENDERED)
           pageBlogPost {
             largeCover {
               altText
@@ -128,7 +134,6 @@ const getWpPostsByCategorySlug = cache(async (slug) => {
   const first = isProduction ? BLOG_POSTS_PER_PAGE : BLOG_POSTS_FOR_PREVIEW;
 
   while (true) {
-    // eslint-disable-next-line no-await-in-loop
     const { nodes: posts, pageInfo } = await fetchWpPostsByCategorySlug(slug, first, afterCursor);
 
     allPosts = allPosts.concat(posts);
@@ -161,21 +166,18 @@ const fetchAllWpPosts = async (first, after) => {
           date
           modifiedGmt
           title(format: RENDERED)
-          content(format: RENDERED)
+          excerpt(format: RENDERED)
           pageBlogPost {
             isFeatured
             largeCover {
               altText
               mediaItemUrl
             }
-            description
             authors {
               author {
                 ... on PostAuthor {
                   title
                   postAuthor {
-                    role
-                    url
                     image {
                       altText
                       mediaItemUrl
@@ -199,6 +201,7 @@ const fetchAllWpPosts = async (first, after) => {
       }
     }
   `;
+
   const data = await fetchGraphQL(graphQLClient).request(allPostsQuery, {
     first,
     after,
@@ -220,6 +223,7 @@ const getAllWpPosts = cache(async () => {
       const { nodes: posts, pageInfo } = await fetchAllWpPosts(first, afterCursor);
 
       allPosts = allPosts.concat(posts);
+
       if (!isProduction || !pageInfo.hasNextPage) break;
       afterCursor = pageInfo.endCursor;
     } catch (error) {
@@ -275,7 +279,6 @@ const getWpPostBySlug = cache(async (slug) => {
         modifiedGmt
         title(format: RENDERED)
         content(format: RENDERED)
-        readingTime
         pageBlogPost {
           largeCover {
             altText
@@ -300,7 +303,7 @@ const getWpPostBySlug = cache(async (slug) => {
         }
         ...wpPostSeo
       }
-      posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+      posts(first: 6, where: { orderby: { field: DATE, order: DESC } }) {
         nodes {
           categories {
             nodes {
@@ -311,7 +314,6 @@ const getWpPostBySlug = cache(async (slug) => {
           slug
           title(format: RENDERED)
           date
-          readingTime
           pageBlogPost {
             largeCover {
               altText
@@ -342,7 +344,10 @@ const getWpPostBySlug = cache(async (slug) => {
 
   const data = await fetchGraphQL(graphQLClient).request(postBySlugQuery, { id: slug });
 
-  const sortedPosts = data?.posts?.nodes.filter((post) => post.slug !== slug).slice(0, 3);
+  const nodes = data?.posts?.nodes ?? [];
+  const sortedPosts = nodes
+    .filter((post) => post.slug !== slug || isEmpty(post.pageBlogPost?.largeCover))
+    .slice(0, 3);
 
   return {
     post: data?.post,
@@ -403,7 +408,7 @@ const getWpPreviewPostData = async (id, status) => {
           ...wpPostSeo
         }
 
-        posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+        posts(first: 4, where: { orderby: { field: DATE, order: DESC } }) {
           nodes {
             categories {
               nodes {
@@ -500,7 +505,7 @@ const getWpPreviewPostData = async (id, status) => {
           }
         }
 
-        posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+        posts(first: 4, where: { orderby: { field: DATE, order: DESC } }) {
           nodes {
             categories {
               nodes {
@@ -645,6 +650,64 @@ const getAllWpCaseStudiesCategories = cache(async () => {
   return [{ name: 'All', slug: 'all' }, ...updatedCategories];
 });
 
+const getAllWpUseCases = cache(async () => {
+  const useCasesQuery = gql`
+    query UseCases {
+      useCases(where: { orderby: { field: MENU_ORDER, order: ASC } }, first: 100) {
+        nodes {
+          id
+          title(format: RENDERED)
+          useCase {
+            icon
+            description
+            link {
+              url
+              title
+              target
+            }
+            linkedCaseStudy {
+              ... on CaseStudy {
+                title
+                slug
+                caseStudyPost {
+                  logo {
+                    mediaItemUrl
+                    mediaDetails {
+                      width
+                      height
+                    }
+                  }
+                  quote
+                  author {
+                    name
+                    post
+                  }
+                  isInternal
+                  externalUrl
+                  post {
+                    ... on Post {
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          }
+          useCaseTags {
+            nodes {
+              slug
+              name
+            }
+          }
+        }
+      }
+    }
+  `;
+  const data = await fetchGraphQL(graphQLClient).request(useCasesQuery);
+
+  return data?.useCases?.nodes;
+});
+
 export {
   fetchAllWpPosts,
   getAllWpBlogCategories,
@@ -654,6 +717,7 @@ export {
   getAllWpPosts,
   getAllPosts,
   getCategoryBySlug,
+  getAllWpUseCases,
   getWpPostBySlug,
   getPostsByCategorySlug,
   getWpPreviewPost,

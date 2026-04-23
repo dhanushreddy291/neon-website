@@ -1,16 +1,20 @@
 ---
 title: Branching
 subtitle: Branch your data the same way you branch your code
+summary: >-
+  Covers the creation and management of data branches in Neon, allowing for
+  isolated development, testing, and historical analysis without impacting the
+  performance of the production database.
 enableTableOfContents: true
 redirectFrom:
   - /docs/conceptual-guides/branches
   - /docs/conceptual-guides/branching
   - /docs/concepts/branching
   - /docs/introduction/point-in-time-restore
-updatedOn: '2025-04-10T19:06:52.166Z'
+updatedOn: '2026-02-15T20:51:54.213Z'
 ---
 
-With Neon, you can quickly and cost-effectively branch your data for development, testing, and various other purposes, enabling you to improve developer productivity and optimize continuous integration and delivery (CI/CD) pipelines.
+With Neon, you can quickly branch your data for development, testing, and various other purposes, enabling you to improve developer productivity and optimize continuous integration and delivery (CI/CD) pipelines.
 
 You can also rewind your data or create branches from the past to recover from mistakes or analyze historical states.
 
@@ -44,7 +48,7 @@ The following video demonstrates creating a branch in the Neon Console. For step
   <source type="video/mp4" src="/docs/introduction/create_branch.mp4"/>
 </video>
 
-You can integrate branching into your development workflows and toolchains using the Neon CLI, API, or GitHub Actions. If you use Vercel, you can use the Neon [Postgres Previews Integration](/docs/guides/vercel-previews-integration) to create a branch for each preview deployment.
+You can integrate branching into your development workflows and toolchains using the Neon CLI, API, or GitHub Actions. If you use Vercel, you can use the [Neon-managed Vercel integration](/docs/guides/neon-managed-vercel-integration) to create a branch for each preview deployment.
 
 Refer to the following guides for instructions:
 
@@ -56,7 +60,7 @@ Refer to the following guides for instructions:
 
 <a href="/docs/guides/branching-github-actions" description="Automate branching with Neon's GitHub Actions for branching" icon="split-branch">Branching with GitHub Actions</a>
 
-<a href="/docs/guides/branching-neon-api" description="Connect your Vercel project and create a branch for each preview deployment" icon="split-branch">The Neon Postgres Previews Integration</a>
+<a href="/docs/guides/neon-managed-vercel-integration" description="Connect your Vercel project and create a branch for each preview deployment" icon="split-branch">The Neon-Managed Vercel Integration</a>
 
 </DetailIconCards>
 
@@ -70,9 +74,20 @@ Refer to the following guide for instructions.
 
 <DetailIconCards>
 
-<a href="/docs/guides/branching-test-queries" description="Instantly create a branch to test queries before running them in production" icon="queries">Branching — Testing queries</a>
+<a href="/docs/guides/branching-test-queries" description="Instantly create a branch to test queries before running them in production" icon="queries">Branching: Testing queries</a>
 
 </DetailIconCards>
+
+### Temporary environments
+
+Create branches with TTL by [setting an expiration date](/docs/guides/branch-expiration). Perfect for temporary development and testing environments that need automatic deletion.
+
+Branches with expiration work well for:
+
+- CI/CD pipeline testing environments
+- Feature development with known lifespans
+- Automated testing scenarios
+- AI-driven development workflows
 
 ## Restore and recover data
 
@@ -82,18 +97,11 @@ If you lose data due to an unintended deletion or some other event, you can rest
 
 ### Restore window
 
-Your **restore window** determines how far back Neon maintains a history of changes for each branch. By default, this is set to **1 day** to help you avoid unexpected storage costs. You can increase it up to:
+Neon retains a history of changes for your branches, enabling data recovery features. The restore window determines how far back you can restore data, with defaults of 6 hours on Free plan and 1 day on paid plans.
 
-- 24 hours on the [Free plan](/docs/introduction/plans#free-plan)
-- 7 days on [Launch](/docs/introduction/plans#launch)
-- 14 days on [Scale](/docs/introduction/plans#scale)
-- 30 days on [Business](/docs/introduction/plans#business)
+Increasing your restore window expands your data recovery options but also increases storage costs, as more history is retained. You can configure it up to 7 days on Launch or 30 days on Scale plans.
 
-You can configure your restore window in the Neon Console under **Settings** > **Storage** > **Instant restore**. See [Configure restore window](/docs/manage/projects#configure-your-restore-window).
-
-<Admonition type="note">Increasing your restore window affects **all branches** in your project and increases [project storage](/docs/introduction/usage-metrics#storage). You can reduce it to zero to minimize cost.</Admonition>
-
-History is retained in the form of Write-Ahead-Log (WAL) records. As WAL records age out of the retention period, they are evicted from storage and no longer count toward project storage.
+For complete information about the restore window, including how to configure it, plan limits, storage implications, and how it works, see [Restore window](/docs/introduction/restore-window).
 
 Learn how to use these data recovery features:
 
@@ -103,6 +111,6 @@ Learn how to use these data recovery features:
 
 <a href="/docs/guides/reset-from-parent" description="Reset a branch to match its parent" icon="split-branch">Reset from parent</a>
 
-<a href="/docs/manage/history/time-travel" description="Run SQL queries against your database's past state" icon="queries">Time Travel queries</a>
+<a href="/docs/guides/time-travel-assist" description="Run SQL queries against your database's past state" icon="queries">Time Travel queries</a>
 
 </DetailIconCards>

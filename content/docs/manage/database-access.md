@@ -1,10 +1,14 @@
 ---
 title: Manage database access
 subtitle: Learn how to manage user access to databases in your Neon project
+summary: >-
+  Covers the management of user access to databases in Neon projects, including
+  creating roles with specific permissions, assigning roles to users, and
+  implementing a least privilege model for database access.
 enableTableOfContents: true
 redirectFrom:
   - /docs/guides/manage-database-access
-updatedOn: '2025-02-07T19:29:48.917Z'
+updatedOn: '2026-02-15T20:51:54.231Z'
 ---
 
 Each Neon project is created with a Postgres role that is named for your database. For example, if your database is named `neondb`, the project is created with a role named `neondb_owner`.
@@ -48,7 +52,7 @@ In Postgres, access must be granted at the database, schema, and object level. F
 
 To create a read-only role:
 
-1. Connect to your database from an SQL client such as [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [Neon SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor). If you need help connecting, see [Connect from any client](/docs/connect/connect-from-any-app).
+1. Connect to your database from an SQL client such as [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [Neon SQL Editor](/docs/get-started/query-with-neon-sql-editor). If you need help connecting, see [Connect from any client](/docs/connect/connect-from-any-app).
 
 2. Create a `readonly` role using the following statement.
 
@@ -93,7 +97,7 @@ To create a read-only role:
    The `readonly_user1` user now has read-only access to tables in the specified schema and database and should be able to connect and run `SELECT` queries.
 
    ```bash
-   psql postgresql://readonly_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname
+   psql postgresql://readonly_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
    psql (15.2 (Ubuntu 15.2-1.pgdg22.04+1), server 15.3)
    SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
    Type "help" for help.
@@ -128,7 +132,7 @@ This section describes how to create a read-write role with access to a specific
 
 To create a read-write role:
 
-1. Connect to your database from an SQL client such as [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [Neon SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor). If you need help connecting, see [Connect from any client](/docs/connect/connect-from-any-app).
+1. Connect to your database from an SQL client such as [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [Neon SQL Editor](/docs/get-started/query-with-neon-sql-editor). If you need help connecting, see [Connect from any client](/docs/connect/connect-from-any-app).
 
 2. Create a `readwrite` role using the following statement.
 
@@ -175,7 +179,7 @@ To create a read-write role:
    The `readwrite_user1` user now has read-write access to tables in the specified schema and database and should able to connect and run `SELECT`, `INSERT`, `UPDATE`, `DELETE` queries.
 
    ```bash
-   psql postgresql://readwrite_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname
+   psql postgresql://readwrite_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
    psql (15.2 (Ubuntu 15.2-1.pgdg22.04+1), server 15.3)
    SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
    Type "help" for help.
@@ -212,7 +216,7 @@ As you work through the steps in this scenario, remember that when you create a 
 
 To get started:
 
-1. Connect to the database **on the parent branch** from an SQL client such as [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [Neon SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor). If you need help connecting, see [Connect from any client](/docs/connect/connect-from-any-app).
+1. Connect to the database **on the parent branch** from an SQL client such as [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [Neon SQL Editor](/docs/get-started/query-with-neon-sql-editor). If you need help connecting, see [Connect from any client](/docs/connect/connect-from-any-app).
 
 2. Use your default Neon role or another role with `neon_superuser` privileges to create a developer role **on the parent branch**. For example, create a role named `dev_users`.
 
@@ -248,7 +252,7 @@ To get started:
 
 5. Connect to the database **on the development branch** with an SQL client. Be mindful that a child branch connection string differs from a parent branch connection string. The branches reside on different hosts. If you need help connecting to your branch, see [Connect from any client](/docs/connect/connect-from-any-app).
 
-6. After connecting the database on your new branch, create a developer user (e.g., `dev_user1`). The password requirements described above apply here as well.
+6. After connecting the database on your new branch, create a developer user (for example, `dev_user1`). The password requirements described above apply here as well.
 
    ```sql
    CREATE ROLE dev_user1 WITH LOGIN PASSWORD '<password>';
@@ -263,7 +267,7 @@ To get started:
    The `dev_user1` user can now connect to the database on your development branch and start using the database with full privileges.
 
    ```bash
-   psql postgresql://dev_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname
+   psql postgresql://dev_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
    psql (15.2 (Ubuntu 15.2-1.pgdg22.04+1), server 15.3)
    SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
    Type "help" for help.

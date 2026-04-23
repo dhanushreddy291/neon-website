@@ -2,11 +2,15 @@
 title: Optimize pgvector search
 subtitle: Fine-tune parameters for efficient and accurate similarity searches in
   Postgres
+summary: >-
+  Step-by-step guide for optimizing `pgvector` searches in Postgres, focusing on
+  profiling queries, indexing strategies, and parameter tuning to enhance
+  performance and accuracy in AI applications.
 enableTableOfContents: true
-updatedOn: '2024-07-15T14:47:00.995Z'
+updatedOn: '2026-02-06T22:07:32.728Z'
 ---
 
-This guide explores how to effectively use `pgvector` for vector similarity searches in your AI applications. We'll address the following key questions:
+This guide covers how to use `pgvector` for vector similarity searches. We'll address the following key questions:
 
 1. How to profile your vector search queries, when using `pgvector`?
 2. When to use indexes and tradeoffs between the available options?
@@ -40,7 +44,7 @@ Execution Time: 39.527 ms
 
 You can see in the plan that the query performs a sequential scan (`Seq Scan`) on the `items` table, which means that the query compares the query vector against all vectors in the `items` table. In other words, the query does not use an index.
 
-To understand how queries perform at scale, we tested sequential scan vector searches with `pgvector` on subsets of the [GIST-960 dataset](http://corpus-texmex.irisa.fr/) with 10k, 50k, 100k, 500k, and 1M rows using a Neon database instance with 4 vCPUs and 16 GB of RAM.
+To understand how queries perform at scale, we tested sequential scan vector searches with `pgvector` on subsets of the [GIST-960 dataset](http://corpus-texmex.irisa.fr/) with 10k, 50k, 100k, 500k, and 1M rows using a Neon database instance with 4 CU (16 GB of RAM).
 
 The sequential scan search performed reasonably well for tables with 10k rows (~36ms). However, sequential scans start to become costly at 50k rows.
 
@@ -121,12 +125,10 @@ CREATE INDEX items_embedding_cosine_idx ON items USING ivfflat (embedding vector
 IVFFlat in `pgvector` has two parameters:
 
 1. `lists`
-
    - This parameter specifies the number of [k-means clusters](https://en.wikipedia.org/wiki/K-means_clustering) (or "lists") to divide the dataset into
    - Each cluster contains a subset of the data, and each data point belongs to the closest cluster centroid.
 
 2. `probes`
-
    - This parameter determines the number of lists to explore during the search for the nearest neighbors.
    - By probing multiple lists, the search algorithm can find the closest points more accurately, balancing between speed and accuracy.
 
@@ -158,7 +160,7 @@ We've experimented with `lists` equal to 1000, 2000, and 4000, and `probes` equa
 
 Although there is a substantial gain in recall for increasing the number of `probes`, you will reach a point of diminishing returns when recall plateaus and execution time increases.
 
-Therefore, we encourage experimenting with different values for `probes` and `lists` to achieve optimal search performance for your queries. Good places to start are:
+Try different values for `probes` and `lists` to find the right balance for your dataset. Good places to start:
 
 - Using a `lists` size equal to rows / 1000 for tables with up to 1 million rows, and `sqrt(rows)` for larger datasets.
 - Start with a `probes` value equal to lists / 10 for tables up to 1 million rows, and `sqrt(lists)` for larger datasets.

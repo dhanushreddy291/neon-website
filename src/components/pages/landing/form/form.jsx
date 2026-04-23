@@ -1,7 +1,6 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,12 +14,77 @@ import Link from 'components/shared/link/link';
 import { FORM_STATES } from 'constants/forms';
 import LINKS from 'constants/links';
 import { checkBlacklistEmails } from 'utils/check-blacklist-emails';
+import { cn } from 'utils/cn';
 import { doNowOrAfterSomeTime, sendHubspotFormData } from 'utils/forms';
 
 import ErrorMessage from './error-message';
 import FormField from './form-field';
 import FormFooter from './form-footer';
 import SubmitButton from './submit-button';
+
+const emailValidationSchema = (field) => {
+  let schema = yup
+    .string()
+    .email('Please enter a valid email')
+    .required('Email address is a required field');
+
+  // Business email checking
+  if (field.validation?.useDefaultBlockList || field.validation?.data) {
+    schema = schema.test(checkBlacklistEmails(field));
+  }
+
+  return schema;
+};
+
+const fieldValidationSchema = (field) => {
+  // Handle email fields first
+  if (field.name.includes('email')) {
+    return { schema: emailValidationSchema(field) };
+  }
+
+  // Handle other field types
+  switch (field.fieldType) {
+    case 'radio':
+      return { schema: yup.string().notOneOf(['hidden'], 'Please choose an option') };
+
+    case 'checkbox':
+      return {
+        schema: yup
+          .array()
+          .min(1, 'Please choose at least one option')
+          .required('This field is required'),
+        defaultValue: [],
+      };
+
+    case 'text':
+      return { schema: yup.string().required('Please complete this required field.') };
+
+    default:
+      return { schema: yup.string().required('Please complete this required field.') };
+  }
+};
+
+const validationSchema = (fieldGroups) => {
+  const yupObject = {};
+  const defaultValues = {};
+
+  fieldGroups.forEach((group) => {
+    group.fields.forEach((field) => {
+      if (!field.required && !field.name.includes('email')) return;
+
+      const { schema, defaultValue } = fieldValidationSchema(field);
+      yupObject[field.name] = schema;
+      if (defaultValue !== undefined) {
+        defaultValues[field.name] = defaultValue;
+      }
+    });
+  });
+
+  return {
+    schema: yup.object(yupObject).required(),
+    defaultValues,
+  };
+};
 
 const Form = ({
   title,
@@ -43,45 +107,7 @@ const Form = ({
     pageUri: href,
   };
 
-  const yupObject = {};
-  const defaultValues = {};
-  fieldGroups.forEach((group) => {
-    group.fields.forEach((field) => {
-      if (field.required || field.name.includes('email')) {
-        let yupField = yup;
-
-        if (field.fieldType === 'text') {
-          yupField = yupField.string();
-
-          if (field.name.includes('email')) {
-            yupField = yupField.email('Please enter a valid email');
-
-            // Business email checking
-            if (field.validation.useDefaultBlockList || field.validation.data) {
-              yupField = yupField.test(checkBlacklistEmails(field));
-            }
-          }
-        }
-
-        if (field.required) {
-          if (field.name.includes('email'))
-            yupField = yupField.required('Email address is a required field');
-          else if (field.fieldType === 'radio')
-            yupField = yupField.string().notOneOf(['hidden'], 'Please choose an option');
-          else if (field.fieldType === 'checkbox') {
-            defaultValues[field.name] = [];
-            yupField = yupField
-              .array()
-              .min(1, 'Please choose at least one option')
-              .required('This field is required');
-          } else yupField = yupField.required('Please complete this required field.');
-        }
-
-        yupObject[field.name] = yupField;
-      }
-    });
-  });
-  const yupSchema = yup.object(yupObject).required();
+  const { schema, defaultValues } = validationSchema(fieldGroups);
 
   const {
     register,
@@ -89,7 +115,7 @@ const Form = ({
     handleSubmit,
     formState: { isValid, errors },
   } = useForm({
-    resolver: yupResolver(yupSchema),
+    resolver: yupResolver(schema),
     defaultValues,
   });
 
@@ -132,7 +158,7 @@ const Form = ({
           setErrorMessage('Please reload the page and try again');
         }, loadingAnimationStartedTime);
       }
-    } catch (error) {
+    } catch (_error) {
       doNowOrAfterSomeTime(() => {
         setState(FORM_STATES.ERROR);
         setErrorMessage('Please reload the page and try again');
@@ -147,10 +173,10 @@ const Form = ({
           <div className="relative z-20">
             <Field
               labelClassName="hidden"
-              inputClassName={clsx(
-                '!bg-black-pure remove-autocomplete-styles !m-0 h-16 w-full appearance-none rounded-[50px] !border-[1px] bg-black-new pl-7 pr-48 text-base text-white placeholder:tracking-tight placeholder:text-gray-new-50 focus:outline-none disabled:opacity-100 md:h-14 md:pl-6 md:pr-16 md:placeholder:text-sm',
-                state === FORM_STATES.ERROR ? '!border-secondary-1' : '!border-green-45',
-                state === FORM_STATES.SUCCESS ? '!pr-14 text-green-45' : 'text-white'
+              inputClassName={cn(
+                'bg-black-pure! remove-autocomplete-styles m-0! h-16 w-full appearance-none rounded-[50px] border-[1px]! bg-black-new pl-7 pr-48 text-base text-white placeholder:tracking-tight placeholder:text-gray-new-50 focus:outline-hidden disabled:opacity-100 md:h-14 md:pl-6 md:pr-16 md:placeholder:text-sm',
+                state === FORM_STATES.ERROR ? 'border-secondary-1!' : 'border-green-45!',
+                state === FORM_STATES.SUCCESS ? 'pr-14! text-green-45' : 'text-white'
               )}
               name={simpleField.name}
               label={`${simpleField.label} *`}
@@ -159,14 +185,14 @@ const Form = ({
               placeholder={simpleField.placeholder}
               isDisabled={state === FORM_STATES.LOADING || state === FORM_STATES.SUCCESS}
               error={errors[simpleField.name]?.message}
-              errorClassName="ml-7"
+              errorClassName="bottom-auto top-full text-center! w-full max-w-full translate-y-2!"
               {...register(simpleField.name)}
             />
             <SubmitButton formState={state} text={submitText} simpleMode />
             {errorMessage && <ErrorMessage text={errorMessage} />}
           </div>
           <LinesIllustration
-            className="-!top-8 z-10 h-[150px] !w-[125%]"
+            className="-top-8! z-10 h-[150px] w-[125%]!"
             color={state === FORM_STATES.ERROR ? '#FF4C79' : '#00E599'}
             bgColor="#000"
           />
@@ -179,20 +205,20 @@ const Form = ({
     <>
       <form className="relative w-full" method="POST" onSubmit={handleSubmit(onSubmit)}>
         <div
-          className={clsx(
+          className={cn(
             'relative z-20 rounded-[10px]',
             greenMode && 'bg-[linear-gradient(155deg,#00E59980,#00E5990D_50%,#00E59980_100%)] p-px'
           )}
         >
           <div
-            className={clsx(
+            className={cn(
               isAzurePage ? 'p-8 lg:p-6' : 'bg-black-new p-9 sm:px-5 sm:py-6',
               'rounded-[10px]'
             )}
           >
             <div className="space-y-6">
               {title && (
-                <h2 className="text-title text-center text-[32px] font-medium leading-tight tracking-tight sm:text-2xl">
+                <h2 className="text-title text-center text-[32px] leading-tight font-medium tracking-tight sm:text-2xl">
                   {title}
                 </h2>
               )}
@@ -200,7 +226,7 @@ const Form = ({
                 fieldGroups.map((fieldGroup, index) => (
                   <fieldset
                     key={index}
-                    className={clsx(
+                    className={cn(
                       fieldGroup.fields.length > 1 && 'flex gap-[30px] sm:flex-col sm:gap-6'
                     )}
                   >
@@ -227,11 +253,11 @@ const Form = ({
             >
               <span className="absolute inset-0 bg-[url('/images/noise.png')] bg-cover" />
               <span className="absolute inset-0 rounded-[inherit] border-image-azure-form-border" />
-              <span className="absolute -left-10 -top-12 z-10 size-[85px] rounded-full bg-white mix-blend-overlay blur-[30px]" />
-              <span className="absolute -left-24 -top-24 h-[220px] w-[410px] -rotate-[17deg] rounded-[100%] bg-azure-form-bg-top opacity-40 blur-[65px]" />
+              <span className="absolute -top-12 -left-10 z-10 size-[85px] rounded-full bg-white mix-blend-overlay blur-[30px]" />
+              <span className="absolute -top-24 -left-24 h-[220px] w-[410px] -rotate-[17deg] rounded-[100%] bg-azure-form-bg-top opacity-40 blur-[65px]" />
               <span className="absolute -right-9 bottom-9 h-36 w-[120px] translate-x-full rounded-[100%] bg-[#CF9FFF] blur-[52px]" />
-              <span className="absolute -bottom-6 -right-10 z-10 size-[85px] rounded-full bg-white mix-blend-overlay blur-[30px]" />
-              <span className="absolute -bottom-20 -right-32 h-[170px] w-[316px] rotate-[163deg] rounded-[100%] bg-azure-form-bg-bottom opacity-40 blur-[65px]" />
+              <span className="absolute -right-10 -bottom-6 z-10 size-[85px] rounded-full bg-white mix-blend-overlay blur-[30px]" />
+              <span className="absolute -right-32 -bottom-20 h-[170px] w-[316px] rotate-[163deg] rounded-[100%] bg-azure-form-bg-bottom opacity-40 blur-[65px]" />
             </span>
           )}
           {errorMessage && <ErrorMessage text={errorMessage} />}
@@ -241,14 +267,14 @@ const Form = ({
             Neon will contact you at the information above with relevant content, products, and
             services. You may unsubscribe at any time. For more info, see our{' '}
             <Link className="whitespace-nowrap" to={LINKS.privacyPolicy} theme="green-underlined">
-              Privacy Policy
+              Privacy Notice
             </Link>
             .
           </p>
         )}
         {greenMode && (
           <LinesIllustration
-            className="-top-[25%] !h-[450px] !w-[145%]"
+            className="-top-[25%] h-[450px]! w-[145%]!"
             color="#00E599"
             bgColor="#000"
           />

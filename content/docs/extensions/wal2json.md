@@ -1,8 +1,13 @@
 ---
 title: The wal2json plugin
 subtitle: Convert Postgres Write-Ahead Log (WAL) changes to JSON format
+summary: >-
+  Covers the setup and configuration of the `wal2json` plugin for Postgres in
+  Neon, enabling the conversion of Write-Ahead Log changes into JSON format for
+  easier processing in applications like data replication and real-time
+  analytics.
 enableTableOfContents: true
-updatedOn: '2024-11-30T11:53:56.052Z'
+updatedOn: '2026-02-06T22:07:32.851Z'
 ---
 
 The `wal2json` plugin is a logical replication decoding output plugin for Postgres. It lets you convert the Write-Ahead Log (WAL) changes into JSON format, making it easier to consume and process database changes in various applications, such as data replication, auditing, event-driven services, and real-time analytics.
@@ -38,7 +43,7 @@ SHOW wal_level;
 (1 row)
 ```
 
-For information about using the Neon SQL Editor, see [Query with Neon's SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor). For information about using the `psql` client with Neon, see [Connect with psql](/docs/connect/query-with-psql-editor).
+For information about using the Neon SQL Editor, see [Query with Neon's SQL Editor](/docs/get-started/query-with-neon-sql-editor). For information about using the `psql` client with Neon, see [Connect with psql](/docs/connect/query-with-psql-editor).
 
 ## Create a replication slot
 

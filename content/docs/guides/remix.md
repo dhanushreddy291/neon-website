@@ -1,18 +1,25 @@
 ---
 title: Connect a Remix application to Neon
 subtitle: Set up a Neon project in seconds and connect from a Remix application
+summary: >-
+  How to connect a Remix application to a Neon project by creating a Neon
+  project, setting up a Remix project, and configuring connection settings
+  securely.
 enableTableOfContents: true
-updatedOn: '2025-02-03T20:41:57.335Z'
+updatedOn: '2026-02-06T22:07:33.042Z'
 ---
+
+<Admonition type="note">
+Remix is now React Router v7. The features of the Remix framework have been merged into React Router v7. If you are starting a new project, we recommend using React Router. Follow our [React Router guide](/docs/guides/react-router) to connect to Neon.
+
+For more information, see the [Remix announcement](https://remix.run/blog/merging-remix-and-react-router).
+</Admonition>
 
 Remix is an open-source full stack JavaScript framework that lets you focus on building out the user interface using familiar web standards. This guide explains how to connect Remix with Neon using a secure server-side request.
 
 To create a Neon project and access it from a Remix application:
 
-1. [Create a Neon project](#create-a-neon-project)
-2. [Create a Remix project and add dependencies](#create-a-remix-project-and-add-dependencies)
-3. [Configure a Postgres client](#configure-the-postgres-client)
-4. [Run the app](#run-the-app)
+<Steps>
 
 ## Create a Neon project
 
@@ -49,7 +56,7 @@ If you do not have one already, create a Neon project. Save your connection deta
 Add a `.env` file to your project directory and add your Neon connection string to it. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 ## Configure the Postgres client
@@ -159,6 +166,8 @@ When you run `npm run dev` you can expect to see the following on [localhost:300
 ```shell shouldWrap
 PostgreSQL 16.0 on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
 ```
+
+</Steps>
 
 ## Source code
 

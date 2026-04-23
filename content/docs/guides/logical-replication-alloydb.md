@@ -1,9 +1,13 @@
 ---
 title: Replicate data from AlloyDB
 subtitle: Learn how to replicate data from AlloyDB to Neon
+summary: >-
+  How to replicate data from AlloyDB to Neon using native Postgres logical
+  replication, including preparation steps for the AlloyDB source database and
+  enabling necessary flags.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2025-02-14T17:05:09.995Z'
+updatedOn: '2026-02-06T22:07:33.005Z'
 ---
 
 This guide describes how to replicate data from AlloyDB Postgres to Neon using native Postgres logical replication. The steps in this guide follow those described in [Set up native PostgreSQL logical replication](https://cloud.google.com/sql/docs/postgres/replication/configure-logical-replication#set-up-native-postgresql-logical-replication), in the _Google AlloyDB documentation_.

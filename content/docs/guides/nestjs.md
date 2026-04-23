@@ -1,18 +1,22 @@
 ---
 title: Connect a NestJS application to Neon
 subtitle: Set up a Neon project in seconds and connect from a NestJS application
+summary: >-
+  Step-by-step guide for connecting a NestJS application to a Neon project,
+  including project setup, dependency installation, and configuration of
+  database credentials for secure access.
 enableTableOfContents: true
-updatedOn: '2025-02-03T20:41:57.330Z'
+updatedOn: '2026-02-06T22:07:33.026Z'
 ---
+
+<CopyPrompt src="/prompts/nestjs-prompt.md"
+description="Pre-built prompt for connecting NestJS applications to Neon Postgres"/>
 
 NestJS is a framework for building efficient, scalable Node.js server-side applications<sup><a target="_blank" href="https://docs.nestjs.com/">1</a></sup>. This guide explains how to connect NestJS with Neon using a secure server-side request.
 
 To create a Neon project and access it from a NestJS application:
 
-1. [Create a Neon project](#create-a-neon-project)
-2. [Create a NestJS project and add dependencies](#create-a-nestjs-project-and-add-dependencies)
-3. [Configure a Postgres client](#configure-the-postgres-client)
-4. [Run the app](#run-the-app)
+<Steps>
 
 ## Create a Neon project
 
@@ -49,7 +53,7 @@ If you do not have one already, create a Neon project. Save your connection deta
 Add a `.env` file to your project directory and add your Neon connection string to it. You can find your connection details by clicking **Connect** on the Neon **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 ## Configure the Postgres client
@@ -136,7 +140,7 @@ export class DatabaseModule {}
 
 ### 2. Create a Service for Database Interaction
 
-Next, implement a service to facilitate interaction with your Postgres database. This service will use the database connection defined in the DatabaseModule.
+Next, implement a service to handle interaction with your Postgres database. This service will use the database connection defined in the DatabaseModule.
 
 <CodeTabs reverse={true} labels={["node-postgres", "postgres.js", "Neon serverless driver"]}>
 
@@ -227,6 +231,8 @@ When you run `npm run start` you can expect to see output similar to the followi
 ```shell shouldWrap
 [{"id":1,"name":"c4ca4238a0","value":0.39330545},{"id":2,"name":"c81e728d9d","value":0.14468245}]
 ```
+
+</Steps>
 
 ## Source code
 

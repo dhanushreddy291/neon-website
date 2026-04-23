@@ -2,8 +2,12 @@
 title: Stream changes from your Neon database to anywhere
 subtitle: Learn how to capture and stream changes and rows from your database to
   anywhere with Sequin
+summary: >-
+  Step-by-step guide for connecting your Neon database to Sequin to capture and
+  stream real-time changes, including inserts, updates, and deletes, to various
+  applications and services using logical replication.
 enableTableOfContents: true
-updatedOn: '2025-02-11T11:32:44.541Z'
+updatedOn: '2026-03-03T14:18:20.108Z'
 ---
 
 Neon's Logical Replication features makes it possible to detect every change in your database. It can be used to power read-replicas and backups, but can also be used to add streaming characteristics to Neon.
@@ -20,6 +24,10 @@ In this guide, we'll show you how to connect your Neon database to Sequin to sta
 - A [Neon account](https://console.neon.tech/)
 - Read the [important notices about logical replication in Neon](/docs/guides/logical-replication-neon#important-notices) before you begin
 
+<Admonition type="important" title="Compute and billing">
+Replication keeps compute active (no [scale to zero](/docs/introduction/scale-to-zero)) while subscribers are connected, which can increase your bill. See [Important notices about logical replication in Neon](/docs/guides/logical-replication-neon#important-notices).
+</Admonition>
+
 ## Enable logical replication in Neon
 
 Sequin uses the Write Ahead Log (WAL) to capture changes from your Postgres database. In this step, we'll enable logical replication for your Neon Postgres project.
@@ -35,7 +43,7 @@ To enable logical replication in Neon:
 3. Select **Logical Replication**.
 4. Click **Enable** to enable logical replication.
 
-You can verify that logical replication is enabled by running the following query from the [Neon SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor):
+You can verify that logical replication is enabled by running the following query from the [Neon SQL Editor](/docs/get-started/query-with-neon-sql-editor):
 
 ```sql
 SHOW wal_level;
@@ -51,7 +59,7 @@ After enabling logical replication on Neon, you'll now connect your Neon databas
 1. In Neon, copy your database connection string. You can find the it by clicking the **Connect** button on your **Project Dashboard**. It will look similar to this:
 
    ```sql shouldWrap
-   postgresql://neondb_owner:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require
+   postgresql://neondb_owner:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
    ```
 
 2. In the Sequin Console, click on the **Connect Database** button, and then auto-complete your database credentials by clicking the **Autofill with URL** button and pasting in your database connection string.
@@ -74,7 +82,7 @@ After enabling logical replication on Neon, you'll now connect your Neon databas
    Defining specific tables lets you add or remove tables from the publication later, which you cannot do when creating publications with `FOR ALL TABLES`.
    </Admonition>
 
-5. Back in the Sequin Console, enter the name of the replication slot (`sequin_slot`) and publication (`sequin_pub`) you just created. Then, name your database (e.g. `neondb`) and click **Create Database**.
+5. Back in the Sequin Console, enter the name of the replication slot (`sequin_slot`) and publication (`sequin_pub`) you just created. Then, name your database (for example `neondb`) and click **Create Database**.
 
 With these steps completed, your Neon database is now connected to Sequin via a replication slot and publication. Sequin is now detecting changes to your tables.
 
@@ -89,18 +97,15 @@ Set up a consumer in Sequin to stream changes from your database.
 3. Define any filters for the changes you want to capture. For example, you might want to only process orders with a value greater than a certain amount, or accounts with a certain status.
 
 4. Choose whether you want your consumer to process [rows or changes](https://sequinstream.com/docs/core-concepts#rows-and-changes):
-
    - **Rows**: Captures the latest state of records when a row is inserted or updated.
    - **Changes**: Captures every `insert`, `update`, and `delete`, including `OLD` values for updates and deletes.
 
 5. Select your preferred method for [receiving changes](https://sequinstream.com/docs/core-concepts#consumption):
-
    - **HTTP Push** (Webhooks): Sequin sends changes to your specified endpoint.
    - **HTTP Pull** (similar to SQS): Your application pulls changes from Sequin.
 
 6. Enter the final details for your consumer:
-
-   - Give your consumer a name (e.g., `neon-changes-consumer`).
+   - Give your consumer a name (for example, `neon-changes-consumer`).
    - If using HTTP Push, provide the endpoint URL where Sequin should send the changes. You can also provide encrypted headers.
    - Optionally, set a timeout and add an endpoint path.
 
@@ -115,6 +120,3 @@ You're now using Sequin with Neon to capture and stream changes from your databa
 - Use Sequin to trigger workflows in tools like Inngest or trigger.dev, activate side-effects in your app, setup audit logs, or generate denormalized views.
 - Tailor your consumer's [filtering](https://sequinstream.com/docs/core-concepts#filtering) and settings to meet your requirements.
 - Try a [pull consumer](https://sequinstream.com/docs/core-concepts#pull-consumers) with [our SDKs](https://sequinstream.com/docs/sdks) to completely manage how you retrieve changes at scale.
-- Use Sequins [observability and monitoring](https://console.sequinstream.com/consumers) to debug and keep production humming.
-
-Learn more in our [docs](https://sequinstream.com/docs/introduction). And if you need anything, Sequin is open source - just open an issue or reach out to us: <a href="mailto:founders@sequinstream.com">founders@sequinstream.com</a>.

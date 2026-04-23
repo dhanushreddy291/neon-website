@@ -116,7 +116,7 @@ These packages provide:
 
 ```
 # Database
-DATABASE_URL=postgres://[user]:[password]@[hostname]/[database]?sslmode=require
+DATABASE_URL=postgres://[user]:[password]@[hostname]/[database]?sslmode=require&channel_binding=require
 
 # Redis
 REDIS_URL=redis://localhost:6379
@@ -521,7 +521,7 @@ async function getJobsByQueue(queueName, limit = 100, offset = 0) {
 
 async function getJobStats() {
   const result = await pool.query(`
-    SELECT 
+    SELECT
       queue_name,
       status,
       COUNT(*) as count
@@ -1013,11 +1013,7 @@ This will show you a breakdown of job counts by queue and status:
 
 ### Bull Board Dashboard
 
-If you've set up Bull Board as described earlier, you can visit `http://localhost:3000/admin/queues` in your browser to see a visual dashboard of all your queues and jobs.
-
-![Bull Board Dashboard](/guides/images/job-queue-system/bull-board.png)
-
-This dashboard provides a real-time view of your queues, including active, waiting, and completed jobs.
+If you've set up Bull Board as described earlier, you can visit `http://localhost:3000/admin/queues` in your browser to see a visual dashboard of all your queues and jobs. This dashboard provides a real-time view of your queues, including active, waiting, and completed jobs.
 
 ## Verifying Database Records
 

@@ -2,10 +2,14 @@
 title: Migrate from Azure PostgreSQL to Neon
 subtitle: Learn how to migrate your database from Azure PostgreSQL to Neon using logical
   replication
+summary: >-
+  Covers the migration of a database from Azure PostgreSQL to Neon using logical
+  replication, detailing the necessary preparations and steps to ensure minimal
+  downtime during the process.
 redirectFrom:
   - /docs/import/import-from-azure-postgres
 enableTableOfContents: true
-updatedOn: '2025-02-14T17:05:10.002Z'
+updatedOn: '2026-04-01T22:00:00.000Z'
 ---
 
 This guide describes how to migrate your database from Azure Database for PostgreSQL to Neon, using logical replication.
@@ -162,7 +166,7 @@ To ensure that the Neon `AdventureWorks` database has the same schema as the Azu
 
 After importing the schema, create a subscription on the Neon database:
 
-1. Use the [Neon SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor), [psql](/docs/connect/query-with-psql-editor), or another SQL client to connect to your Neon database.
+1. Use the [Neon SQL Editor](/docs/get-started/query-with-neon-sql-editor), [psql](/docs/connect/query-with-psql-editor), or another SQL client to connect to your Neon database.
 
 2. Create the subscription using the `CREATE SUBSCRIPTION` statement:
 
@@ -255,6 +259,10 @@ After successfully migrating and verifying your data on Neon, you can:
 ## Other migration options
 
 This section discusses migration options other than using logical replication.
+
+<Admonition type="important">
+Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) when you run `pg_dump` or `pg_restore` against Neon.
+</Admonition>
 
 - **pg_dump and pg_restore**
 

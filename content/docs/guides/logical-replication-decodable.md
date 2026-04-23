@@ -1,9 +1,13 @@
 ---
 title: Replicate data with Decodable
 subtitle: Learn how to replicate data from Neon with Decodable
+summary: >-
+  Step-by-step guide for configuring a Postgres source connector in Decodable to
+  replicate data from a Neon Postgres database, including enabling logical
+  replication and creating a dedicated Postgres role for the process.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2025-02-11T11:32:44.537Z'
+updatedOn: '2026-03-03T14:18:20.102Z'
 ---
 
 Neon's logical replication feature allows you to replicate data from your Neon Postgres database to external destinations.
@@ -11,14 +15,17 @@ Neon's logical replication feature allows you to replicate data from your Neon P
 [Decodable](https://www.decodable.co/) is a fully managed platform for ETL, ELT, and stream processing,
 powered by Apache Flink® and Debezium.
 
-In this guide, you will learn how to configure a Postgres source connector in Decodable for ingesting changes from your Neon database so that you can replicate data from Neon to any of Decodable's [supported data sinks](https://docs.decodable.co/connect/destinations.html),
-optionally processing the data with SQL or custom Flink jobs.
+In this guide, you will learn how to configure a Postgres source connector in Decodable for ingesting changes from your Neon database so that you can replicate data from Neon to any of Decodable's [supported data sinks](https://docs.decodable.co/connections.html#sinks), optionally processing the data with SQL or custom Flink jobs.
 
 ## Prerequisites
 
 - A [Decodable account](https://www.decodable.co/) ([start free](https://app.decodable.co/-/accounts/create), no credit card required)
 - A [Neon account](https://console.neon.tech/)
 - Read the [important notices about logical replication in Neon](/docs/guides/logical-replication-neon#important-notices) before you begin
+
+<Admonition type="important" title="Compute and billing">
+Replication keeps compute active (no [scale to zero](/docs/introduction/scale-to-zero)) while subscribers are connected, which can increase your bill. See [Important notices about logical replication in Neon](/docs/guides/logical-replication-neon#important-notices).
+</Admonition>
 
 ## Enable logical replication in Neon
 
@@ -33,7 +40,7 @@ To enable logical replication in Neon:
 3. Select **Logical Replication**.
 4. Click **Enable** to enable logical replication.
 
-You can verify that logical replication is enabled by running the following query from the [Neon SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor):
+You can verify that logical replication is enabled by running the following query from the [Neon SQL Editor](/docs/get-started/query-with-neon-sql-editor):
 
 ```sql
 SHOW wal_level;
@@ -136,14 +143,18 @@ For information about configuring allowed IPs in Neon, see [Configure IP Allow](
 1. In the Decodable web UI, select **Connections** from the left navigation bar and click **New Connection**.
 2. In the connector catalog, choose **Postgres CDC** and click **Connect**.
 3. Enter the connection details for your Neon database. You can find your Neon database connection details by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
+
+   <Admonition type="important">
+   Use a **direct connection** to your compute endpoint, not a pooled connection. Logical replication requires a persistent connection and is not compatible with connection poolers. When copying your connection string from Neon, make sure it does not include `-pooler` in the hostname. For more information about connection pooling and when to use direct connections, see [Connection pooling](/docs/connect/connection-pooling).
+   </Admonition>
+
    Your connection string will look like this:
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
    ```
 
    Enter the details for **your connection string** into the source connector fields. Based on the sample connection string above, the values would be specified as shown below. Your values will differ.
-
    - **Connection Type**: Source (the default)
    - **Host**: ep-cool-darkness-123456.us-east-2.aws.neon.tech
    - **Port**: 5432

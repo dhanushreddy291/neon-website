@@ -1,11 +1,15 @@
 ---
 title: Migrate from Heroku to Neon Postgres
+summary: >-
+  Covers the steps to migrate data from Heroku Postgres to Neon, including
+  project creation, connection string retrieval, and data import using the
+  Heroku CLI.
 enableTableOfContents: true
 redirectFrom:
   - /docs/how-to-guides/hasura-heroku-migration
   - /docs/how-to-guides/import-from-heroku
   - /docs/import/import-from-heroku
-updatedOn: '2025-02-03T20:41:57.341Z'
+updatedOn: '2026-04-01T22:00:00.000Z'
 ---
 
 This guide describes how to import your data from Heroku Postgres to Neon.
@@ -26,8 +30,12 @@ The instructions assume that you have installed the Heroku CLI, which is used to
    The example connection string used the instructions that follow is:
 
    ```text shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
    ```
+
+   <Admonition type="important">
+   `heroku pg:pull` uses `pg_dump` toward your Neon database. Avoid using a [pooled connection string](/docs/reference/glossary#pooled-connection-string). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) instead.
+   </Admonition>
 
 ## Retrieve your Heroku app name and database name
 
@@ -69,9 +77,9 @@ where:
 For example:
 
 ```shell shouldWrap
-$ heroku pg:pull --app thawing-wave-57227 postgresql-trapezoidal-48645 postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname
+$ heroku pg:pull --app thawing-wave-57227 postgresql-trapezoidal-48645 postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
 
-heroku-cli: Pulling postgresql-trapezoidal-48645 ---> postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname
+heroku-cli: Pulling postgresql-trapezoidal-48645 ---> postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
 
 pg_dump: last built-in OID is 16383
 pg_dump: reading extensions

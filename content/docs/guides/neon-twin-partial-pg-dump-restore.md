@@ -1,15 +1,23 @@
 ---
-title: Partial Twin
+title: pg_dump / pg_restore — Partial Twin
 subtitle: Create a partial Twin of your production database
+summary: >-
+  Covers the setup of a workflow to create a partial Neon Twin of a production
+  database using `pg_dump`, `pg_restore`, and `psql`, including necessary
+  directory structure and code configuration.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2025-03-03T16:46:05.779Z'
+updatedOn: '2026-04-01T22:00:00.000Z'
 ---
 
 This workflow will create a partial Neon Twin using `pg_dump`, `pg_restore` and `psql`.
 
 <Admonition type="note">
-To use this workflow, you'll need the Postgres connection string for your Neon database. Follow our [Getting Started Guide](/docs/get-started-with-neon/signing-up#sign-up) to learn how.
+To use this workflow, you'll need the Postgres connection string for your Neon database. Follow our [Getting Started Guide](/docs/get-started/signing-up#sign-up) to learn how.
+</Admonition>
+
+<Admonition type="important">
+Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary#pooled-connection-string). Use an [unpooled connection string](/docs/reference/glossary#unpooled-connection-string) for `PROD_DATABASE_URL` and `DEV_DATABASE_URL` when they point to Neon.
 </Admonition>
 
 ## Create the workflow
@@ -225,5 +233,5 @@ If your dump/restore process takes longer, consider using [self-hosted runners](
 
 ## Further reading
 
-- [Automate Partial Data Dumps with PostgreSQL and GitHub Actions](https://neon.tech/blog/automate-partial-data-dumps-with-postgresql-and-github-actions)
-- [Neon Twin: How to deploy a change tested in Neon to prod in RDS](https://neon.tech/blog/neon-twin-deploy-workflow)
+- [Automate Partial Data Dumps with PostgreSQL and GitHub Actions](/blog/automate-partial-data-dumps-with-postgresql-and-github-actions)
+- [Neon Twin: How to deploy a change tested in Neon to prod in RDS](/blog/neon-twin-deploy-workflow)

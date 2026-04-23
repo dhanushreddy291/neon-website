@@ -101,36 +101,30 @@ This signature is then Base64Url encoded to form the third part of the JWT.
 The overall process of using JWTs for authentication and authorization typically involves the following steps:
 
 1. **User Authentication**:
-
    - The process begins when a user logs in with their credentials (e.g., username and password).
    - The server verifies these credentials against the stored user information.
 
 2. **JWT Creation**:
-
    - Upon successful authentication, the server creates a JWT.
    - It generates the header and payload, encoding the necessary information.
    - Using a secret key (kept secure on the server), it creates the signature.
    - The three parts (header, payload, signature) are combined to form the complete JWT.
 
 3. **Sending the Token**:
-
    - The server sends this token back to the client in the response.
    - The client stores this token, often in local storage or a secure cookie.
 
 4. **Subsequent Requests**:
-
    - For any subsequent requests to protected routes or resources, the client includes this token in the Authorization header.
    - The format is: `Authorization: Bearer <token>`
 
 5. **Server-side Token Validation**:
-
    - When the server receives a request with a JWT, it first splits the token into its three parts.
    - It base64 decodes the header and payload.
    - The server then recreates the signature using the header, payload, and its secret key.
    - If this newly created signature matches the signature in the token, the server knows the token is valid and hasn't been tampered with.
 
 6. **Accessing Protected Resources**:
-
    - If the token is valid, the server can use the information in the payload without needing to query the database.
    - This allows the server to authenticate the user and know their permissions for each request without needing to store session data.
 
@@ -169,7 +163,7 @@ With the theory out of the way, let's start by creating a new project directory 
 Now, let's install the necessary packages for our project:
 
 ```bash
-pip install "fastapi[all]" sqlalchemy psycopg2-binary pyjwt "passlib[bcrypt]" python-dotenv
+pip install "fastapi[all]" sqlalchemy psycopg2-binary pyjwt bcrypt python-dotenv
 ```
 
 This command installs:
@@ -178,7 +172,7 @@ This command installs:
 - SQLAlchemy: An ORM for database interactions
 - psycopg2-binary: PostgreSQL adapter for Python
 - PyJWT: For working with JWT tokens instead of handling them manually
-- passlib: For password hashing
+- bcrypt: For secure password hashing
 - python-dotenv: To load environment variables from a .env file
 
 You can also create a `requirements.txt` file to manage your dependencies using the following:
@@ -196,7 +190,7 @@ Next, let's set up a connection to Neon Postgres for storing user data.
 Create a `.env` file in your project root and add the following configuration:
 
 ```env
-DATABASE_URL=postgres://user:password@your-neon-hostname.neon.tech/dbname?sslmode=require
+DATABASE_URL=postgres://user:password@your-neon-hostname.neon.tech/dbname?sslmode=require&channel_binding=require
 ```
 
 Replace the placeholders with your actual Neon database credentials.
@@ -282,7 +276,7 @@ class User(BaseModel):
     email: EmailStr
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Token(BaseModel):
     access_token: str
@@ -300,7 +294,7 @@ Now that we have the database models and schemas in place, let's add some utilit
 Create a file called `auth.py` where we will define functions for password hashing, verification, and JWT token creation:
 
 ```python
-from passlib.context import CryptContext
+import bcrypt
 import jwt
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -313,13 +307,13 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
+def get_password_hash(password: str) -> str:
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed.decode('utf-8')
 
 def create_access_token(data: dict):
     to_encode = data.copy()
@@ -345,7 +339,7 @@ This file includes functions for:
 - Creating JWT access tokens
 - Verifying JWT tokens
 
-The `CryptContext` from passlib is used for secure password hashing, while `PyJWT` is used for JWT token creation and verification. PyJWT provides a simpler and more focused API for JWT operations compared to `python-jose`.
+The `bcrypt` library is used for secure password hashing, while `PyJWT` is used for JWT token creation and verification. PyJWT provides a simpler and more focused API for JWT operations compared to `python-jose`.
 
 ## API Endpoints
 
@@ -507,7 +501,7 @@ Make sure that you don't include the `.env` file in the Docker image to keep you
 To run the Docker container, use the following command:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env fastapi-auth-demo
+docker run -d -p 8000:8000 fastapi-auth-demo
 ```
 
 This command starts the container in detached mode, maps port 8000 on the host to port 8000 in the container, and loads environment variables from the `.env` file.

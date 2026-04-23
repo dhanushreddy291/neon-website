@@ -1,8 +1,12 @@
 ---
 title: Schema migration with Neon Postgres and Ruby on Rails
 subtitle: Set up Neon Postgres and run migrations for your Rails project
+summary: >-
+  Covers the setup of Neon Postgres for Ruby on Rails projects, including
+  initializing a new project, retrieving database connection strings, and
+  managing schema migrations using Rails' migration system.
 enableTableOfContents: true
-updatedOn: '2025-02-03T20:41:57.333Z'
+updatedOn: '2026-02-06T22:07:33.035Z'
 ---
 
 [Ruby on Rails](https://rubyonrails.org/) is a popular web application framework for Ruby developers. It provides an ORM (Object-Relational Mapping) layer called `Active Record`, that simplifies database interactions and schema management. Rails also includes a powerful migration system that allows you to define and manage database schema changes over time.
@@ -35,7 +39,7 @@ To follow along with this guide, you will need:
 You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. It should look similar to this:
 
 ```bash
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
 ```
 
 Keep your connection string handy for later use.

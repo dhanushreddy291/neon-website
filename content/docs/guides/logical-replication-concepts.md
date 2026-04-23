@@ -1,9 +1,13 @@
 ---
 title: Postgres logical replication concepts
 subtitle: Learn about PostgreSQL logical replication concepts
+summary: >-
+  Covers the concepts of PostgreSQL logical replication, detailing how to
+  replicate data between databases using a publisher-subscriber model, and
+  enabling logical replication in Neon for real-time data updates.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2025-02-14T17:05:09.999Z'
+updatedOn: '2026-02-06T22:07:33.006Z'
 ---
 
 Logical Replication is a method of replicating data between databases or between your database and other data services or platforms. It differs from physical replication in that it replicates transactional changes rather than copying the entire database byte-for-byte. This approach allows for selective replication, where users can choose specific tables or rows for replication. It works by capturing DML operations in the source database and applying these changes to the target, which could be another Postgres database or data platform.
@@ -101,7 +105,7 @@ max_replication_slots = 10
 ```
 
 <Admonition type="important">
-To prevent storage bloat, **Neon automatically removes _inactive_ replication slots after a period of time if there are other _active_ replication slots**. If you have or intend on having more than one replication slot, please see [Unused replication slots](/docs/guides/logical-replication-neon#unused-replication-slots) to learn more.
+To prevent storage bloat, **Neon automatically removes _inactive_ replication slots after a period of time. Please see [Unused replication slots](/docs/guides/logical-replication-neon#unused-replication-slots) to learn more.
 </Admonition>
 
 ### Decoder plugins

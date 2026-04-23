@@ -1,23 +1,27 @@
 ---
 title: Get started with Flyway and Neon
 subtitle: Learn how to manage schema changes in Neon with Flyway
+summary: >-
+  Step-by-step guide for installing and configuring the Flyway command-line tool
+  to manage schema changes in a Neon database, including setting up the
+  connection and executing migrations.
 enableTableOfContents: true
-updatedOn: '2025-02-03T20:41:57.314Z'
+updatedOn: '2026-02-06T22:07:32.969Z'
 ---
 
-Flyway is a database migration tool that facilitates version control for databases. It allows developers to manage and track changes to the database schema, ensuring that the database evolves consistently across different environments.
+Flyway is a database migration tool that provides version control for databases. It allows developers to manage and track changes to the database schema, ensuring that the database evolves consistently across different environments.
 
 This guide steps you through installing the Flyway command-line tool, configuring Flyway to connect to a Neon database, and running database migrations. The guide follows the setup described in the [Flyway command-line quickstart](https://documentation.red-gate.com/fd/quickstart-command-line-184127576.html).
 
 ## Prerequisites
 
-- A Neon account. See [Sign up](/docs/get-started-with-neon/signing-up).
-- A Neon project. See [Create your first project](/docs/get-started-with-neon/setting-up-a-project).
+- A Neon account. See [Sign up](/docs/get-started/signing-up).
+- A Neon project. See [Create your first project](/docs/get-started/signing-up).
 - A database. This guide uses the ready-to-use `neondb` database. You can create your own database if you like. See [Create a database](/docs/manage/databases#create-a-database) for instructions.
 
 ## Download and extract Flyway
 
-1. Download the latest version of the [Flyway command-line tool](https://documentation.red-gate.com/fd/command-line-184127404.html).
+1. Download the latest version of the [Flyway command-line tool](https://documentation.red-gate.com/fd/command-line-277579359.html).
 
 2. Extract the Flyway files. For example:
 
@@ -140,7 +144,7 @@ You can verify that the data was added by viewing the table on the **Tables** pa
 
 ## View your schema migration history
 
-When you run the `flyway migrate` command, Flyway registers the schema changes in the `flyway_schema_history` table, which Flyway automatically creates in your database. You can view the table by running the [flyway info](https://documentation.red-gate.com/fd/command-line-info-184127413.html) command.
+When you run the `flyway migrate` command, Flyway registers the schema changes in the `flyway_schema_history` table, which Flyway automatically creates in your database. You can view the table by running the [flyway info](https://documentation.red-gate.com/fd/info-277578881.html) command.
 
 ```bash
 flyway info

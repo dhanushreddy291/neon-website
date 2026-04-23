@@ -2,10 +2,14 @@
 title: The Neon GitHub integration
 subtitle: Connect Neon Postgres to a GitHub repository and build GitHub Actions
   workflows
+summary: >-
+  Covers the setup of the Neon GitHub integration, enabling connection between a
+  Neon Postgres project and a GitHub repository for database
+  development and automated workflows using GitHub Actions.
 enableTableOfContents: true
 redirectFrom:
   - /docs/guides/neon-github-app
-updatedOn: '2024-12-03T21:31:16.325Z'
+updatedOn: '2026-02-06T22:07:33.022Z'
 ---
 
 The Neon GitHub integration connects your Neon project to a GitHub repository, streamlining database development within your overall application development workflow. For instance, you can configure GitHub Actions to create a database branch for each pull request and automatically apply schema changes to that database branch. To help you get started, we provide a [sample GitHub Actions workflow](#add-the-github-actions-workflow-to-your-repository).
@@ -26,7 +30,7 @@ This guide walks you through the following steps:
 
 ## Prerequisites
 
-- You have a Neon account and project. If not, see [Sign up for a Neon account](/docs/get-started-with-neon/signing-up).
+- You have a Neon account and project. If not, see [Sign up for a Neon account](/docs/get-started/signing-up).
 - You have a GitHub account with an application repository that you want to connect to your Neon project.
 
 ## Install the GitHub App and connect your Neon project
@@ -152,10 +156,13 @@ jobs:
           api_key: ${{ secrets.NEON_API_KEY }}
 ```
 
+<Admonition type="tip">
+The step outputs from the `create_neon_branch` action will only be available within the same job (`create_neon_branch`). Therefore, write all test code, migrations, and related steps in that job itself. The outputs are marked as secrets. If you need separate jobs, refer to [GitHub's documentation on workflow commands](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#workflow) for patterns on how to handle this.
+</Admonition>
+
 To add the workflow to your repository:
 
 1. In your repository, create a workflow file in the `.github/workflows` directory; for example, create a file named `neon_workflow.yml`.
-
    - If the `.github/workflows` directory already exists, add the file.
    - If your repository doesn't have a `.github/workflows` directory, add the file `.github/workflows/neon-workflow.yml`. This creates the `.github` and `workflows` directories and the `neon-workflow.yml` file.
 
@@ -216,7 +223,7 @@ If you're new to GitHub Actions and workflows, GitHub's [Quickstart for GitHub A
 
 ## Example applications with GitHub Actions workflows
 
-The following example applications utilize GitHub Actions workflows to create and delete branches in Neon. These examples can serve as references when building your own workflows.
+The following example applications use GitHub Actions workflows to create and delete branches in Neon. These examples can serve as references when building your own workflows.
 
 <Admonition type="note">
 The Neon GitHub integration configures a `NEON_API_KEY` secret and a `PROJECT_ID` variable in your GitHub repository. Depending on the specific example application, additional or different variables and secrets may have been used. As you develop your workflows, you might also need to incorporate various other variables and secrets.
@@ -224,15 +231,13 @@ The Neon GitHub integration configures a `NEON_API_KEY` secret and a `PROJECT_ID
 
 <DetailIconCards>
 
-<a href="https://neon.tech/guides/neon-github-actions-authomated-branching" description="Learn how to automate database branching for your application using Neon and GitHub Actions" icon="github">Automated Database Branching with GitHub Actions</a>
+<a href="/guides/neon-github-actions-authomated-branching" description="Learn how to automate database branching for your application using Neon and GitHub Actions" icon="github">Automated Database Branching with GitHub Actions</a>
 
 <a href="https://github.com/neondatabase/preview-branches-with-cloudflare" description="Demonstrates using GitHub Actions workflows to create a Neon branch for every Cloudflare Pages preview deployment" icon="github">Preview branches with Cloudflare Pages</a>
 
 <a href="https://github.com/neondatabase/preview-branches-with-vercel" description="Demonstrates using GitHub Actions workflows to create a Neon branch for every Vercel preview deployment" icon="github">Preview branches with Vercel</a>
 
 <a href="https://github.com/neondatabase/preview-branches-with-fly" description="Demonstrates using GitHub Actions workflows to create a Neon branch for every Fly.io preview deployment" icon="github">Preview branches with Fly.io</a>
-
-<a href="https://github.com/neondatabase/neon_twitter" description="Demonstrates using GitHub Actions workflows to create a Neon branch for schema validation and perform migrations" icon="github">Neon Twitter app</a>
 
 </DetailIconCards>
 
@@ -328,8 +333,8 @@ To remove the GitHub integration:
 
 - [Creating GitHub Actions](https://docs.github.com/en/actions/creating-actions)
 - [Quickstart for GitHub Actions](https://docs.github.com/en/actions/quickstart)
-- [Database Branching Workflows](https://neon.tech/flow)
-- [Database branching workflow guide for developers](https://neon.tech/blog/database-branching-workflows-a-guide-for-developers)
+- [Database Branching Workflows](/branching)
+- [Database branching workflow guide for developers](/blog/database-branching-workflows-a-guide-for-developers)
 
 ## Feedback and future improvements
 

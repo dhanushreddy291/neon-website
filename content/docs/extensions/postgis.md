@@ -1,8 +1,12 @@
 ---
 title: The postgis extension
 subtitle: Work with geospatial data in Postgres using PostGIS
+summary: >-
+  Covers the setup of the PostGIS extension in Neon for managing and analyzing
+  geospatial data, including enabling the extension, storing spatial data, and
+  querying with practical examples.
 enableTableOfContents: true
-updatedOn: '2025-04-13T16:25:37.956Z'
+updatedOn: '2026-02-06T22:07:32.846Z'
 ---
 
 The `postgis` extension provides support for spatial data - coordinates, maps and polygons, encompassing geographical and location-based information. It introduces new data types, functions, and operators to manage and analyze spatial data effectively.
@@ -21,8 +25,6 @@ This guide introduces you to the `postgis` extension - how to enable it, store a
 
 Please refer to the [list of all extensions](/docs/extensions/pg-extensions) available in Neon for up-to-date information.
 
-Currently, Neon uses version `3.3.3` of the `postgis` extension for all Postgres versions.
-
 ## Enable the `postgis` extension
 
 You can enable the extension by running the following `CREATE EXTENSION` statement in the Neon **SQL Editor** or from a client such as `psql` that is connected to Neon.
@@ -31,7 +33,7 @@ You can enable the extension by running the following `CREATE EXTENSION` stateme
 CREATE EXTENSION IF NOT EXISTS postgis;
 ```
 
-For information about using the Neon SQL Editor, see [Query with Neon's SQL Editor](/docs/get-started-with-neon/query-with-neon-sql-editor). For information about using the `psql` client with Neon, see [Connect with psql](/docs/connect/query-with-psql-editor).
+For information about using the Neon SQL Editor, see [Query with Neon's SQL Editor](/docs/get-started/query-with-neon-sql-editor). For information about using the `psql` client with Neon, see [Connect with psql](/docs/connect/query-with-psql-editor).
 
 ## Example usage
 

@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import Rss from 'rss';
 
 import { BLOG_BASE_PATH } from 'constants/blog';
@@ -25,7 +24,6 @@ export async function GET() {
       excerpt,
       date,
       title,
-      content,
       pageBlogPost: { authors },
     } = post;
     const url = `${process.env.NEXT_PUBLIC_DEFAULT_SITE_URL}${BLOG_BASE_PATH}${slug}`;
@@ -40,7 +38,7 @@ export async function GET() {
       date: new Date(date),
       author: authors[0].author.title,
       categories: postCategories,
-      custom_elements: [{ 'content:encoded': content }],
+      custom_elements: [{ 'content:encoded': excerpt }],
     });
   });
 

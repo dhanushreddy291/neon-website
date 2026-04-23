@@ -1,10 +1,14 @@
 ---
 title: Chat with Neon Postgres with AskYourDatabase
 subtitle: Chat with your Neon Postgres database without writing SQL
+summary: >-
+  How to connect AskYourDatabase to Neon Postgres for natural language
+  interactions, allowing users to manage data, visualize information, and
+  perform queries without writing SQL.
 redirectFrom:
   - /docs/connect/connect-ai
 enableTableOfContents: true
-updatedOn: '2024-08-07T21:36:52.645Z'
+updatedOn: '2026-02-06T22:07:32.909Z'
 ---
 
 AskYourDatabase is the ChatGPT for SQL databases, enabling you to interact with your SQL databases using natural language. You can use it for data management, business intelligence, schema design & migration, data visualization, and more. To learn more, see [AskYourDatabase](https://www.askyourdatabase.com/).
@@ -21,7 +25,7 @@ This guide shows how to connect from AskYourDatabase to Neon Postgres.
 1. Get the Neon URL by navigating to the Neon Console and copying the connection string. The URL will look something like this:
 
    ```text shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
    ```
 
 2. Go to AskYourDatabase and click **Connect to your database**:
