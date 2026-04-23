@@ -332,9 +332,12 @@ For more information about database object privileges in Postgres, see [Privileg
 ## Transfer database table ownership between roles
 
 In Neon, roles created via the Console, CLI, or API are members of `neon_superuser` but are not full Postgres superusers. This means you can't directly transfer ownership of a database table from one role to another using `ALTER TABLE ... OWNER TO`.
+
 The workaround is to introduce a shared group role that both roles belong to. You transfer ownership to the group, then the destination role can claim ownership for itself.
 
-**Prerequisites:** Both roles must have been created using the Neon Console, CLI, or API so they have `neon_superuser` membership. Connect to your database using an SQL client such as [psql](/docs/connect/query-with-psql-editor) to perform the transfer. The Neon SQL Editor doesn't support connecting as different roles, so it can't be used for steps that require switching roles.
+<Admonition type="note">
+In the example below, `current_owner`, `new_owner`, and `table_owners` are placeholder role and group names. Replace them with names from your own environment.
+</Admonition>
 
 ### Step 1: Create a group role for table ownership
 
@@ -364,7 +367,7 @@ ALTER TABLE your_table OWNER TO table_owners;
 
 ### Step 3: Claim ownership as the destination role
 
-Disconnect, then reconnect as `new_owner`. Transfer ownership from the group to yourself:
+Connect as the `new_owner`. Transfer ownership from the group to yourself:
 
 ```sql
 ALTER TABLE your_table OWNER TO new_owner;
