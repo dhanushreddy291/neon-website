@@ -19,7 +19,7 @@ import Tag from '../tag';
 const Changelog = ({ posts }) => (
   <>
     <Hero />
-    <ChangelogForm className="mb-5 hidden xl:flex" />
+    <ChangelogForm />
     <ChangelogList className="mt-16" posts={posts} />
   </>
 );
@@ -86,7 +86,7 @@ const Post = ({
         ) : (
           <article>
             <div className="flex items-start justify-between gap-6 sm:flex-col sm:items-stretch sm:gap-4">
-              <div className={cn(!isChangelog && 'max-w-[520px]')}>
+              <div className={cn(!isChangelog && 'max-w-xl 2xl:max-w-[520px]')}>
                 <h1
                   className={cn(
                     'text-[36px] leading-tight font-medium tracking-tighter text-balance md:text-[28px]',
