@@ -339,53 +339,76 @@ The workaround is to introduce a shared group role that both roles belong to. Yo
 In the example below, `current_owner`, `new_owner`, and `table_owners` are placeholder role and group names. Replace them with names from your own environment.
 </Admonition>
 
-### Step 1: Create a group role for table ownership
+1. Connect as the database owner role and run:
 
-Connect as the database owner role and run:
+   ```sql
+   -- Create a group role with no login
+   CREATE ROLE table_owners NOLOGIN;
+
+   -- Grant schema access to the group
+   GRANT USAGE, CREATE ON SCHEMA public TO table_owners;
+
+   -- Add both roles to the group
+   GRANT table_owners TO current_owner;
+   GRANT table_owners TO new_owner;
+   ```
+
+   Replace `current_owner` and `new_owner` with the actual role names.
+
+2. Still connected as `current_owner`, transfer the table to the group:
+
+   ```sql
+   ALTER TABLE your_table OWNER TO table_owners;
+   ```
+
+3. Connect as `new_owner`. Transfer ownership from the group to yourself:
+
+   ```sql
+   ALTER TABLE your_table OWNER TO new_owner;
+   ```
+
+4. Verify ownership:
+
+   ```sql
+   \dt your_table
+   ```
+
+   The **Owner** column should now show `new_owner`.
+
+5. Leave the `table_owners` group role in place if you need to transfer other tables later, or drop it when you're done:
+
+   ```sql
+   DROP ROLE table_owners;
+   ```
+
+   `DROP ROLE table_owners` works only after that role no longer owns any objects and has no blocking dependencies.
+
+### Transfer ownership for multiple objects
+
+The numbered steps above show how to transfer one table with `ALTER TABLE ... OWNER TO`.
+
+If you need to transfer ownership for everything a role owns in a database, use `REASSIGN OWNED` instead of running `ALTER ... OWNER TO` for each table.
+
+`REASSIGN OWNED` includes tables and other object types owned by the role, such as views, materialized views, sequences, functions, schemas, and types.
+
+Connect as `current_owner` and move all owned objects to the shared group:
 
 ```sql
--- Create a group role with no login
-CREATE ROLE table_owners NOLOGIN;
-
--- Grant schema access to the group
-GRANT USAGE, CREATE ON SCHEMA public TO table_owners;
-
--- Add both roles to the group
-GRANT table_owners TO current_owner;
-GRANT table_owners TO new_owner;
+REASSIGN OWNED BY current_owner TO table_owners;
 ```
 
-Replace `current_owner` and `new_owner` with the actual role names.
-
-### Step 2: Transfer ownership to the group
-
-Still connected as `current_owner`, transfer the table to the group:
+Then connect as `new_owner` and move those objects from the group to the destination role:
 
 ```sql
-ALTER TABLE your_table OWNER TO table_owners;
+REASSIGN OWNED BY table_owners TO new_owner;
 ```
 
-### Step 3: Claim ownership as the destination role
+`REASSIGN OWNED` applies within the current database context. Run it in each database where you need to transfer ownership.
 
-Connect as the `new_owner`. Transfer ownership from the group to yourself:
-
-```sql
-ALTER TABLE your_table OWNER TO new_owner;
-```
-
-### Step 4: Verify
-
-```sql
-\dt your_table
-```
-
-The **Owner** column should now show `new_owner`.
-
-You can leave the `table_owners` group role in place if you need to transfer other tables later, or drop it when you're done:
-
-```sql
-DROP ROLE table_owners;
-```
+<Admonition type="note">
+- `REASSIGN OWNED` runs in the current database context, so run it in each database where you need to transfer ownership.
+- `REASSIGN OWNED` reassigns ownership only. It does not change existing `GRANT` permissions or default privileges.
+</Admonition>
 
 ## Reserved database names
 
