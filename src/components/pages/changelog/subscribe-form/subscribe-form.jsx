@@ -102,20 +102,22 @@ const SubscribeForm = ({ className }) => {
   return (
     <section
       className={cn(
-        'relative overflow-hidden border border-[#C7D4CE] bg-[#E4F1EB]/40 px-5 py-5',
+        'relative border border-[#C7D4CE] bg-[#E4F1EB]/40 px-5 py-5',
         'dark:border-gray-new-30 dark:bg-gray-new-10',
         className
       )}
       id="changelog-form"
     >
-      <Image
-        className="absolute top-1/2 right-0 bottom-0 h-41 w-auto -translate-y-1/2 object-cover sm:hidden"
-        src={patternImage}
-        alt=""
-        width={188}
-        height={163}
-        loading="eager"
-      />
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <Image
+          className="absolute top-1/2 right-0 bottom-0 h-41 w-auto -translate-y-1/2 object-cover sm:hidden"
+          src={patternImage}
+          alt=""
+          width={188}
+          height={163}
+          loading="eager"
+        />
+      </div>
 
       <div className="relative z-10">
         <h2 className="text-xl leading-tight font-medium tracking-tight text-black-new dark:text-white sm:text-lg/tight">
@@ -128,12 +130,15 @@ const SubscribeForm = ({ className }) => {
               <Field
                 className="w-full"
                 theme="transparent"
+                errorTheme="tooltip"
+                errorClassName="[--error-tooltip-bg:#fff] dark:[--error-tooltip-bg:#18191B]"
                 name="email"
                 label="Email"
                 labelClassName="hidden"
                 type="email"
                 placeholder="Enter your email address"
                 isDisabled={formState === FORM_STATES.LOADING || formState === FORM_STATES.SUCCESS}
+                error={errors.email?.message}
                 inputClassName={cn(
                   'remove-autocomplete-styles m-0 h-11 rounded-none! border-gray-new-80 px-4 py-0 text-[15px] leading-none tracking-extra-tight transition-colors duration-200',
                   'bg-white! text-black-new placeholder:text-gray-new-50',
@@ -147,14 +152,6 @@ const SubscribeForm = ({ className }) => {
                   setValueAs: (value) => (typeof value === 'string' ? value.trim() : value),
                 })}
               />
-              {formState === FORM_STATES.ERROR && errors.email?.message && (
-                <span
-                  className="absolute top-full block translate-y-0.5 text-sm leading-tight tracking-tight text-secondary-1 sm:relative sm:top-auto sm:mt-0.5 sm:translate-y-0"
-                  data-test="error-message"
-                >
-                  {errors.email.message}
-                </span>
-              )}
             </div>
 
             <LazyMotion features={domAnimation}>
