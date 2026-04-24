@@ -140,7 +140,7 @@ const SubscribeForm = ({ className }) => {
                 isDisabled={formState === FORM_STATES.LOADING || formState === FORM_STATES.SUCCESS}
                 error={errors.email?.message}
                 inputClassName={cn(
-                  'remove-autocomplete-styles m-0 h-11 rounded-none! border-gray-new-80 px-4 py-0 text-[15px] leading-none tracking-extra-tight transition-colors duration-200',
+                  'remove-autocomplete-styles m-0 h-11 rounded-none! border-gray-new-80 px-4 py-0 text-base leading-none tracking-tight transition-colors duration-200',
                   'bg-white! text-black-new placeholder:text-gray-new-50',
                   'focus:outline-none focus:border-gray-new-80 focus:border-gray-30',
                   'dark:border-gray-new-30 dark:focus:border-gray-new-30 dark:bg-gray-new-15! dark:text-white dark:placeholder:text-gray-new-50',
