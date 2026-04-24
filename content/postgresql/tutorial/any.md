@@ -248,7 +248,7 @@ Output:
 
 ```
 
-It returns all the rows with the `employee` type because they have a value in the `salary` column less than any value in the set (55K, 58K, and 60K).
+It returns all the rows from the `employee` table because they have a value in the `salary` column less than any value in the set (55K, 58K, and 60K).
 
 ## Summary
 
