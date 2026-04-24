@@ -118,7 +118,7 @@ const SubscribeForm = ({ className }) => {
       />
 
       <div className="relative z-10">
-        <h2 className="text-xl leading-tight font-medium tracking-tighter text-black-new dark:text-white sm:text-lg/tight">
+        <h2 className="text-xl leading-tight font-medium tracking-tight text-black-new dark:text-white sm:text-lg/tight">
           Subscribe to our changelog. No spam, guaranteed.
         </h2>
 

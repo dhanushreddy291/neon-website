@@ -19,6 +19,7 @@ import Tag from '../tag';
 const Changelog = ({ posts }) => (
   <>
     <Hero />
+    {/* <SubscribeForm className="mt-3.5" /> */}
     <SubscribeForm />
     <ChangelogList className="mt-14" posts={posts} />
   </>
