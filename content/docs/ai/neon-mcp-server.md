@@ -18,15 +18,6 @@ The **Neon MCP Server** is an open-source tool that lets you interact with your 
 
 ## Quick setup
 
-### One-click install (Cursor and Kiro)
-
-These links match the badges on the [**Neon MCP Server** GitHub README](https://github.com/neondatabase/mcp-server-neon): they open your tool with the Neon remote MCP URL (`https://mcp.neon.tech/mcp`) pre-filled so you can authorize without editing JSON first.
-
-[![Install MCP Server in Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=Neon&config=eyJ1cmwiOiJodHRwczovL21jcC5uZW9uLnRlY2gvbWNwIn0%3D)
-[![Add to Kiro](https://kiro.dev/images/add-to-kiro.svg)](https://kiro.dev/launch/mcp/add?name=Neon&config=%7B%22url%22%3A%20%22https%3A//mcp.neon.tech/mcp%22%7D)
-
-For manual Kiro paths and more context, see [PR #228](https://github.com/neondatabase/mcp-server-neon/pull/228) and [Kiro MCP documentation](https://kiro.dev/docs/mcp/).
-
 The fastest way to set up Neon's MCP Server is with one command:
 
 ```bash
@@ -92,6 +83,10 @@ Or add this to your MCP config file:
 
 <Admonition type="tip" title="One-click install for Cursor">
 <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=Neon&config=eyJ1cmwiOiJodHRwczovL21jcC5uZW9uLnRlY2gvbWNwIn0%3D"><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add Neon MCP server to Cursor" height="32" /></a>
+</Admonition>
+
+<Admonition type="tip" title="One-click install for Kiro">
+<a href="https://kiro.dev/launch/mcp/add?name=Neon&config=%7B%22url%22%3A%20%22https%3A//mcp.neon.tech/mcp%22%7D"><img src="https://kiro.dev/images/add-to-kiro.svg" alt="Add Neon MCP server to Kiro" height="32" /></a>
 </Admonition>
 
 After saving, restart your MCP client. When the OAuth window opens in your browser, review the requested permissions and click **Authorize** to complete the connection.
