@@ -141,9 +141,9 @@ Output:
 ```text
  id | customer_name | phone | fax  | email
 ----+---------------+-------+------+-------
-  4 | Apple         | null  | null | null
-  5 | Samsung       | null  | null | null
-  6 | Sony          | null  | null | null
+  1 | Apple         | null  | null | null
+  2 | Samsung       | null  | null | null
+  3 | Sony          | null  | null | null
 (3 rows)
 
 
