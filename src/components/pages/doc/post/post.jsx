@@ -50,7 +50,7 @@ const Post = ({
   gitHubPath,
   tableOfContents,
   author,
-  className = 'max-w-[832px] lg:max-w-none',
+  className = 'max-w-208 lg:max-w-none',
 }) => {
   const modal = MODALS.find(
     (modal) =>
