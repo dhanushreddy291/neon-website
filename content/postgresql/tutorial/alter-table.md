@@ -180,7 +180,7 @@ VALUES('PostgreSQL','http://www.postgresql.org/','whatever');
 
 ```
 ERROR:  new row for relation "links" violates check constraint "links_target_check"
-DETAIL:  Failing row contains (2, PostgreSQL, http://www.postgresql.org/, whatever).DETAIL:  Failing row contains (2, PostgreSQL, http://www.postgresql.org/, whatever).
+DETAIL:  Failing row contains (2, PostgreSQL, http://www.postgresql.org/, whatever).
 ```
 
 The following statement adds a `UNIQUE` constraint to the `url` column of the `links` table:
