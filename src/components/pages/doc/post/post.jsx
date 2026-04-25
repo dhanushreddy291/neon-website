@@ -51,6 +51,7 @@ const Post = ({
   gitHubPath,
   tableOfContents,
   author,
+  aboveContent = null,
   className = 'max-w-208 lg:max-w-none',
 }) => {
   const modal = MODALS.find(
@@ -105,6 +106,7 @@ const Post = ({
               </div>
               {!isChangelog && <DropdownMenu gitHubPath={gitHubPath} />}
             </div>
+            {aboveContent}
             <Content
               className={cn('mt-10 lg:mt-7 md:mt-5', isSplitLayout && 'split-layout')}
               content={content}
@@ -182,6 +184,7 @@ Post.propTypes = {
     }),
     photo: PropTypes.string,
   }),
+  aboveContent: PropTypes.node,
   className: PropTypes.string,
 };
 

@@ -115,8 +115,8 @@ const CopyMarkdownButton = ({
     <DropdownItem
       icon={CopyIcon}
       text={getButtonText()}
-      onClick={status === 'copied' ? undefined : copyPageToClipboard}
       description={description}
+      onClick={status === 'copied' ? undefined : copyPageToClipboard}
     />
   );
 };
@@ -203,13 +203,13 @@ const DropdownMenu = ({ gitHubPath, className }) => {
               icon={bot.icon}
               text={`Open in ${bot.name}`}
               url={bot.generateLink(markdownUrl)}
+              description={bot.description}
               onClick={() =>
                 sendGtagEvent('Action Clicked', {
                   text: `Open in ${bot.name}`,
                   tag_name: 'DropdownMenu',
                 })
               }
-              description={bot.description}
             />
           ))}
         </div>
