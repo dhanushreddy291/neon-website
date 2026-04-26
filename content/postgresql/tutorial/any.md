@@ -253,7 +253,7 @@ Output:
 
 ```
 
-It returns all the rows with the `employee` type because they have a value in the `salary` column less than any value in the set (55K, 58K, and 60K).
+It returns rows from the `employees` table whose `salary` is less than at least one value in the set (55K, 58K, and 60K). In this example, that means salaries less than 60K, which matches the 11 rows shown in the output.
 
 ## Summary
 
