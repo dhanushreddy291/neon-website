@@ -22,7 +22,7 @@ Exporting PostgreSQL tables to CSV with COPY and \copy works the same on any Pos
 
 **Summary**: in this tutorial, you will learn various techniques to export data from PostgreSQL tables to CSV files.
 
-In the previous tutorial, we showed you how to [import data from a CSV file into a table](import-csv-file-into-posgresql-table). We will use the same `persons` table for importing data from a CSV file.
+In the previous tutorial, we showed you how to [import data from a CSV file into a table](import-csv-file-into-posgresql-table). We will use the same `persons` table for exporting data to a CSV file.
 
 ![postgresql export csv](/postgresqltutorial/posgresql-import-csv.jpg)
 The following statement retrieves the data from the `persons` table.
