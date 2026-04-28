@@ -227,7 +227,7 @@ Even though child branch storage is capped at your logical data size, it's still
 
 **Storage per branch:**
 
-Paid plans (Launch and Scale) support a logical data size of up to **16 TB per branch**. To increase this limit, [request an increase in the feedback form in console](https://console.neon.tech/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
+Paid plans (Launch and Scale) support a logical data size of up to **16 TB per branch**. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request an increase in the feedback form in console](https://console.neon.tech/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
 
 ### Public network transfer
 
