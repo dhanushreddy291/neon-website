@@ -198,7 +198,7 @@ WHERE id =  1;
 ROLLBACK;
 ```
 
-If you retrieve data from the accounts table, you’ll won’t see the changes because it was rolled back.
+If you retrieve data from the accounts table, you won’t see the changes because they were rolled back.
 
 ```sql
 SELECT * FROM accounts;
