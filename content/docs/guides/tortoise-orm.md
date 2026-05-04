@@ -202,4 +202,9 @@ The `in_transaction()` block ensures an all-or-nothing execution. Because the si
 
 </details>
 
+## Resources
+
+- [Tortoise ORM documentation](https://tortoise.github.io/)
+- [asyncpg documentation](https://magicstack.github.io/asyncpg/current/)
+
 <NeedHelp/>
