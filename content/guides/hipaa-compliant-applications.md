@@ -21,7 +21,7 @@ When evaluating Neon for healthcare workloads, you likely have a few specific re
 - **Compliant Features:** Core Postgres operations, database branching, read replicas, backups, and Point-in-Time Recovery (PITR) are fully covered under the BAA. We recommend using [anonymized data](/docs/workflows/data-anonymization) in non-production branches.
 - **Feature Exclusions:** Neon Auth and the Data API reside outside the HIPAA boundary and must not be used for PHI.
 - **Shared Responsibility:** If you use logical replication or Change Data Capture (CDC) to stream data out of Neon, you are responsible for the destination's compliance.
-- **Audit Logging:** Audit logs are securely retained for "x" years. For exporting logs for audits or investigations, [raise a support request](https://console.neon.tech/app/projects?modal=support).
+- **Audit Logging:** Audit logs are securely retained for the duration specified in your Business Associate Agreement (BAA). For exporting logs for audits or investigations, [raise a support request](https://console.neon.tech/app/projects?modal=support).
 - **Subprocessors:** Neon uses compliant subprocessors that also sign data processing agreements. See the full list at [neon.com/subprocessors](https://neon.com/subprocessors).
 
 ## Architecture and data security
