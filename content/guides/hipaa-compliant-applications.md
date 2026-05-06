@@ -40,7 +40,7 @@ Neon separates compute and storage. You can provision a dedicated project for ea
 Neon protects PHI both in transit and at rest.
 
 - **At rest:** All data is encrypted using AES-256 at the storage layer. Neon manages these storage keys through secure key management services.
-- **In transit:** All network communications to the database require TLS 1.2 or higher. When connecting your application to Neon, you must enforce SSL (for example, `sslmode=require`).
+- **In transit:** All network communications to the database require TLS 1.2 or higher. When connecting your application to Neon, you must enforce SSL.
 
 ## Audit logging
 
