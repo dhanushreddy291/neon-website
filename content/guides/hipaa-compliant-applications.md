@@ -80,7 +80,7 @@ Logs stream to a dedicated Neon audit collector. Self-serve export of HIPAA audi
 
 ## Shared responsibility model
 
-HIPAA compliance requires a shared effort. Neon secures the database infrastructure, but you govern how your application models, accesses, and transmits data.
+HIPAA compliance is a shared effort. Neon secures the database infrastructure, but you govern how your application models, accesses, and transmits data.
 
 **Neon handles:**
 
