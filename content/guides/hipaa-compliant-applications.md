@@ -32,7 +32,7 @@ When you enable HIPAA on a Neon project, it runs on infrastructure configured to
 
 Neon separates compute and storage. You can provision a dedicated project for each of your tenants. This gives each customer their own isolated Postgres instance, reducing the risk of cross-tenant data exposure.
 
-- **Cloud providers:** HIPAA compliance is supported across Neon's infrastructure. Note that if you use Postgres 18, HIPAA-compliant projects are currently limited to AWS regions.
+- **Cloud providers:** HIPAA compliance is supported across Neon's infrastructure.
 - **Network isolation:** You can restrict access to your database using [IP Allowlisting](/docs/introduction/ip-allow) and [Private Networking](/docs/guides/neon-private-networking) to ensure only your application backend can connect.
 
 ### Encryption
