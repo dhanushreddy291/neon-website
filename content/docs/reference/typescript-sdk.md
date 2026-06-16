@@ -13,6 +13,10 @@ enableTableOfContents: true
 updatedOn: '2026-06-05T17:20:32.620Z'
 ---
 
+<Admonition type="info">
+Looking for the Neon Client SDK for database queries and authentication? See [Neon TypeScript SDK (Client)](/docs/reference/javascript-sdk).
+</Admonition>
+
 <InfoBlock>
 
 <DocsList title="What you will learn:">
@@ -269,7 +273,7 @@ const apiClient = createApiClient({
 
 async function listNeonBranches(projectId: string) {
   try {
-    const response = await apiClient.listProjectBranches({ projectId });
+    const response = await apiClient.listProjectBranches(projectId);
     console.log('Branches:', response.data.branches);
   } catch (error) {
     console.error('Error listing branches:', error);
@@ -408,6 +412,31 @@ In this example:
 
 Similarly, when creating a project, you can use types like `ProjectCreateRequest` for the request body and `ProjectResponse` for the expected response:
 
+```typescript
+import { createApiClient, ProjectCreateRequest, ProjectResponse } from '@neondatabase/api-client';
+import { AxiosResponse } from 'axios';
+
+const apiClient = createApiClient({
+  apiKey: process.env.NEON_API_KEY!,
+});
+
+async function createNewProject(name: string): Promise<void> {
+  const projectRequest: ProjectCreateRequest = {
+    project: {
+      name,
+      region_id: 'aws-us-east-1',
+    },
+  };
+
+  try {
+    const response: AxiosResponse<ProjectResponse> = await apiClient.createProject(projectRequest);
+    console.log('Created project:', response.data.project.id);
+  } catch (error) {
+    console.error('Error creating project:', error);
+  }
+}
+```
+
 By using TypeScript types, you ensure that your code interacts with the Neon API in a predictable and type-safe manner, reducing potential errors and improving code quality. You can explore all available types in the `@neondatabase/api-client` package to get the full benefits of TypeScript in your Neon SDK integrations.
 
 ## Key SDK Method Signatures
@@ -516,9 +545,33 @@ To give you a better overview of the SDK, here are some of the key methods avail
 - `listProjectIdentityIntegrations(projectId: string)`: Lists Auth Provider integrations for a project.
 - `deleteProjectIdentityIntegration(projectId: string, authProvider: IdentitySupportedAuthProvider)`: Deletes an Auth Provider integration.
 
-### General
+## Polling for Operations
 
-- `getProjectOperation(projectId: string, operationId: string)`: Retrieves details for a specific operation.
+Since many Neon API operations (like creating a project or branch) are asynchronous, you may need to poll the operation status until it's finished.
+
+```typescript
+import { createApiClient } from '@neondatabase/api-client';
+
+const apiClient = createApiClient({
+  apiKey: process.env.NEON_API_KEY!,
+});
+
+async function waitForOperation(projectId: string, operationId: string) {
+  let status = 'running';
+  while (status === 'running' || status === 'scheduling') {
+    const response = await apiClient.getProjectOperation(projectId, operationId);
+    status = response.data.operation.status;
+    console.log(`Operation status: ${status}`);
+
+    if (status === 'finished') break;
+    if (status === 'failed') throw new Error('Operation failed');
+
+    // Wait for 1 second before polling again
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  console.log('Operation completed successfully');
+}
+```
 
 ## Error Handling
 

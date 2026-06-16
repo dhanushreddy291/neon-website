@@ -1,6 +1,11 @@
 ---
 title: Neon TypeScript SDK
 subtitle: Reference documentation for authentication and Data API database queries
+---
+
+<Admonition type="info">
+Looking for the Neon API TypeScript SDK for managing projects, branches, and databases? See [Neon API TypeScript SDK (Management)](/docs/reference/typescript-sdk).
+</Admonition>
 summary: >-
   The `@neondatabase/neon-js` TypeScript SDK combines Neon Auth and the Neon
   Data API in one client, covering auth methods (email/password, OAuth, OTP,
